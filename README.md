@@ -68,3 +68,4 @@
 ## 相关文档
 - [Thinkjs3 中自定义加载，实现插件目录功能](https://www.jianshu.com/p/df9346a1d0bb)
 - [Thinkjs3 支持 Nuxtjs](https://www.jianshu.com/p/16feed3a5715)
+- [CMSWing SVG 验证码插件](https://github.com/baisheng/cmswing-ext-captcha)
