@@ -139,10 +139,9 @@ module.exports = {
     return think.modService(name, ser, ...args);
   },
   async hook (hooks, ...args) {
-    console.log(hooks)
     try {
       const h = await this.model('hooks').hookscache(hooks);
-      console.log(h)
+      // console.log(h)
       if (!think.isEmpty(h.ext)) {
         const ext = h.ext.split(',');
         const hookarr = [];
@@ -150,12 +149,7 @@ module.exports = {
           // 查询插件状态
           const status = await this.extConfig(c, 'status');
           if (Number(status) === 1) {
-            // const ep = `${c}/hooks`;
-
-            // const Cls = think.app.controllers.addons[`${c}/hooks`]
             const Cls = this.controller(`${c}/hooks`, 'addons')
-            // return new Cls(`${prefix}${modelName}`, config)
-            // const Cls = this.controller(ep, 'addons');
             if (Number(h.type) === 1) {
               hookarr.push(await Cls[hooks](...args));
             } else {

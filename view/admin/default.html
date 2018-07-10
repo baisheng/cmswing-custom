@@ -1,18 +1,18 @@
-{% extends "../../_layouts/layout_admin.html" %}
+{% extends "../_layouts/layout_admin.html" %}
 
-{% block mainNavbar %}
-    {% include "./main_navbar.html" %}
+{% block appNavbar %}
+    {% include "./components/app_navbar.html" %}
 {% endblock %}
 
 {% block beforeMain %}
     {% block sidebar %}
-        {% include "./sidebar.html" %}
+        {% include "./components/app_sidebar.html" %}
     {% endblock %}
 
     {% block sidebar2 %} {% endblock %}
 {% endblock %}
 
-{% block afterMain %} {% endblock %}
+{#{% block afterMain %} {% endblock %}#}
 
 {% block main %}
     <div class="content-wrapper">
@@ -23,7 +23,7 @@
 
         <!-- Footer -->
         {% block footer %}
-            {% include "./footer.html" %}
+            {% include "./components/app_footer.html" %}
         {% endblock %}
         <!-- /footer -->
     </div>

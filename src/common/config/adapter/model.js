@@ -19,14 +19,14 @@ module.exports = {
   mysql: {
     logConnect: isDev,
     handle: mysql,
-    database: 'cx',
-    prefix: 'cx_',
+    database: 'cmswing',
+    prefix: 'cmswing_',
     connectionLimit: 1, // 连接池的连接个数，默认为 1
     // charset: 'UTF8MB4',
     charset: 'UTF8MB4_GENERAL_CI',
     // debug: true,
     host: isDev ? '127.0.0.1' : '127.0.0.1',
-    port: isDev ? '3321' : '3321',
+    port: isDev ? '3313' : '3313',
     user: 'root',
     password: 'ub08JASJQy9s',
     dateStrings: true,

@@ -1,4 +1,4 @@
-{% extends "../../_layouts/layout.html" %}
+{% extends "../../_layouts/layout_default.html" %}
 
 {% block navbar %}
     <!-- Main navbar -->
@@ -174,7 +174,7 @@
 {% endblock %}
 
 {% block footer %}
-    {% include "../_inc/footer.html" %}
+    {% include "../components/app_footer.html" %}
 {% endblock %}
 
 {% block script %}
@@ -194,30 +194,49 @@
           success: function (data) {
             if (data.errno === 0) {
               if (data.data.url) {
-                toastr.success(data.data.name + ' 页面即将自动跳转~');
+                new PNotify({
+                  icon: 'icon-check',
+                  text: data.data.name + ' 页面即将自动跳转',
+                  addclass: 'bg-success',
+                  type: 'success'
+                })
+                // toastr.success(data.data.name + ' 页面即将自动跳转~');
               } else {
-                toastr.success(data.data.name);
+                new PNotify({
+                  icon: 'icon-check',
+                  text: data.data.name,
+                  addclass: 'bg-success',
+                  type: 'success'
+                })
+                // toastr.success(data.data.name);
               }
               setTimeout(function () {
                 $(self).removeClass('disabled').prop('disabled', false);
                 if (data.data.url) {
                   location.href = data.data.url;
                 } else if ($(this).hasClass('no-refresh')) {
-                  toastr.clear()
+                  // toastr.clear()
                 } else {
                   location.reload();
                 }
               }, 1500);
             } else {
-              toastr.error(data.errmsg);
-
+              // toastr.error(data.errmsg);
+              new PNotify({
+                text: data.errmsg,
+                addclass: 'alert bg-danger border-danger alert-styled-left',
+                type: 'danger'
+              })
+              // PNotify.error({
+              //   text: "I'm an error message."
+              // });
               //console.log(data);
               setTimeout(function () {
                 $(self).removeClass('disabled').prop('disabled', false);
                 if (data.data) {
                   location.href = data.data;
                 } else {
-                  toastr.clear()
+                  // toastr.clear()
                 }
               }, 1500);
             }

@@ -1,0 +1,25 @@
+{% extends "../default.html" %}
+
+{% block pageHeader %}
+    <div class="page-header">
+        <div class="page-header-content header-elements-inline">
+            <div class="page-title d-">
+
+                <h4><i class="icon-arrow-left52 mr-2"></i>
+                    <span class="text-weight-semibold">系统管理</span> - {{ controller.meta_title }}
+                </h4>
+                {% block breadcrumb %}
+                    <div class="breadcrumb">
+                        <a href="index.html" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> 首页</a>
+                        {#<a href="content_page_header.html" class="breadcrumb-item">Current</a>#}
+                        <span class="breadcrumb-item active">{{ controller.meta_title }}</span>
+                    </div>
+                {% endblock %}
+            </div>
+
+            <div class="header-elements d-none text-center text-md-left mb-3 mb-md-0">
+                {% block pageAction %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

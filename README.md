@@ -2,6 +2,7 @@
 
 ## 效果截图
 <img src="https://github.com/baisheng/cmswing-custom/blob/master/screenshot/user_login.png?raw=true" width="375">
+<img src="https://github.com/baisheng/cmswing-custom/blob/master/screenshot/menu_index.png?raw=true" width="375">
 
 ## Todos 更新记录
 
@@ -9,7 +10,7 @@
 - ~~将 CMSWing 的基类迁移到 common 模块~~
 - ~~将 ext 迁移至 addons 模块~~
 - ~~增加 addons 插件加载机制，可识别插件目录结构~~
-- 基于 bootstrap 和 nunjucks 重构 admin 前端视图
+- 基于 bootstrap4 和 nunjucks 重构 admin 前端视图
 - nunjucks UI 组件
 
 
