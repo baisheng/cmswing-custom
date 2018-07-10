@@ -1,0 +1,206 @@
+{% macro input(data, options) -%}
+    <div class="form-group ">
+        {% if options.label %}
+            <label class="control-label text-semibold">{{ options.label }}</label>
+        {% endif %}
+
+        <input type="{{ options.type }}"
+                name="{{ options.name }}" placeholder="{{ options.placeholder }}" class="form-control" type="text"
+               value="{{ data }}" {% if options.required or options.is_must == 1%} required="required" {% endif %} >
+
+        {% if options.helper %}
+            <p class="help-block ">
+                <i class="icon-info22 position-left text-teal-400"></i>
+                {{ options.helper }}
+            </p>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+
+{% macro string(name, placeholder, value, flag) -%}
+    <div class="form-group">
+        <label class="text-semibold">专栏名称</label>
+
+        <input name="{{ name }}" placeholder="{{ placeholder }}" class="form-control" type="text"
+               value="{{ value }}" data-required={{ flag }}>
+    </div>
+{%- endmacro %}
+
+{% macro textarea(name, placeholder) -%}
+    <textarea name="{{ name }}" placeholder="{{ placeholder }}"
+              class="apos-field-input apos-field-input-textarea"></textarea>
+{%- endmacro %}
+
+{% macro radio(options) -%}
+    <div class="form-group">
+        <label class="display-block text-semibold">{{ options.label }}</label>
+        {%- for item in options.items -%}
+            {% if not options.inline %}         <div class="radio">{% endif %}
+            <label class="{% if options.inline %}radio-inline{% endif %}">
+
+                <input name="{{ options.name }}" value="{{ item.value }}" type="radio"
+                       class="styled" {% if options.checked == item.value %} checked="checked" {% endif %}> {{ item.label }}
+            </label>
+            {% if not options.inline %}         </div>{% endif %}
+
+        {% endfor %}
+
+
+        {% if options.helper %}
+            <p class="help-block ">
+                <i class="icon-info22 position-left text-teal-400"></i>
+                {{ options.helper }}
+            </p>
+        {% endif %}
+    </div>
+{%- endmacro %}
+
+
+{% macro checkbox(name, label, val, checkeds) -%}
+
+    <label class="checkbox-inline">
+        <input name="{{ name }}" value="{{ val }}" type="checkbox"
+               class="styled" {% if val | in_Array(checkeds) %} checked="checked" {% endif %}> {{ label }}
+    </label>
+{%- endmacro %}
+
+{% macro uploader(options, field) -%}
+    <div class="form-group">
+        <label class="text-semibold">{{ options.label }}</label>
+        <input type="hidden" name="{{ options.name }}" id="cover_id_{{ field.name }}" value="{{ options.id }}"/>
+
+        <div id="fileList_{{ field.name }}" class="uploader-list"></div>
+        <div id="filePicker_{{ field.name }}" class="">选择图片</div>
+
+        {% if options.helper %}
+            <p class="help-block ">
+                <i class="icon-info22 position-left"></i>
+                {{ options.helper }}
+            </p>
+        {% endif %}
+        <script type="text/javascript" f>
+            $list_{{ field.name }} = $('#fileList_{{ field.name }}'),
+                // 优化retina, 在retina下这个值是2
+                ratio_{{ field.name }} = window.devicePixelRatio || 1,
+
+                // 缩略图大小
+                thumbnailWidth_{{ field.name }} = 100 * ratio_{{ field.name }},
+                thumbnailHeight_{{ field.name }} = 100 * ratio_{{ field.name }},
+
+                // Web Uploader实例
+                uploader_{{ field.name }};
+
+            // 初始化Web Uploader
+            // 初始化Web Uploader
+            var uploader_{{ field.name }} = WebUploader.create({
+                // 选完文件后，是否自动上传。
+                auto: true,
+                // swf文件路径
+                swf: '/static/admin/js/webuploader/Uploader.swf',
+                // 文件接收服务端。
+                server: '/admin/file/uploadpic',
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: {
+                    id: '#filePicker_{{ field.name }}',
+                    multiple: false
+                },
+                // 只允许选择图片文件。
+                accept: {
+                    title: 'Images',
+                    extensions: 'gif,jpg,jpeg,bmp,png',
+                    mimeTypes: 'image/*'
+                }
+            });
+            {% if options.id %}
+
+            var cover_id = "{{ options.id }}";
+            if (cover_id != 0) {
+                var picurl = "{{ options.url }}"
+                var $li = $(
+                        '<div id="' + cover_id + '" class="file-item thumbnail ">' +
+                        '<img src="' + picurl + '">' +
+                        '</div>'
+                    ),
+                    $img = $li.find('img');
+
+                $list_{{field.name}}.html($li);
+            }
+
+            {% endif %}
+            // 当有文件添加进来的时候
+            uploader_{{field.name}}.on('fileQueued', function (file) {
+                var $li = $(
+                        '<div id="' + file.id + '" class="file-item thumbnail">' +
+                        '<img>' +
+                        '<div class="primary">' + file.name + '</div>' +
+                        '</div>'
+                    ),
+                    $img = $li.find('img');
+
+                $list_{{field.name}}.html($li);
+
+                // 创建缩略图
+                uploader_{{field.name}}.makeThumb(file, function (error, src) {
+                    if (error) {
+                        $img.replaceWith('<span>不能预览</span>');
+                        return;
+                    }
+
+                    $img.attr('src', src);
+                }, thumbnailWidth_{{ field.name }}, thumbnailHeight_{{ field.name }} );
+            });
+
+            // 文件上传过程中创建进度条实时显示。
+            uploader_{{field.name}}.on('uploadProgress', function (file, percentage) {
+
+                var $li = $('#' + file.id),
+                    $percent = $li.find('.progress span');
+
+                // 避免重复创建
+                if (!$percent.length) {
+                    $percent = $('<p class="progress"><span></span></p>')
+                        .appendTo($li)
+                        .find('span');
+                }
+
+                $percent.css('width', percentage * 100 + '%');
+            });
+
+            // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+            uploader_{{field.name}}.on('uploadSuccess', function (file, res) {
+                $('#' + file.id).addClass('upload-state-done');
+                $("#cover_id_{{ field.name }}").val(res);
+            });
+
+            // 文件上传失败，现实上传出错。
+            uploader_{{field.name}}.on('uploadError', function (file) {
+                var $li = $('#' + file.id),
+                    $error = $li.find('div.error');
+
+                // 避免重复创建
+                if (!$error.length) {
+                    $error = $('<div class="error"></div>').appendTo($li);
+                }
+
+                $error.text('上传失败');
+            });
+
+            // 完成上传完了，成功或者失败，先删除进度条。
+            uploader_{{field.name}}.on('uploadComplete', function (file) {
+                $('#' + file.id).find('.progress').remove();
+            });
+        </script>
+    </div>
+{%- endmacro %}
+
+{% macro select(name, options) -%}
+    <div class="apos-field-input-select-wrapper">
+        <select name="{{ name }}" class="apos-field-input apos-field-input-select">
+            {%- for option in options -%}
+                <option value="{{ option.value }}">{{ option.label }}</option>
+            {%- endfor -%}
+        </select>
+    </div>
+{%- endmacro %}

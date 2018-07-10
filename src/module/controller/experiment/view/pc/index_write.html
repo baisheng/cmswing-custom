@@ -1,0 +1,384 @@
+{% set layout_theme = controller.THEME_VIEW_PATH + '/inc/base_sidebar.html' %}
+{% extends layout_theme %}
+
+{% block centerSidebar %}
+{% endblock %}
+{% block beforeAppScript %}
+    {#<script src="/static/js/plugins/parsley/parsley.min.js"></script>#}
+    {#<script src="/static/js/plugins/parsley/parsley.extend.js"></script>#}
+    {#<script type="text/javascript" src="/static/js/pages/form_validation.js"></script>#}
+
+    <!-- Theme JS files -->
+    <script type="text/javascript"
+            src="/theme/vrlab/assets/js/plugins/editors/summernote/summernote.min.js"></script>
+    <script type="text/javascript" src="/theme/vrlab/assets/js/plugins/forms/styling/uniform.min.js"></script>
+{% endblock %}
+	{#<script type="text/javascript" src="assets/js/core/app.js"></script>#}
+
+	{#<!-- /theme JS files -->#}
+
+{% block content %}
+    <!-- Single mail -->
+    <div class="panel panel-white">
+        <form class="form-validate login-form" id="_form">
+
+            <!-- Mail toolbar -->
+            <div class="panel-toolbar panel-toolbar-inbox">
+                <div class="navbar navbar-default navbar-component no-margin-bottom">
+                    <ul class="nav navbar-nav visible-xs-block no-border">
+                        <li>
+                            <a class="text-center collapsed" data-toggle="collapse"
+                               data-target="#inbox-toolbar-toggle-single">
+                                <i class="icon-circle-down2"></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="navbar-collapse collapse" id="inbox-toolbar-toggle-single">
+
+                        <div class="btn-group navbar-btn">
+                            <button class="btn bg-primary-400" type="submit">
+                                <i class="icon-checkmark3"></i><span
+                                        class="hidden-xs position-right">发布</span></button>
+                            <a href="/module/experiment/index/report" class="btn btn-default"><i class="icon-cross2"></i>
+                                <span
+                                        class="hidden-xs position-right">取消</span></a>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /mail toolbar -->
+
+
+            <!-- Mail details -->
+            <div class="table-responsive mail-details-write">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td class="no-padding">
+                            <input type="text"
+                                   name="title"
+                                   class="form-control input-lg" placeholder="实验报告标题" required="required">
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- /mail details -->
+
+
+            <!-- Mail container -->
+            <div class="mail-container-write">
+                <textarea id="data" name="content" class="summernote">
+                    <div>
+                        <p class="MsoNormal">
+                            <o:p>&nbsp;</o:p>
+                            <span style="font-family: 宋体; color: inherit; font-size: 22pt; letter-spacing: -0.015em;">实验报告标题</span>
+                        </p>
+                        <h1>
+                            <o:p></o:p>
+                        </h1>
+                        <h2><span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:&quot;Calibri Light&quot;;
+mso-ascii-theme-font:major-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+major-fareast;mso-hansi-font-family:&quot;Calibri Light&quot;;mso-hansi-theme-font:major-latin">摘要</span>
+                            <o:p></o:p>
+                        </h2>
+                        <h2><span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:&quot;Calibri Light&quot;;
+mso-ascii-theme-font:major-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+major-fareast;mso-hansi-font-family:&quot;Calibri Light&quot;;mso-hansi-theme-font:major-latin">关键词</span>
+                            <o:p></o:p>
+                        </h2>
+                        <p class="MsoNormal">
+                            <o:p>&nbsp;</o:p>
+                        </p>
+                        <h2>1<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+                                    lang="ZH-CN"
+                                    style="font-family:宋体;mso-ascii-font-family:&quot;Calibri Light&quot;;mso-ascii-theme-font:
+major-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:major-fareast;
+mso-hansi-font-family:&quot;Calibri Light&quot;;mso-hansi-theme-font:major-latin">前言（文献综述）</span>
+                            <o:p></o:p>
+                        </h2>
+                        <h3>1.1
+                            <o:p></o:p>
+                        </h3>
+                        <h3>1.2
+                            <o:p></o:p>
+                        </h3>
+                        <h3>1.3
+                            <o:p></o:p>
+                        </h3>
+                        <h3>1.4
+                            <o:p></o:p>
+                        </h3>
+                        <h3>1.5
+                            <o:p></o:p>
+                        </h3>
+                        <h2>2<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+                                    lang="ZH-CN"
+                                    style="font-family:宋体;mso-ascii-font-family:&quot;Calibri Light&quot;;mso-ascii-theme-font:
+major-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:major-fareast;
+mso-hansi-font-family:&quot;Calibri Light&quot;;mso-hansi-theme-font:major-latin">问题提出</span>
+                            <o:p></o:p>
+                        </h2>
+                        <h3>2.1
+                            <o:p></o:p>
+                        </h3>
+                        <h3>2.2
+                            <o:p></o:p>
+                        </h3>
+                        <p class="MsoNormal">
+                            <o:p>&nbsp;</o:p>
+                        </p>
+                        <h2>3<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+                                    lang="ZH-CN"
+                                    style="font-family:宋体;mso-ascii-font-family:&quot;Calibri Light&quot;;mso-ascii-theme-font:
+major-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:major-fareast;
+mso-hansi-font-family:&quot;Calibri Light&quot;;mso-hansi-theme-font:major-latin">研究方案</span>
+                            <o:p></o:p>
+                        </h2>
+                        <h3>3.1
+                            <o:p></o:p>
+                        </h3>
+                        <h3>3.2
+                            <o:p></o:p>
+                        </h3>
+                        <p class="MsoNormal">
+                            <o:p>&nbsp;</o:p>
+                        </p>
+                        <h2>4<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+                                    lang="ZH-CN"
+                                    style="font-family:宋体;mso-ascii-font-family:&quot;Calibri Light&quot;;mso-ascii-theme-font:
+major-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:major-fareast;
+mso-hansi-font-family:&quot;Calibri Light&quot;;mso-hansi-theme-font:major-latin">实验</span>1
+                            <o:p></o:p>
+                        </h2>
+                        <h3>4.1 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">被试</span>
+                            <o:p></o:p>
+                        </h3>
+                        <h3>4.2 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">材料</span>
+                            <o:p></o:p>
+                        </h3>
+                        <h3>4.3 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">仪器</span>
+                            <o:p></o:p>
+                        </h3>
+                        <h3>4.4 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">设计</span>
+                            <o:p></o:p>
+                        </h3>
+                        <h3>4.5 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">程序</span>
+                            <o:p></o:p>
+                        </h3>
+                        <h3>4.6 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">结果</span>
+                            <o:p></o:p>
+                        </h3>
+                        <h3>4.7 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">讨论</span>
+                            <o:p></o:p>
+                        </h3>
+                        <h2>5<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+                                    lang="ZH-CN"
+                                    style="font-family:宋体;mso-ascii-font-family:&quot;Calibri Light&quot;;mso-ascii-theme-font:
+major-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:major-fareast;
+mso-hansi-font-family:&quot;Calibri Light&quot;;mso-hansi-theme-font:major-latin">实验</span>2
+                            <o:p></o:p>
+                        </h2>
+                        <h3>5.1 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">被试</span>
+                            <o:p></o:p>
+                        </h3>
+                        <h3>5.2 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">材料</span>
+                            <o:p></o:p>
+                        </h3>
+                        <h3>5.3 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">仪器</span>
+                            <o:p></o:p>
+                        </h3>
+                        <h3>5.4 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">设计</span>
+                            <o:p></o:p>
+                        </h3>
+                        <h3>5.5 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">程序</span>
+                            <o:p></o:p>
+                        </h3>
+                        <h3>5.6 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">结果</span>
+                            <o:p></o:p>
+                        </h3>
+                        <h3>5.7 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">讨论</span>
+                            <o:p></o:p>
+                        </h3>
+                        <p class="MsoNormal">
+                            <o:p>&nbsp;</o:p>
+                        </p>
+                        <h2>6<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+                                    lang="ZH-CN"
+                                    style="font-family:宋体;mso-ascii-font-family:&quot;Calibri Light&quot;;mso-ascii-theme-font:
+major-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:major-fareast;
+mso-hansi-font-family:&quot;Calibri Light&quot;;mso-hansi-theme-font:major-latin">实验</span>3
+                            <o:p></o:p>
+                        </h2>
+                        <h3>6.1 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">被试</span>
+                            <o:p></o:p>
+                        </h3>
+                        <h3>6.2 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">材料</span>
+                            <o:p></o:p>
+                        </h3>
+                        <h3>6.3 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">仪器</span>
+                            <o:p></o:p>
+                        </h3>
+                        <h3>6.4 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">设计</span>
+                            <o:p></o:p>
+                        </h3>
+                        <h3>6.5 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">程序</span>
+                            <o:p></o:p>
+                        </h3>
+                        <h3>6.6 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">结果</span>
+                            <o:p></o:p>
+                        </h3>
+                        <h3>6.7 <span lang="ZH-CN" style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">讨论</span>
+                            <o:p></o:p>
+                        </h3>
+                        <h2>7<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+                                    lang="ZH-CN"
+                                    style="font-family:宋体;mso-ascii-font-family:&quot;Calibri Light&quot;;mso-ascii-theme-font:
+major-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:major-fareast;
+mso-hansi-font-family:&quot;Calibri Light&quot;;mso-hansi-theme-font:major-latin">讨论</span>
+                            <o:p></o:p>
+                        </h2>
+                        <h3>7.1
+                            <o:p></o:p>
+                        </h3>
+                        <h3>7.2
+                            <o:p></o:p>
+                        </h3>
+                        <h3>7.3
+                            <o:p></o:p>
+                        </h3>
+                        <h2>8<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+                                    lang="ZH-CN"
+                                    style="font-family:宋体;mso-ascii-font-family:&quot;Calibri Light&quot;;mso-ascii-theme-font:
+major-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:major-fareast;
+mso-hansi-font-family:&quot;Calibri Light&quot;;mso-hansi-theme-font:major-latin">结论</span>
+                            <o:p></o:p>
+                        </h2>
+                        <h3>8.1
+                            <o:p></o:p>
+                        </h3>
+                        <h3>8.2
+                            <o:p></o:p>
+                        </h3>
+                        <h3>8.3
+                            <o:p></o:p>
+                        </h3>
+                        <h2>9<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+                                    lang="ZH-CN"
+                                    style="font-family:宋体;mso-ascii-font-family:&quot;Calibri Light&quot;;mso-ascii-theme-font:
+major-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:major-fareast;
+mso-hansi-font-family:&quot;Calibri Light&quot;;mso-hansi-theme-font:major-latin">申明与说明</span>
+                            <o:p></o:p>
+                        </h2>
+                        <h2>10<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="ZH-CN"
+                                                                                                  style="font-family:宋体;mso-ascii-font-family:&quot;Calibri Light&quot;;mso-ascii-theme-font:
+major-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:major-fareast;
+mso-hansi-font-family:&quot;Calibri Light&quot;;mso-hansi-theme-font:major-latin">参考文献</span>
+                            <o:p></o:p>
+                        </h2>
+                        <p>
+
+
+                        </p>
+                    </div>
+                </textarea>
+            </div>
+            <!-- /mail container -->
+        </form>
+    </div>
+    <!-- /single mail -->
+
+{% endblock %}
+{% block afterAppScript %}
+    <script type="text/javascript" src="/theme/vrlab/assets/js/plugins/notifications/sweet_alert.min.js"></script>
+    <script type="text/javascript" src="/theme/vrlab/assets/js/pages/mail_list_write.js"></script>
+{% endblock %}
+{% block afterScript %}
+    <script type="text/javascript" src="/theme/vrlab/assets/js/pages/components_modals.js"></script>
+    <script type="text/javascript">
+      $('#_form').submit(function (e) {
+        e.preventDefault();
+        if ($(".form-validate").valid()) {
+          $(this).addClass('disabled').attr('autocomplete', 'off').prop('disabled', true);
+          $.post("/module/experiment/index/report",
+            $(this).serialize()).done(function (data) {
+            if (data.errno > 0) {
+              new PNotify({
+                title: '出错啦',
+                icon: 'icon-blocked',
+                text: data.errmsg,
+                addclass: 'bg-danger',
+                type: 'danger'
+              });
+            } else {
+              swal({
+                title: "成功",
+                text: "您的实验报告发布成功",
+                confirmButtonColor: "#66BB6A",
+                type: "success"
+              }, function (isConfirm) {
+                if (isConfirm) {
+                  window.location.href = '/module/experiment/index/report'
+                }
+              })
+            }
+          }).fail(function () {
+            new PNotify({
+              title: '出错啦',
+              icon: 'icon-blocked',
+              text: '请检查内容并重新发布',
+              addclass: 'bg-danger',
+              type: 'danger'
+            });
+          });
+        }
+      })
+    </script>
+{% endblock %}
+

@@ -1,0 +1,141 @@
+{% extends "../inc/base.html" %}
+
+{% block content %}
+
+    {% if controller.user.roleid == 1 %}
+        <div class="panel panel-white">
+            <div class="panel-heading">
+                <h5 class="panel-title"> 报告列表<a class="heading-elements-toggle"><i class="icon-more"></i></a></h5>
+                <div class="heading-elements">
+                    <a href="/mod/experiment/index/write" class="btn bg-primary heading-btn">
+                        <i class="icon-file-plus2 position-left"></i>
+                        添加报告
+                    </a>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered tree-table treetable" id="category">
+                    <thead>
+                    <tr>
+                        <th> 标题</th>
+                        <th> 姓名</th>
+                        <th> 报告时间</th>
+                        <th> 评价状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for val in list %}
+                        <tr>
+                            <td>{{ val.title }}</td>
+                            <td>{{ val.uid | get_realname }}</td>
+                            <td>{{ val.date | moment('YYYY-MM-DD HH:mm') }}</td>
+                            <td>{{ val.evaluation | evaluation_format | safe }}</td>
+                            <td>
+                                {% if val.evaluation == 1 %}
+                                    <a href="/mod/experiment/index/evaluates/?id={{ val.id }}" class="btn">查看</a>
+                                {% else %}
+                                    <a href="/mod/experiment/index/edit/?id={{ val.id }}" class="btn">
+                                        修改
+                                    </a>
+                                {% endif %}
+
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">
+                                <div class="alert alert-warning alert-block">
+                                    <button data-dismiss="alert" class="close" type="button">×
+                                    </button>
+                                    <p>
+                                        还没有实验报告。
+                                    </p>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if pagerData %}
+                <div class="panel-footer">
+                    <div class="col-sm-12 text-right text-center-xs">
+                        {{ pagerData | safe }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="panel panel-white">
+            <div class="panel-heading">
+                <h5 class="panel-title"> 学生报告列表<a class="heading-elements-toggle"><i class="icon-more"></i></a></h5>
+                <div class="heading-elements">
+                    <ul class="pager pager-sm">
+                        <li><a href="/mod/experiment/index/studentreports"><i class=" icon-arrow-left7"></i> 返回列表页</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered tree-table treetable" id="category">
+                    <thead>
+                    <tr>
+                        <th> 标题</th>
+                        <th> 姓名</th>
+                        <th> 报告时间</th>
+                        <th> 评价状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for val in list %}
+                        <tr>
+                            <td>{{ val.title }}</td>
+                            <td>{{ val.uid | get_realname }}</td>
+                            <td>{{ val.date | moment('YYYY-MM-DD HH:mm') }}</td>
+                            <td>{{ val.evaluation | evaluation_format | safe }}</td>
+                            <td>
+                                {#{% if val.evaluation == 1 %}#}
+                                {#<a href="/mod/experiment/index/evaluates/?id={{ val.id }}"#}
+                                {#class="btn btn-default btn-sm">#}
+                                {#查看#}
+                                {#</a>#}
+                                {#{% else %}#}
+                                <a href="/mod/experiment/index/evaluates/?id={{ val.id }}" class="btn btn-sm">
+                                    {% if val.evaluation == 1 %}
+                                        查看
+                                    {% else %}
+                                        评价
+                                    {% endif %}
+                                </a>
+                                {#{% endif %}#}
+
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">
+                                <div class="alert alert-warning alert-block">
+                                    <button data-dismiss="alert" class="close" type="button">×
+                                    </button>
+                                    <p>
+                                        还没有实验报告。
+                                    </p>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if pagerData %}
+                <div class="panel-footer">
+                    <div class="col-sm-12 text-right text-center-xs">
+                        {{ pagerData | safe }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}
+

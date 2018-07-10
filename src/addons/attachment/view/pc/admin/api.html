@@ -1,0 +1,164 @@
+{% extends "view/admin/ext/admin.html" %}
+{% block pageHeader %}
+    <div class="page-header">
+        <!-- Header content -->
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4>
+                    <i class="icon-cabinet position-left"></i>
+                    <span class="text-semibold">系统管理</span> - {{ controller.meta_title }}
+                </h4>
+
+                <ul class="breadcrumb position-right">
+                    <li>
+                        <a href="index.html">
+                            首页
+                        </a>
+                    </li>
+                    <li><a href="/admin/database/index">系统管理</a></li>
+                    <li class="active">{{ controller.meta_title }}</li>
+
+                </ul>
+                <a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
+
+            <div class="heading-elements">
+                <a href="/{{ ctx.controller }}/addapi" class="btn btn-sm btn-primary">
+                    添加接口
+                </a>
+                <div class="btn-group">
+
+                    {% for t in type %}
+                        <a href="/{{ ctx.controller }}/index/?typeid={{ t.typeid }}"
+                           class="btn btn-sm btn-default {% if typeid == t.typeid %}active{% endif %}">
+                            {{ t.name }}
+                        </a>
+                    {% endfor %}
+                </div>
+                {#
+                <a href="/{{ ctx.controller }}/upload" class="btn btn-labeled btn-labeled-right bg-primary heading-btn"
+                   data-toggle="modal" data-target="#modal_remote">图片上传
+                    <b><i class="icon-upload"></i></b></a>#}
+            </div>
+        </div>
+        <!-- /header content -->
+
+
+        <!-- Toolbar -->
+        <div class="navbar navbar-default navbar-component navbar-xs">
+            <ul class="nav navbar-nav visible-xs-block">
+                <li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter"><i
+                                class="icon-menu7"></i></a></li>
+            </ul>
+
+            <div class="navbar-collapse collapse" id="navbar-filter">
+                <ul class="nav navbar-nav">
+                    <li class="{{ 'active' if ctx.action == 'index' }}"><a href="/{{ ctx.controller }}/index">
+                            <i class="icon-images3 position-left"></i>图片管理</a></li>
+                    <li class="{{ 'active' if ctx.action == 'file' }}"><a href="/{{ ctx.controller }}/file">
+                            <i class=" icon-file-zip position-left"></i>文件管理</a></li>
+                    <li class="{{ 'active' if ctx.action == 'api' }}"><a href="/{{ ctx.controller }}/api">
+                            <i class=" icon-puzzle4 position-left"></i>接口管理</a></li>
+                </ul>
+            </div>
+            <!-- /toolbar -->
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extadmin %}
+    <div class="panel panel-default">
+        <div class="panel-toolbar panel-toolbar-inbox panel-body" style="padding-left: 0;">
+            <div class="navbar navbar-default">
+                <ul class="nav navbar-nav visible-xs-block no-border">
+                    <li>
+                        <a class="text-center collapsed" data-toggle="collapse"
+                           data-target="#inbox-toolbar-toggle-multiple">
+                            <i class="icon-circle-down2"></i>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="navbar-collapse collapse" id="inbox-toolbar-toggle-multiple">
+
+                    <div class="btn-group navbar-btn">
+                        <a href="/{{ ctx.controller }}/sort" class="btn btn-default ajax-post" target-form="sort">
+                            <i class="icon-sort-numberic-desc position-left"></i>排序</a>
+                        <a href="/{{ ctx.controller }}/setstatus/?model=ext_attachment&status=1"
+                           class="btn btn-default ajax-post" target-form="ids">
+                            <i class="icon-check position-left"></i>启用</a>
+                        <a href="/{{ ctx.controller }}/setstatus/?model=ext_attachment&status=0"
+                           class="btn btn-default ajax-post" target-form="ids">
+                            <i class="icon-blocked position-left"></i>停用</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!--列表，可以根据自己的实际业务，些内容-->
+        <div class="table-responsive">
+            <table class="table table-striped b-t b-light">
+                <thead>
+                <tr>
+                    <th style="width:20px;">
+                        <input type="checkbox">
+                    </th>
+                    <th style="width:80px;">排序</th>
+                    <th style="">接口标示</th>
+                    <th class="">表单name值</th>
+                    <th class="">描述</th>
+                    <th class="">类型</th>
+                    <th class="">状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in list %}
+                    <tr>
+                        <td>
+                            <input class="ids" type="checkbox" name="ids"
+                                   value="{{ item.id }}">
+                        </td>
+                        <td><input class="form-control form-control-text sort" value="{{ item.sort }}" name="sort"
+                                   data-id="{{ item.id }}"/></td>
+                        <td>{{ item.dis }}</td>
+                        <td>{{ item.name if item.name else 'file' }}</td>
+                        <td>{{ item.description }}</td>
+                        <td>{% if item.type ==0 %}图片{% else %}文件{% endif %}</td>
+                        <td>{% if item.status==1 %}启用{% else %}禁用{% endif %}</td>
+                        <td>
+
+                            <a href="/{{ ctx.controller }}/editapi/?id={{ item.id }}" class="">修改</a>
+                            <a href="/{{ ctx.controller }}/del/?ids={{ item.id }}"
+                               class="confirm ajax-get ">删除</a></td>
+
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8">
+                            <div class="alert alert-warning alert-block">
+                                <button data-dismiss="alert" class="close" type="button">×</button>
+                                <p>这是后台插件模板的一个例子！</p>
+                            </div>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        <!--列表，可以根据自己的实际业务，些内容-->
+        <!--分页底部导航-->
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-12 text-right text-center-xs">
+                    {{ pagerData | safe }}
+                </div>
+            </div>
+        </footer>
+        <!--分页底部导航-->
+    </div>
+{% endblock %}

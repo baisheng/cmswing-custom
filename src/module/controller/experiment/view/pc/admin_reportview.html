@@ -1,0 +1,157 @@
+{% extends "view/admin/inc/experiment_base.html" %}
+{% block content %}
+    <div class="panel panel-white">
+        <div class="panel-heading">
+            <h6 class="panel-title text-semibold">
+                {{ data.title }}
+                <a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+            <div class="heading-elements">
+                <ul class="pager pager-sm">
+                    {#http://zy.caixie.la/mod/experiment/admin/report#}
+                    <li><a href="/module/experiment/admin/report"><i class=" icon-arrow-left7"></i> 返回列表页</a></li>
+                </ul>
+            </div>
+        </div>
+        <ul class="nav nav-lg nav-tabs nav-tabs-bottom nav-tabs-toolbar no-margin">
+            <li class="active"><a href="#report-overview" data-toggle="tab" aria-expanded="true"><i
+                            class="icon-file-pdf position-left"></i> 报告内容</a></li>
+            <!--
+            <li class=""><a href="#report-evaluation" data-toggle="tab" aria-expanded="false"><i
+                            class="icon-comments position-left"></i> 评价</a></li>
+                            -->
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="report-overview">
+                <div class="panel-body">
+                    <div class="content-group-lg">
+                        <h3 class="text-semibold mb-5">
+                            <a href="#" class="text-default">
+                                {{ data.title }}
+                            </a>
+                        </h3>
+
+                        <ul class="list-inline list-inline-separate text-muted content-group">
+                            <li>作者: <a href="#" class="text-muted">{{ data.uid | get_realname }}</a></li>
+                            <li>{{ data.modified | moment('YYYY-MM-DD HH:mm') }}</li>
+                        </ul>
+
+                        <div class="content-group">
+                            {{ data.content | safe }}
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane fade" id="report-evaluation">
+                <div class="">
+                    <div class="panel-heading">
+                        <h6 class="panel-title text-semiold">
+                            评价列表
+                            <a class="heading-elements-toggle">
+                                <i class="icon-more"></i>
+                            </a>
+                        </h6>
+                        <div class="heading-elements">
+                            <ul class="list-inline list-inline-separate heading-text text-muted">
+                                <li>${ list.length } 评价</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <ul class="media-list stack-media-on-mobile" v-if="list.length > 0">
+                            <li class="media" v-for="item in list" :key="item.id">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img :src="'/u/avatar/' + item.uid" alt=""
+                                             class="img-circle img-sm">
+                                    </a>
+                                </div>
+
+                                <div class="media-body">
+                                    <div class="media-heading">
+                                        <a href="/profile/index" class="text-semibold">
+                                            我
+                                            {#${item.real_name}#}
+                                        </a>
+                                        <span class="media-annotation dotted">
+                                        </span>
+                                        ${voteText(item.vote)}
+                                    </div>
+
+                                    <p>
+                                        ${item.content}
+                                        {#{{ data.content | safe }}#}
+                                    </p>
+
+                                    <ul class="list-inline list-inline-separate text-size-small">
+                                    </ul>
+                                </div>
+                            </li>
+
+                        </ul>
+                        <div class="alert alert-info no-border" v-else>
+                            <button type="button" class="close" data-dismiss="alert"><span>×</span><span
+                                        class="sr-only">Close</span></button>
+                            <span class="text-semibold">还没有评价</span>
+                        </div>
+                    </div>
+
+                    <hr class="no-margin">
+
+                    <div class="panel-body">
+                        <h6 class="no-margin-top content-group">添加评价</h6>
+                        <div class="content-group">
+                            <div class="form-group">
+                                <label class="display-block text-semibold">报告评级</label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radio-unstyled-inline-left" checked="checked"
+                                           value="4"
+                                           v-model="evaluate.vote">
+                                    优秀
+                                </label>
+
+                                <label class="radio-inline">
+                                    <input type="radio" name="radio-unstyled-inline-left" value="3"
+                                           v-model="evaluate.vote">
+                                    良好
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radio-unstyled-inline-left" value="2"
+                                           v-model="evaluate.vote">
+                                    中等
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="radio-unstyled-inline-left" value="1"
+                                           v-model="evaluate.vote">
+                                    一般
+                                </label>
+                            </div>
+                        </div>
+                        <div class="content-group">
+                            <label class="display-block text-semibold">评价内容</label>
+                            <textarea rows="5" cols="5" class="form-control" placeholder="评价内容"
+                                      v-model="evaluate.content"></textarea>
+                            {#<div class="summernote-height"></div>#}
+                        </div>
+
+                        <div class="text-right">
+                            <button type="button" class="btn bg-blue"
+                                    @click="evaluation"
+                                    :disabled="isDisabled"><i class="icon-plus22"></i>
+                                添加评价
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    {#<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/summernote.min.js"></script>#}
+    {#<script type="text/javascript" src="/static/assets/js/pages/editor_summernote.js"></script>#}
+{% endblock %}

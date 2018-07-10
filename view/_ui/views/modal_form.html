@@ -1,0 +1,32 @@
+{% extends "./form.html" %}
+{% import "../../_ui/components/fields.html" as fields -%}
+
+{% block style %}{% endblock %}
+{% block content %}
+{#<div class="modal-dialog modal-{% block size %}lg{% endblock %}">#}
+
+    {#<div class="modal-content">#}
+
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h6 class="modal-title text-semibold">{{ controller.meta_title }}</h6>
+            <span class="modal-subtitle display-block">{% block subtitle %}{% endblock %}</span>
+        </div>
+
+        <form class="form-validate" id="_form">
+
+            <div class="modal-body">
+                {% block _content %}{% endblock %}
+            </div>
+
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+                <button class="btn btn-primary" type="submit">确定</button>
+
+            </div>
+        </form>
+
+    {#</div>#}
+{#</div>#}
+{% endblock %}
+

@@ -1,0 +1,65 @@
+{% import './buttons.html' as buttons with context %}
+
+{% macro menuItem(item, options) -%}
+    <li>
+        <a href="{{ item.url }}"
+                {% if options.modal %}
+                    data-toggle="modal"
+                    data-target="#modal_remote"
+                {% endif %} >
+
+            <i class="{{ item.icon }} pull-right"></i>
+            {{ item.label }}
+        </a>
+    </li>
+
+    {% if item == '_' %}
+        <li class="divider"></li>
+    {% endif %}
+
+{%- endmacro %}
+
+{% macro a(menu, options) %}
+    <a href="{{ options.url }}"
+       class="dropdown-toggle" data-toggle="dropdown">
+        <i class="{{ options.icon }}"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-{{ options.position }}">
+
+        {% for item in menu.items %}
+            {{ menuItem(item, options) }}
+        {%- endfor -%}
+    </ul>
+{% endmacro %}
+
+{% macro base(menu, type, options) -%}
+    {%- if options.direction -%}
+        {%- set direction = options.direction -%}
+    {%- else -%}
+        {%- set direction = 'up' -%}
+    {%- endif -%}
+
+    <div class="apos-dropdown apos-dropdown--{{ type }} apos-dropdown--{{ direction }}{% if options.class %} apos-dropdown--{{ options.class }}{% endif %}"
+         data-apos-dropdown={{ direction }} data-apos-actionable>
+        {%- if type == 'button' -%}
+            {%- if options.buttonType -%}
+                {{ buttons[options.buttonType](menu.label, apos.utils.merge({ action: 'dropdown-button-label' }, options) ) }}
+            {%- else -%}
+                {{ buttons.normal(menu.label, { action: 'dropdown-button-label' }) }}
+            {%- endif -%}
+            {%- elif type == 'admin' -%}
+            <div class="apos-admin-bar-item-inner">
+                {{ menu.label }}
+            </div>
+        {%- endif -%}
+        <ul class="apos-dropdown-items" data-apos-dropdown-items>
+            {%- if options.listMacro -%}
+                {{ options.listMacro(menu.items) }}
+            {%- else -%}
+                {% for item in menu.items %}
+                    {{ menuItem(item, options) }}
+                {%- endfor -%}
+            {%- endif -%}
+        </ul>
+    </div>
+{%- endmacro %}

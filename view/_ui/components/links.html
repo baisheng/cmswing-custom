@@ -1,0 +1,52 @@
+{% macro base(label, options, classes) -%}
+    <a {{ ('href=' + options.url) if options.url }} class="{{ classes }}"
+                                                    data-{{ options.action }}>
+        {{ label }}
+        {% if options.small %}
+            <small class="display-block">{{ options.small }}</small>
+        {% endif %}
+    </a>
+
+{%- endmacro -%}
+
+{% macro white(label, options) -%}
+    {{ base(label, options, 'text-white') }}
+{%- endmacro -%}
+
+
+{% macro default(label, options, classes) -%}
+
+    <a {{ ('href=' + options.url) if options.url }}
+    {{ ('data-' + options.action) if option.action }} {% if options.value %}='{{ options.value }}'{% endif %}
+    {{ ('data-target') if option.target }} {% if options.target %}='{{ options.target }}'{% endif %}
+    data-popup="tooltip-custom" title="{{ options.title }}"
+    class="{{ classes }}" >
+
+    {% if options.icon %}
+        <i class="{{ options.icon }}"></i>
+    {% endif %}
+
+    {% if label %}
+        {{ label }}
+    {% endif %}
+
+    </a>
+
+{%- endmacro -%}
+
+
+
+
+
+
+{% macro span(label, options) -%}
+    <a {{ ('href=' + options.url) if options.url }} class="{{ classes }}"
+                                                    data-{{ options.action }}>
+        <span>{{ label }}</span>
+    </a>
+{%- endmacro -%}
+
+{% macro danger(label, options) -%}
+    {{ base(label, options, 'apos-link--danger') }}
+{%- endmacro -%}
+

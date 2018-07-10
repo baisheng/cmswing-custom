@@ -1,0 +1,30 @@
+{% extends "../_template/outerLayoutAdmin.html" %}
+
+{% block mainNavbar %}
+    {% include "./main_navbar.html" %}
+{% endblock %}
+
+{% block beforeMain %}
+    {% block sidebar %}
+        {% include "./sidebar.html" %}
+    {% endblock %}
+
+    {% block sidebar2 %} {% endblock %}
+{% endblock %}
+
+{% block afterMain %} {% endblock %}
+
+{% block main %}
+    <div class="content-wrapper">
+        {% block pageHeader %} {% endblock %}
+        <div class="content">
+            {% block content %} {% endblock %}
+        </div>
+
+        <!-- Footer -->
+        {% block footer %}
+            {% include "./footer.html" %}
+        {% endblock %}
+        <!-- /footer -->
+    </div>
+{% endblock %}

@@ -1,0 +1,69 @@
+<!-- register form 短信注册-->
+<h1 class="logo_title"><img src="/static/images/shoudushifan/images/logo.png" alt="">虚拟仿真系统</h1>
+<form class="form_box registerpost" action="/addon/dayu/index/smsreg" method="post">
+    {#<ul class="tab_title">#}
+        {#<li class="active">我是老师</li>#}
+        {#<li>我是学生</li>#}
+    {#</ul>#}
+    <p class="normal_title">用户注册</p>
+    <div id='teacher_role' class="active">
+        <input type="text" placeholder="请输入手机号" class="input_style" name="mobile">
+        <input type="password" placeholder="密码" class="input_style" name="password">
+        <div class="input_style code_step"><input type="number" placeholder="验证码" name="verifycode"/>
+            <button class="get_code" id="verifycodesend" data-type="1">获取短信验证码</button>
+        </div>
+
+        <span class="hou" style="display: none"><m id="wait" class="">60</m>秒后重新获取激活码</span>
+        <button type="submit" class="submit_btn ajax-post" target-form="registerpost"><i class="fa fa-check"></i> 立即注册</button>
+    </div>
+    {#<div id="student_role">#}
+    {#<input type="tel" placeholder="输入手机号" class="input_style">#}
+    {#<div class="input_style code_step"><input type="number" /><button class="get_code">获取验证码</button></div>#}
+    {#<button type="submit" class="submit_btn">注册</button>#}
+    {#</div>#}
+</form>
+<script>
+  $("#verifycodesend").click(function () {
+    var that = this;
+    var mobile = $("input[name='mobile']").val();
+    var type = $(this).attr("data-type");
+
+    // var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+    var myreg = /^(((1[0-9][0-9]{1}))+\d{8})$/
+
+    if (!myreg.test(mobile)) {
+      alert('请输入有效的手机号码！')
+      return false;
+    }
+    $(that).addClass('disabled').attr('autocomplete', 'off').prop('disabled', true);
+    $.ajax({
+      type: "post",
+      url: "/addon/dayu/index/verifycodesend",
+      data: {mobile: mobile, type: 1, check: 1},
+      success: function (data) {
+        alert(JSON.stringify(data))
+        if (data.err_code == 0) {
+          $(".qian").hide();
+          $(".hou").show();
+          var wait = document.getElementById('wait')
+          var interval = setInterval(function () {
+            var time = --wait.innerHTML;
+            if (time <= 0) {
+              $(".qian").show();
+              $(".hou").hide();
+              $(that).removeClass('disabled').prop('disabled', false);
+              $("#wait").text('60');
+              clearInterval(interval);
+            }
+          }, 1000);
+        } else {
+          if (1000 == data.errno) {
+            $(that).removeClass('disabled').prop('disabled', false);
+            alert(data.errmsg)
+            // _toastr(data.errmsg,"top-right","error",false);
+          }
+        }
+      }
+    })
+  })
+</script>

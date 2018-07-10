@@ -1,0 +1,84 @@
+{% macro base(label, options, classes) -%}
+
+    {#
+        <a href="{{ cate_list[i].url }}" class="btn btn-default btn-xs">
+            <i class="icon-eye8 position-left"></i> 进入专栏</a>
+    #}
+    <a {{ ('href=' + options.url) if options.url }}
+    {{ ('data-' + options.action) if option.action }} {% if options.value %}='{{ options.value }}'{% endif %}
+    {{ ('data-target') if option.target }} {% if options.target %}='{{ options.target }}'{% endif %}
+    data-popup="tooltip-custom" title="{{ options.title }}"
+    class="btn {{ classes }}" >
+
+    {% if options.icon %}
+        <i class="{{ options.icon }}"></i>
+    {% endif %}
+
+    {% if label %}
+        {{ label }}
+    {% endif %}
+
+    </a>
+
+{%- endmacro -%}
+
+{% macro xs(label, options) %}
+    {{ base(label, options, 'btn-default btn-xs') }}
+{% endmacro %}
+
+{% macro modal(label=false, options, classes) -%}
+
+    <a {{ ('href=' + options.url) if options.url }}
+        data-toggle="modal" data-target="#modal_remote"
+    class="btn btn-default btn-xs" >
+
+    {% if options.icon %}
+        <i class="{{ options.icon }}"></i>
+    {% endif %}
+
+    {% if label %}
+        {{ label }}
+    {% endif %}
+
+    </a>
+{% endmacro %}
+
+{% macro normal(label, options) -%}
+    {{ base(label, options, '') }}
+{%- endmacro -%}
+
+{% macro disabled(label, options) -%}
+    {{ base(label, options, 'apos-button--disabled') }}
+{%- endmacro -%}
+
+{% macro inContext(label, options) -%}
+    {{ base(label, options, 'apos-button--in-context') }}
+{%- endmacro %}
+
+{% macro more(label, options) -%}
+    {{ base(label, options, 'apos-button--more') }}
+{%- endmacro %}
+
+{% macro action(label, options) -%}
+    {{ base(label, options, 'apos-button--action') }}
+{%- endmacro %}
+
+{% macro global(label, options) -%}
+    {{ base(label, options, 'apos-button--global') }}
+{%- endmacro %}
+
+{% macro major(label, options) -%}
+    {{ base(label, options, 'apos-button--major') }}
+{%- endmacro %}
+
+{% macro minor(label, options) -%}
+    {{ base(label, options, 'apos-button--minor') }}
+{%- endmacro %}
+
+{% macro danger(label, options) -%}
+    {{ base(label, options, 'apos-button--danger') }}
+{%- endmacro %}
+
+{% macro inGroup(label, options) -%}
+    {{ base(label, options, 'apos-button--in-group') }}
+{%- endmacro %}

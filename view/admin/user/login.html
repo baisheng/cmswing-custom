@@ -1,0 +1,250 @@
+{% extends "../layouts/layout.html" %}
+
+{% block navbar %}
+    <!-- Main navbar -->
+    <div class="navbar navbar-expand-md navbar-dark">
+        <div class="navbar-brand">
+            <a href="index.html" class="d-inline-block">
+                <img src="{{ GLOBAL_PATH }}/global_assets/images/logo_light.png" alt="">
+            </a>
+        </div>
+
+        <div class="d-md-none">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile">
+                <i class="icon-tree5"></i>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-mobile">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown">
+                        <i class="icon-git-compare"></i>
+                        <span class="d-md-none ml-2">版本更新</span>
+                        <span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">9</span>
+                    </a>
+
+                    <div class="dropdown-menu dropdown-content wmin-md-350">
+                        <div class="dropdown-content-header">
+                            <span class="font-weight-semibold">更新日志</span>
+                            <a href="#" class="text-default"><i class="icon-sync"></i></a>
+                        </div>
+
+                        <div class="dropdown-content-body dropdown-scrollable">
+                            <ul class="media-list">
+                                <li class="media">
+                                    <div class="mr-3">
+                                        <a href="#"
+                                           class="btn bg-transparent border-primary text-primary rounded-round border-2 btn-icon"><i
+                                                    class="icon-git-pull-request"></i></a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        Drop the IE <a href="#">specific hacks</a> for temporal inputs
+                                        <div class="text-muted font-size-sm">4 minutes ago</div>
+                                    </div>
+                                </li>
+
+                                <li class="media">
+                                    <div class="mr-3">
+                                        <a href="#"
+                                           class="btn bg-transparent border-warning text-warning rounded-round border-2 btn-icon"><i
+                                                    class="icon-git-commit"></i></a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        Add full font overrides for popovers and tooltips
+                                        <div class="text-muted font-size-sm">36 minutes ago</div>
+                                    </div>
+                                </li>
+
+                                <li class="media">
+                                    <div class="mr-3">
+                                        <a href="#"
+                                           class="btn bg-transparent border-info text-info rounded-round border-2 btn-icon"><i
+                                                    class="icon-git-branch"></i></a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        <a href="#">Chris Arney</a> created a new <span class="font-weight-semibold">Design</span>
+                                        branch
+                                        <div class="text-muted font-size-sm">2 hours ago</div>
+                                    </div>
+                                </li>
+
+                                <li class="media">
+                                    <div class="mr-3">
+                                        <a href="#"
+                                           class="btn bg-transparent border-success text-success rounded-round border-2 btn-icon"><i
+                                                    class="icon-git-merge"></i></a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        <a href="#">Eugene Kopyov</a> merged <span
+                                                class="font-weight-semibold">Master</span> and <span
+                                                class="font-weight-semibold">Dev</span> branches
+                                        <div class="text-muted font-size-sm">Dec 18, 18:36</div>
+                                    </div>
+                                </li>
+
+                                <li class="media">
+                                    <div class="mr-3">
+                                        <a href="#"
+                                           class="btn bg-transparent border-primary text-primary rounded-round border-2 btn-icon"><i
+                                                    class="icon-git-pull-request"></i></a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        Have Carousel ignore keyboard events
+                                        <div class="text-muted font-size-sm">Dec 12, 05:46</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="dropdown-content-footer bg-light">
+                            <a href="#" class="text-grey mr-auto">全部更新</a>
+                            <div>
+                                {#<a href="#" class="text-grey" data-popup="tooltip" title="Mark all as read"><i#}
+                                {#class="icon-radio-unchecked"></i></a>#}
+                                <a href="#" class="text-grey ml-2" data-popup="tooltip" title="问题跟踪"><i
+                                            class="icon-bug2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <span class="navbar-text ml-md-3 mr-md-auto">
+				{#<span class="badge bg-success">Online</span>#}
+			</span>
+
+            <ul class="navbar-nav">
+
+
+                <li class="nav-item dropdown dropdown-user">
+                    <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                        <img src="{{ GLOBAL_PATH }}/global_assets/images/placeholders/placeholder.jpg"
+                             class="rounded-circle" alt="">
+                        <span>Victoria</span>
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="#" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
+                        <a href="#" class="dropdown-item"><i class="icon-coins"></i> My balance</a>
+                        <a href="#" class="dropdown-item"><i class="icon-comment-discussion"></i> Messages <span
+                                    class="badge badge-pill bg-blue ml-auto">58</span></a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>
+                        <a href="#" class="dropdown-item"><i class="icon-switch2"></i> Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /main navbar -->
+
+{% endblock %}
+
+{% block content %}
+    <!-- Content area -->
+    <div class="content d-flex justify-content-center align-items-center">
+        {% if HOOK@signinView%}
+            {{ HOOK@signinView|safe}}
+        {% else %}
+            <!-- Login form -->
+            <form class="login-form" action="#" method="post">
+                <div class="card mb-0 wmin-400">
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <i class="icon-reading icon-2x text-slate-300 border-slate-300 border-3 rounded-round p-3 mb-3 mt-1"></i>
+                            <h5 class="mb-0">系统登录</h5>
+                            <span class="d-block text-muted">在下方输入账户信息</span>
+                        </div>
+
+                        <div class="form-group form-group-feedback form-group-feedback-left">
+                            <input type="text" class="form-control" placeholder="用户名" id="user_name" name="user_name">
+                            <div class="form-control-feedback">
+                                <i class="icon-user text-muted"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-group-feedback form-group-feedback-left">
+                            <input type="password" class="form-control" placeholder="密码" id="password" name="password">
+                            <div class="form-control-feedback">
+                                <i class="icon-lock2 text-muted"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">
+                                登录
+                                <i class="icon-circle-right2 ml-2"></i>
+                            </button>
+                        </div>
+
+                        <div class="text-center">
+                            <a href="login_password_recover.html">忘记密码?</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- /login form -->
+        {% endif %}
+    </div>
+    <!-- /content area -->
+{% endblock %}
+
+{% block footer %}
+    {% include "../inc/footer.html" %}
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+      $('#validate-submit').click(function () {
+        var self = this;
+        $(self).addClass('disabled').attr('autocomplete', 'off').prop('disabled', true);
+        $.ajax({
+          url: '/admin/login',
+          type: 'POST',
+          dataType: 'json',
+          data: {
+            username: $('#username').val(),
+            password: $('#password').val(),
+            captcha: $('#captcha').val(),
+          },
+          success: function (data) {
+            if (data.errno === 0) {
+              if (data.data.url) {
+                toastr.success(data.data.name + ' 页面即将自动跳转~');
+              } else {
+                toastr.success(data.data.name);
+              }
+              setTimeout(function () {
+                $(self).removeClass('disabled').prop('disabled', false);
+                if (data.data.url) {
+                  location.href = data.data.url;
+                } else if ($(this).hasClass('no-refresh')) {
+                  toastr.clear()
+                } else {
+                  location.reload();
+                }
+              }, 1500);
+            } else {
+              toastr.error(data.errmsg);
+
+              //console.log(data);
+              setTimeout(function () {
+                $(self).removeClass('disabled').prop('disabled', false);
+                if (data.data) {
+                  location.href = data.data;
+                } else {
+                  toastr.clear()
+                }
+              }, 1500);
+            }
+          }
+        });
+        return false;
+      })
+    </script>
+{% endblock %}

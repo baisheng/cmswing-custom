@@ -1,0 +1,75 @@
+{% set layout_theme = controller.THEME_VIEW_PATH + '/inc/base_sidebar.html' %}
+{% extends layout_theme %}
+
+{% block content %}
+    <div class="panel panel-white">
+        {#<div class="panel-heading">#}
+        {#<h5 class="panel-title"> 学生数据列表<a class="heading-elements-toggle"><i class="icon-more"></i></a></h5>#}
+        {#</div>#}
+        <div class="panel-heading">
+            <h6 class="panel-title text-semibold">
+                实验数据
+                <a class="heading-elements-toggle"><i class="icon-more"></i></a><a
+                        class="heading-elements-toggle"><i
+                            class="icon-more"></i></a></h6>
+            <div class="heading-elements">
+                <ul class="pager pager-sm">
+                    {% if controller.user.roleid == 2 %}
+                        <li><a href="/module/experiment/index/students"><i class=" icon-arrow-left7"></i> 返回学生数据列表</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered tree-table treetable" id="category">
+                <thead>
+                <tr>
+                    <th> 实验编号</th>
+                    <th> 实验标识</th>
+                    <th> 特征1</th>
+                    <th> 特征2</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for val in list %}
+                    <tr>
+                        <td>{{ val.num }}</td>
+                        <td>{{ val.experiment }}</td>
+                        <td>{{ val.c1 }}</td>
+                        <td>{{ val.c2 }}</td>
+                        <td>
+                            <a href="/module/experiment/index/dataview/?id={{ val.id }}" class=""
+                               data-toggle="modal"
+                               data-target="#modal_remote">
+                                详情
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">
+                            <div class="alert alert-warning alert-block">
+                                <button data-dismiss="alert" class="close" type="button">×
+                                </button>
+                                <p>
+                                    没有实验数据上传。
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if pagerData %}
+            <div class="panel-footer">
+                <div class="col-sm-12 text-right text-center-xs">
+                    {{ pagerData | safe }}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+

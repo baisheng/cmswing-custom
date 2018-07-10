@@ -1,0 +1,132 @@
+{% import 'view/_ui/components/fields.html' as fields -%}
+
+{% extends 'view/_ui/views/modals.html' %}
+
+{% block title %} {{ controller.meta_title }} {% endblock %}
+
+
+{% block body %}
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="3" class="active">实验数据</th>
+            </tr>
+            <tr>
+                <td style="width: 20%;">
+                    编号
+                </td>
+                <td>
+                    {{ data.num }}
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 20%">
+                    实验标识
+                </td>
+                <td>
+                    {{ data.experiment }}
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 20%;">
+                    性别
+                </td>
+                <td>
+                    {{ data.gender }}
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 20%;">
+                    年龄
+                </td>
+                <td>
+                    {{ data.age }}
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 20%;">
+                    特征1
+                </td>
+                <td>
+                    {{ data.c1 }}
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 20%;">
+                    特征2
+                </td>
+                <td>
+                    {{ data.c2 }}
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 20%;">
+                    实验条件1
+                </td>
+                <td>
+                    {{ data.r1 }}
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 20%;">
+                    实验条件2
+                </td>
+                <td>
+                    {{ data.r2 }}
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 20%;">
+                    实验条件3
+                </td>
+                <td>
+                    {{ data.r3 }}
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 20%;">
+                    反映时1
+                </td>
+                <td>
+                    {{ data.t1 }}
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 20%;">
+                    反映时2
+                </td>
+                <td>
+                    {{ data.t2 }}
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 20%;">
+                    反映行为1
+                </td>
+                <td>
+                    {{ data.a1 }}
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 20%;">
+                    反映行为2
+                </td>
+                <td>
+                    {{ data.a2 }}
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 20%;">
+                    反映行为3
+                </td>
+                <td>
+                    {{ data.a3 }}
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+{% block footer %}{% endblock %}

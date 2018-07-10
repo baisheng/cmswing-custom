@@ -1,0 +1,73 @@
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+{% block script %}
+    <script type="text/javascript" src="/static/js/pages/form_validation.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            // Init Select2 when loaded
+            $('.select').select2({
+                minimumResultsForSearch: Infinity
+            });
+            // Default initialization
+            $(".styled, .multiselect-container input").uniform({
+                radioClass: 'choice'
+            });
+
+            // Primary
+            $(".control-primary").uniform({
+                radioClass: 'choice',
+                wrapperClass: 'border-slate text-teal'
+            });
+
+            // $(".select-icons").select2({
+            //     templateResult: iconFormat,
+            //     minimumResultsForSearch: Infinity,
+            //     templateSelection: iconFormat,
+            //     escapeMarkup: function (m) {
+            //         return m;
+            //     }
+            // });
+            // Floating labels
+            // ------------------------------
+
+            // Variables
+            var onClass = "on";
+            var showClass = "is-visible";
+
+
+            // Setup
+            $("input:not(.token-input):not(.bootstrap-tagsinput > input), textarea, select").on("checkval change", function () {
+
+                // Define label
+                var label = $(this).parents('.form-group-material').children(".control-label");
+
+                // Toggle label
+                if (this.value !== "") {
+                    label.addClass(showClass);
+                }
+                else {
+                    label.removeClass(showClass).addClass('animate');
+                }
+
+            }).on("keyup", function () {
+                $(this).trigger("checkval");
+            }).trigger("checkval").trigger('change');
+
+
+            // Remove animation on page load
+            $(window).on('load', function () {
+                $(".form-group-material").children('.control-label.is-visible').removeClass('animate');
+            });
+
+
+        })
+
+    </script>
+
+
+{% endblock %}

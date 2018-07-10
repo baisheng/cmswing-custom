@@ -1,0 +1,69 @@
+<form action="#" method="post" id="signinView" data-validate="parsley">
+    <div class="panel panel-body login-form width-400">
+        <div class="text-center">
+            <div class="icon-object border-slate-300 text-slate-300">
+                <i class="icon-people"></i></div>
+            <h5 class="content-group">虚拟仿真系统
+                <small class="display-block">在下方输入账户信息</small>
+            </h5>
+        </div>
+
+        <div class="form-group has-feedback has-feedback-left">
+            <input id="username" name="username" type="text" class="form-control input-lg"
+                   placeholder="用户名" data-required="true">
+            <div class="form-control-feedback">
+                <i class="icon-user text-muted"></i>
+            </div>
+        </div>
+
+        <div class="form-group has-feedback has-feedback-left">
+            <input id="password" name="password"
+                   type="password" class="form-control input-lg"
+                   placeholder="密码"
+                   data-required="true">
+            <div class="form-control-feedback">
+                <i class="icon-lock2 text-muted"></i>
+            </div>
+        </div>
+        <div class="form-group has-feedback">
+            <div class="input-group">
+                <input id="captcha" type="text" class="form-control"
+                       placeholder="验证码"
+                       name="captcha">
+                <span class="input-group-btn">
+                    <button class="btn btn-default"
+                            style="padding:0;"
+                            type="button"
+                            v-html="svgCaptcha" @click="getCaptcha">
+
+                    </button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <button id="validate-submit" type="submit"
+                    class="btn btn-primary btn-block btn-lg">登录
+                <i class="icon-arrow-right14 position-right"></i>
+            </button>
+        </div>
+    </div>
+</form>
+<script>
+  var signinApp = new Vue({
+    el: '#signinView',
+    delimiters: ['${', '}'],
+    data: {
+      svgCaptcha: ''
+    },
+    methods: {
+      getCaptcha () {
+        var that = this
+        axios.get('/addon/captcha/index/captcha')
+          .then(function (response) {
+            that.svgCaptcha = response.data.data
+          });
+      }
+    }
+  })
+  signinApp.getCaptcha()
+</script>

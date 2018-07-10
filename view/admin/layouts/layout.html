@@ -1,0 +1,92 @@
+{% extends './outer_layout_base.html' %}
+
+{% set GLOBAL_PATH = "/static" %}
+{% set ASSET_PATH = "/static" %}
+
+{% block beforeHeaderStyle %}
+    <!-- Global stylesheets -->
+    {#<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"#}
+    {#type="text/css">#}
+    <link href="{{ GLOBAL_PATH }}/global_assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="{{ ASSET_PATH }}/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ ASSET_PATH }}/assets/css/bootstrap_limitless.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ ASSET_PATH }}/assets/css/layout.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ ASSET_PATH }}/assets/css/components.css" rel="stylesheet" type="text/css">
+    <link href="{{ ASSET_PATH }}/assets/css/colors.min.css" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+{% endblock %}
+{% block headerScript %}
+    <script type="text/javascript" src="/static/global_assets/js/plugins/vue.js"></script>
+    <script>
+      new Vue({
+        delimiters: ['${', '}']
+      })
+    </script>
+    <script type="text/javascript" src="/static/global_assets/js/plugins/axios.min.js"></script>
+{% endblock %}
+
+{% block main %}
+
+    <!-- Main content -->
+    <div class="content-wrapper">
+        <!-- Content area -->
+        {% block content %}
+        {% endblock %}
+        <!-- /content area -->
+        <!-- Footer -->
+        {% block footer %}
+        {% endblock %}
+        <!-- /footer -->
+    </div>
+    <!-- /main content -->
+
+{% endblock %}
+{% block afterMain %}
+    <!-- Remote source -->
+    <div id="modal_remote" class="modal fade">
+        <div class="modal-dialog modal-large">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title"></h5>
+                </div>
+
+                <div class="modal-body"></div>
+
+                <!--<div class="modal-footer">-->
+                <!--<button type="button" class="btn btn-link" data-dismiss="modal">取消</button>-->
+                <!--<button type="button" class="btn btn-primary">保存</button>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+    <!-- /remote source -->
+{% endblock %}
+{% block beforeFooterScript %}
+    <script type="text/javascript">var plugin_path = '/static/assets/plugins/';</script>
+
+    <!-- Core JS files -->
+    <script src="{{ GLOBAL_PATH }}/global_assets/js/main/jquery.min.js"></script>
+    <script src="{{ GLOBAL_PATH }}/global_assets/js/main/bootstrap.bundle.min.js"></script>
+    <script src="{{ GLOBAL_PATH }}/global_assets/js/plugins/loaders/blockui.min.js"></script>
+    <!-- /core JS files -->
+
+    <!-- Theme JS files -->
+    {#<script src="{{ GLOBAL_PATH }}/global_assets/js/plugins/visualization/d3/d3.min.js"></script>#}
+    {#<script src="{{ GLOBAL_PATH }}/global_assets/js/plugins/visualization/d3/d3_tooltip.js"></script>#}
+    {#<script src="{{ GLOBAL_PATH }}/global_assets/js/plugins/forms/styling/switchery.min.js"></script>#}
+    {#<script src="{{ GLOBAL_PATH }}/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>#}
+    {#<script src="{{ GLOBAL_PATH }}/global_assets/js/plugins/ui/moment/moment.min.js"></script>#}
+    {#<script src="{{ GLOBAL_PATH }}/global_assets/js/plugins/pickers/daterangepicker.js"></script>#}
+
+    {% block beforeAppScript %}
+    {% endblock %}
+    <script src="{{ ASSET_PATH }}/assets/js/app.js"></script>
+
+    {% block afterAppScript %}
+        {#<script src="{{ GLOBAL_PATH }}/global_assets/js/demo_pages/dashboard.js"></script>#}
+    {% endblock %}
+{% endblock %}
+
+<!-- /theme JS files -->
+

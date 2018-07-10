@@ -1,0 +1,165 @@
+<input id="hidden_{{ name }}" type="hidden" name="{{ name }}" value="{{ val }}"/>
+<div class="col-lg-10">
+    <input type="file"
+           name="file"
+           id="upload_{{ name }}"
+           data-show-caption="true"
+           data-show-upload="true"
+           accept="application/zip">
+    <span class="help-block">
+        请上传必需包含 index.html 的 zip 压缩文件包
+    </span>
+</div>
+
+<script>
+
+  jQuery(function () {
+
+    // Modal template
+    var modalTemplate = '<div class="modal-dialog modal-lg" role="document">\n' +
+      '  <div class="modal-content">\n' +
+      '    <div class="modal-header">\n' +
+      '      <div class="kv-zoom-actions btn-group">{toggleheader}{fullscreen}{borderless}{close}</div>\n' +
+      '      <h6 class="modal-title">{heading} <small><span class="kv-zoom-title"></span></small></h6>\n' +
+      '    </div>\n' +
+      '    <div class="modal-body">\n' +
+      '      <div class="floating-buttons btn-group"></div>\n' +
+      '      <div class="kv-zoom-body file-zoom-content"></div>\n' + '{prev} {next}\n' +
+      '    </div>\n' +
+      '  </div>\n' +
+      '</div>\n';
+
+    // Buttons inside zoom modal
+    var previewZoomButtonClasses = {
+      toggleheader: 'btn btn-default btn-icon btn-xs btn-header-toggle',
+      fullscreen: 'btn btn-default btn-icon btn-xs',
+      borderless: 'btn btn-default btn-icon btn-xs',
+      close: 'btn btn-default btn-icon btn-xs'
+    };
+
+    // Icons inside zoom modal classes
+    var previewZoomButtonIcons = {
+      prev: '<i class="icon-arrow-left32"></i>',
+      next: '<i class="icon-arrow-right32"></i>',
+      toggleheader: '<i class="icon-menu-open"></i>',
+      fullscreen: '<i class="icon-screen-full"></i>',
+      borderless: '<i class="icon-alignment-unalign"></i>',
+      close: '<i class="icon-cross3"></i>'
+    };
+
+    // File actions
+    var fileActionSettings = {
+      zoomClass: 'btn btn-link btn-xs btn-icon',
+      zoomIcon: '<i class="icon-zoomin3"></i>',
+      dragClass: 'btn btn-link btn-xs btn-icon',
+      dragIcon: '<i class="icon-three-bars"></i>',
+      removeClass: 'btn btn-link btn-icon btn-xs',
+      removeIcon: '<i class="icon-trash"></i>',
+      "showDrag": false,
+      "showUpload": true,
+      "showRemove": false,
+      indicatorNew: '<i class="icon-file-plus text-slate"></i>',
+      indicatorSuccess: '<i class="icon-checkmark3 file-icon-large text-success"></i>',
+      indicatorError: '<i class="icon-cross2 text-danger"></i>',
+      indicatorLoading: '<i class="icon-spinner2 spinner text-muted"></i>'
+    };
+
+    var $ = jQuery,
+      $list_{{ name }} = $('#thelist_{{ name }}'),
+      $btn_{{ name }} = $('#ctlBtn_{{ name }}');
+    // 使用异步请求的方式
+    var file_id = $('#hidden_{{ name }}').val();
+    if (file_id != 0) {
+      $.get('/addon/attachment/adminfile/fileinfo', {id: file_id}, function (data) {
+        if (data != null) {
+          console.log(data)
+          $('#upload_{{ name }}').fileinput({
+            uploadUrl: "/addon/attachment/adminfile/upload",
+            uploadExtraData: {type: 'htmlfile'},
+            dropZoneEnabled: false,
+            previewFileType: ['image', 'html', 'text', 'video', 'audio', 'flash', 'object'],
+            showPreview: true,
+            showRemove: true,
+            browseLabel: '选择文件',
+            browseClass: 'btn bg-slate-700',
+            browseIcon: '<i class="icon-upload4 position-left"></i> ',
+            removeLabel: '删除',
+            removeClass: 'btn btn-danger',
+            removeIcon: '<i class="icon-cancel-square position-left"></i> ',
+            uploadLabel: '上传',
+            uploadClass: 'btn bg-teal-400',
+            uploadIcon: '<i class="icon-file-upload position-left"></i> ',
+            layoutTemplates: {
+              icon: '<i class="icon-file-check"></i>',
+              modal: modalTemplate
+            },
+            initialPreviewFileType: 'image', // image is the default and can be overridden in config below
+            initialPreview: [
+              // HTML DATA
+              '<div class="text-center">' +
+              '<h3></h3>' +
+              '</div>'
+            ],
+            // initialPreview: ['/Users/basil/__/workspace/_myspace/vr-cms/www/html/174/index.html'],
+            initialPreviewConfig: [
+              {
+                type: "html",
+                size: data.size,
+                caption: data.name,
+                url: data.savepath + '/index.html',
+                key: data.id
+              },
+            ],
+            purifyHtml: true, // this by default purifies HTML data for preview
+            initialCaption: "请选择要上传的文件",
+            mainClass: 'input-group',
+            initialPreviewAsData: true,
+            previewZoomButtonClasses: previewZoomButtonClasses,
+            previewZoomButtonIcons: previewZoomButtonIcons,
+            fileActionSettings: fileActionSettings
+          });
+        }
+      });
+    } else {
+      $('#upload_{{ name }}').fileinput({
+        showRemove: false,
+        uploadUrl: "/addon/attachment/adminfile/upload",
+        uploadExtraData: {type: 'htmlfile'},
+        dropZoneEnabled: false,
+        previewFileType: ['image', 'html', 'text', 'video', 'audio', 'flash', 'object'],
+        showPreview: false,
+        // showRemove: false,
+        browseLabel: '选择文件',
+        browseClass: 'btn bg-slate-700',
+        browseIcon: '<i class="icon-upload4 position-left"></i> ',
+        removeLabel: '删除',
+        removeClass: 'btn btn-danger',
+        removeIcon: '<i class="icon-cancel-square position-left"></i> ',
+        uploadLabel: '上传',
+        uploadClass: 'btn bg-teal-400',
+        uploadIcon: '<i class="icon-file-upload position-left"></i> ',
+        layoutTemplates: {
+          icon: '<i class="icon-file-check"></i>',
+          modal: modalTemplate
+        },
+        initialCaption: "请选择要上传的文件",
+        mainClass: 'input-group',
+        previewZoomButtonClasses: previewZoomButtonClasses,
+        previewZoomButtonIcons: previewZoomButtonIcons,
+        fileActionSettings: fileActionSettings
+      });
+    }
+
+  });
+
+
+  $('#upload_{{ name }}').on('fileuploaded', function (event, data, previewId, index) {
+    var form = data.form, files = data.files, extra = data.extra,
+      response = data.response, reader = data.reader;
+    console.log(response)
+    console.log('File uploaded triggered');
+    {#$('#hidden_{{ name }}').val(response.id);#}
+    // console.log(response.id)
+      $("input[name={{ name }}]").val(response.id);
+  });
+</script>

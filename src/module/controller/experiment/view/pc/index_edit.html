@@ -1,0 +1,126 @@
+{% set layout_theme = controller.THEME_VIEW_PATH + '/inc/base_sidebar.html' %}
+{% extends layout_theme %}
+
+{% block centerSidebar %}
+{% endblock %}
+
+{% block content %}
+    <!-- Single mail -->
+    <div class="panel panel-white">
+        <form class="form-validate login-form" id="_form">
+
+            <!-- Mail toolbar -->
+            <div class="panel-toolbar panel-toolbar-inbox">
+                <div class="navbar navbar-default navbar-component no-margin-bottom">
+                    <ul class="nav navbar-nav visible-xs-block no-border">
+                        <li>
+                            <a class="text-center collapsed" data-toggle="collapse"
+                               data-target="#inbox-toolbar-toggle-single">
+                                <i class="icon-circle-down2"></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="navbar-collapse collapse" id="inbox-toolbar-toggle-single">
+
+                        <div class="btn-group navbar-btn">
+                            <button type="submit" class="btn bg-primary-400">
+                                <i class="icon-checkmark3 "></i><span
+                                        class="hidden-xs position-right">发布</span></button>
+                            <a href="/mod/experiment/index/report" class="btn btn-default"><i class="icon-cross2"></i>
+                                <span
+                                        class="hidden-xs position-right">取消</span></a>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /mail toolbar -->
+
+
+            <!-- Mail details -->
+            <div class="table-responsive mail-details-write">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td class="no-padding">
+                            <input type="hidden" name="id" value="{{ data.id }}">
+                            <input type="text" name="title"
+                                   class="form-control input-lg"
+                                   placeholder="实验报告标题"
+                                   value="{{ data.title }}">
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- /mail details -->
+
+
+            <!-- Mail container -->
+            <div class="mail-container-write">
+                <textarea name="content" class="summernote">
+                    {{ data.content | safe }}
+                </textarea>
+            </div>
+            <!-- /mail container -->
+        </form>
+    </div>
+    <!-- /single mail -->
+
+{% endblock %}
+{% block beforeAppScript %}
+    <!-- Theme JS files -->
+    <script type="text/javascript"
+            src="/themes/default/assets/js/plugins/editors/summernote/summernote.min.js"></script>
+    <script type="text/javascript" src="/themes/default/assets/js/plugins/forms/styling/uniform.min.js"></script>
+{% endblock %}
+
+{% block afterAppScript %}
+    <script type="text/javascript" src="/themes/default/assets/js/plugins/notifications/sweet_alert.min.js"></script>
+    <script type="text/javascript" src="/themes/default/assets/js/pages/mail_list_write.js"></script>
+{% endblock %}
+{% block afterScript %}
+    <script type="text/javascript" src="/themes/default/assets/js/pages/components_modals.js"></script>
+    <script type="text/javascript">
+      $('#_form').submit(function (e) {
+        e.preventDefault();
+        if ($(".form-validate").valid()) {
+          $(this).addClass('disabled').attr('autocomplete', 'off').prop('disabled', true);
+          $.post("/mod/experiment/index/report",
+            $(this).serialize()).done(function (data) {
+            if (data.errno > 0) {
+              new PNotify({
+                title: '出错啦',
+                icon: 'icon-blocked',
+                text: data.errmsg,
+                addclass: 'bg-danger',
+                type: 'danger'
+              });
+            } else {
+              swal({
+                title: "成功",
+                text: "您的实验报告修改成功",
+                confirmButtonColor: "#66BB6A",
+                type: "success"
+              }, function (isConfirm) {
+                if (isConfirm) {
+                  window.location.href = '/mod/experiment/index/report'
+                }
+              })
+            }
+          }).fail(function () {
+            new PNotify({
+              title: '出错啦',
+              icon: 'icon-blocked',
+              text: '请检查内容并重新发布',
+              addclass: 'bg-danger',
+              type: 'danger'
+            });
+          });
+        }
+      })
+    </script>
+{% endblock %}

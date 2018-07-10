@@ -1,0 +1,64 @@
+{% set layout_theme = controller.THEME_VIEW_PATH + '/inc/base_sidebar.html' %}
+{% extends layout_theme %}
+{% block content %}
+    <div class="panel panel-white">
+        <div class="panel-heading">
+            <h5 class="panel-title"> 学生报告列表<a class="heading-elements-toggle"><i class="icon-more"></i></a></h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered tree-table treetable" id="category">
+                <thead>
+                <tr>
+                    <th> 学生姓名</th>
+                    <th> 学生 id</th>
+                    <th> 性别</th>
+                    <th> 年龄</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for val in list %}
+                    <tr>
+                        <td>{{ val.id | get_realname }}</td>
+                        <td>{{ val.id }}</td>
+                        <td>
+                            {% if val.sex == 1 %}
+                                男
+                            {% else %}
+                                女
+                            {% endif %}
+                        </td>
+                        <td>{{ val.birthday | age }}</td>
+                        <td>
+                            {#<a href="/module/experiment/index/dataview/?id={{ val.id }}" class=""#}
+                            <a href="/module/experiment/index/report/?id={{ val.id }}" >
+                                查看报告
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">
+                            <div class="alert alert-warning alert-block">
+                                <button data-dismiss="alert" class="close" type="button">×
+                                </button>
+                                <p>
+                                    没有实验报告。
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {#{% if pagerData %}#}
+        {#<div class="panel-footer">#}
+        {#<div class="col-sm-12 text-right text-center-xs">#}
+        {#{{ pagerData | safe }}#}
+        {#</div>#}
+        {#</div>#}
+        {#{% endif %}#}
+    </div>
+{% endblock %}
+

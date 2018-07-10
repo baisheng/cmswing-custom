@@ -1,0 +1,68 @@
+<form class="login-form" action="#" method="post" id="signinView" data-validate="parsley">
+    <div class="card mb-0 wmin-400">
+        <div class="card-body">
+            <div class="text-center mb-3">
+                <i class="icon-reading icon-2x text-slate-300 border-slate-300 border-3 rounded-round p-3 mb-3 mt-1"></i>
+                <h5 class="mb-0">系统登录</h5>
+                <span class="d-block text-muted">在下方输入账户信息</span>
+            </div>
+
+            <div class="form-group form-group-feedback form-group-feedback-left">
+                <input type="text" class="form-control" placeholder="用户名" id="username" name="username">
+                <div class="form-control-feedback">
+                    <i class="icon-user text-muted"></i>
+                </div>
+            </div>
+
+            <div class="form-group form-group-feedback form-group-feedback-left">
+                <input id="password" name="password"
+                       type="password" class="form-control input-lg"
+                       placeholder="密码"
+                       data-required="true">
+                <div class="form-control-feedback">
+                    <i class="icon-lock2 text-muted"></i>
+                </div>
+            </div>
+
+            <div class="form-group form-group-feedback">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="验证码" id="captcha">
+                    <span class="input-group-append">
+                        <button class="input-group-text p-0 btn btn-default" v-html="svgCaptcha" @click="getCaptcha" type="button"></button>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block" id="validate-submit">
+                    登录
+                    <i class="icon-circle-right2 ml-2"></i>
+                </button>
+            </div>
+
+            <div class="text-center">
+                <a href="login_password_recover.html">忘记密码?</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+  var signinApp = new Vue({
+    el: '#signinView',
+    delimiters: ['${', '}'],
+    data: {
+      svgCaptcha: ''
+    },
+    methods: {
+      getCaptcha () {
+        var that = this
+        axios.get('/addons/captcha/index/captcha')
+          .then(function (response) {
+            that.svgCaptcha = response.data.data
+          });
+      }
+    }
+  })
+  signinApp.getCaptcha()
+</script>
