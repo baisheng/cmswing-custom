@@ -1,0 +1,43 @@
+{% set GLOBAL_ASSETS = "/static/global_assets"%}
+{% set ASSETS = "/static/assets"%}
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>{{ config.setup.WEB_SITE_TITLE }}</title>
+    <meta charset="utf-8"/>
+    <meta name="keywords" content="{{ config.setup.WEB_SITE_KEYWORD }}"/>
+    <meta name="description" content="{{ config.setup.WEB_SITE_DESCRIPTION }}"/>
+    <base href="/"/>
+    {% block standardHead %}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% endblock %}
+    {% block extraHead %}{% endblock %}
+
+    {% block beforeHeaderStyle %}{% endblock %}
+
+    <!-- /global stylesheets -->
+    {% block style %} {% endblock %}
+
+    {% block headerScript %}{% endblock %}
+</head>
+
+<body class="{% block bodyClass %}{% endblock %}">
+{% block mainNavbar %}
+{% endblock %}
+{% block navbar %} {% endblock %}
+{#{% block slider %} {% endblock %}#}
+
+<!-- Page content -->
+<div class="page-content">
+    {% block beforeMain %}{% endblock %}
+    {% block main %}{% endblock %}
+    {% block afterMain %}{% endblock %}
+</div>
+<!-- /page content -->
+
+{% block beforeFooterScript %} {% endblock %}
+{% block script %} {% endblock %}
+{#{% block afterScript %} {% endblock %}#}
+</body>
+</html>

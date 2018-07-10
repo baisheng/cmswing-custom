@@ -1,11 +1,11 @@
-{% extends "../layouts/layout.html" %}
+{% extends "../../_layouts/layout.html" %}
 
 {% block navbar %}
     <!-- Main navbar -->
     <div class="navbar navbar-expand-md navbar-dark">
         <div class="navbar-brand">
             <a href="index.html" class="d-inline-block">
-                <img src="{{ GLOBAL_PATH }}/global_assets/images/logo_light.png" alt="">
+                <img src="{{ GLOBAL_ASSETS }}/images/logo_light.png" alt="">
             </a>
         </div>
 
@@ -16,7 +16,11 @@
         </div>
 
         <div class="collapse navbar-collapse" id="navbar-mobile">
-            <ul class="navbar-nav">
+            {#<span class="navbar-text ml-md-3 mr-md-auto">#}
+				{#<span class="badge bg-success">Online</span>#}
+			{#</span>#}
+
+            <ul class="navbar-nav ml-md-auto">
                 <li class="nav-item dropdown">
                     <a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown">
                         <i class="icon-git-compare"></i>
@@ -24,7 +28,7 @@
                         <span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">9</span>
                     </a>
 
-                    <div class="dropdown-menu dropdown-content wmin-md-350">
+                    <div class="dropdown-menu dropdown-content wmin-md-350 dropdown-menu-right">
                         <div class="dropdown-content-header">
                             <span class="font-weight-semibold">更新日志</span>
                             <a href="#" class="text-default"><i class="icon-sync"></i></a>
@@ -113,31 +117,7 @@
                         </div>
                     </div>
                 </li>
-            </ul>
-            <span class="navbar-text ml-md-3 mr-md-auto">
-				{#<span class="badge bg-success">Online</span>#}
-			</span>
 
-            <ul class="navbar-nav">
-
-
-                <li class="nav-item dropdown dropdown-user">
-                    <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ GLOBAL_PATH }}/global_assets/images/placeholders/placeholder.jpg"
-                             class="rounded-circle" alt="">
-                        <span>Victoria</span>
-                    </a>
-
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
-                        <a href="#" class="dropdown-item"><i class="icon-coins"></i> My balance</a>
-                        <a href="#" class="dropdown-item"><i class="icon-comment-discussion"></i> Messages <span
-                                    class="badge badge-pill bg-blue ml-auto">58</span></a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>
-                        <a href="#" class="dropdown-item"><i class="icon-switch2"></i> Logout</a>
-                    </div>
-                </li>
             </ul>
         </div>
     </div>
@@ -181,10 +161,9 @@
                                 <i class="icon-circle-right2 ml-2"></i>
                             </button>
                         </div>
-
-                        <div class="text-center">
-                            <a href="login_password_recover.html">忘记密码?</a>
-                        </div>
+                        {#<div class="text-center">#}
+                            {#<a href="login_password_recover.html">忘记密码?</a>#}
+                        {#</div>#}
                     </div>
                 </div>
             </form>
@@ -195,7 +174,7 @@
 {% endblock %}
 
 {% block footer %}
-    {% include "../inc/footer.html" %}
+    {% include "../_inc/footer.html" %}
 {% endblock %}
 
 {% block script %}

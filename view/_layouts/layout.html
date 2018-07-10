@@ -1,0 +1,75 @@
+{% extends './layout_base.html' %}
+
+{% block beforeHeaderStyle %}
+    <!-- Global stylesheets -->
+    {#<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"#}
+    {#type="text/css">#}
+    <link href="{{ GLOBAL_ASSETS }}/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="{{ ASSETS }}/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ ASSETS }}/css/bootstrap_limitless.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ ASSETS }}/css/layout.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ ASSETS }}/css/components.css" rel="stylesheet" type="text/css">
+    <link href="{{ ASSETS }}/css/colors.min.css" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+{% endblock %}
+{% block headerScript %}
+    <script type="text/javascript" src="{{ GLOBAL_ASSETS }}/js/plugins/vue.js"></script>
+    <script>
+      new Vue({
+        delimiters: ['${', '}']
+      })
+    </script>
+    <script type="text/javascript" src="{{ GLOBAL_ASSETS }}/js/plugins/axios.min.js"></script>
+{% endblock %}
+
+{% block main %}
+
+    <!-- Main content -->
+    <div class="content-wrapper">
+        <!-- Content area -->
+        {% block content %}
+        {% endblock %}
+        <!-- /content area -->
+        <!-- Footer -->
+        {% block footer %}
+        {% endblock %}
+        <!-- /footer -->
+    </div>
+    <!-- /main content -->
+
+{% endblock %}
+{% block afterMain %}
+    <!-- Remote source -->
+    <div id="modal_remote" class="modal fade">
+        <div class="modal-dialog modal-large">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title"></h5>
+                </div>
+
+                <div class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+    <!-- /remote source -->
+{% endblock %}
+{% block beforeFooterScript %}
+    <script type="text/javascript">var plugin_path = '{{ ASSETS }}/plugins/';</script>
+
+    <!-- Core JS files -->
+    <script src="{{ GLOBAL_ASSETS }}/js/main/jquery.min.js"></script>
+    <script src="{{ GLOBAL_ASSETS }}/js/main/bootstrap.bundle.min.js"></script>
+    <script src="{{ GLOBAL_ASSETS }}/js/plugins/loaders/blockui.min.js"></script>
+    <!-- /core JS files -->
+
+    {#{% block pageScript %} {% endblock %}#}
+    {% block beforeAppScript %}{% endblock %}
+    <script src="{{ ASSETS }}/js/app.js"></script>
+    {#{% block afterAppScript %}#}
+        {#<script src="{{ GLOBAL_ASSETS }}/js/demo_pages/dashboard.js"></script>#}
+    {#{% endblock %}#}
+{% endblock %}
+
+<!-- /theme JS files -->
+

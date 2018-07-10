@@ -1,5 +1,8 @@
 # 基于 CMSWing 定制
 
+## 效果截图
+<img src="https://github.com/baisheng/cmswing-custom/blob/master/screenshot/user_login.png?raw=true" width="375">
+
 ## Todos 更新记录
 
 - ~~将 CMSWing 从单模块工程到多模块工程重建~~
