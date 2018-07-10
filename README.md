@@ -11,8 +11,15 @@
 - ~~将 ext 迁移至 addons 模块~~
 - ~~增加 addons 插件加载机制，可识别插件目录结构~~
 - 基于 bootstrap4 和 nunjucks 重构 admin 前端视图
+    - ~~登录页~~
+    - 后台管理 Dashboard 页
+    - ~~菜单管理~~
 - nunjucks UI 组件
-
+    - Button
+    - Dropdown
+    - Form fields
+    - Links
+    - Modal
 
 ## 目录结构 
 ```bash
