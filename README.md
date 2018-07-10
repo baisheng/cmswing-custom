@@ -1,5 +1,18 @@
 # 基于 CMSWing 定制
 
+## 特色
+
+- 采用 CMSWing (基于 thinkjs3 + mysql 构建) 定制
+- 多模块项目结构
+- 独立插件目录 (addons)
+- 独立扩展模块目录 (modules)
+- API 模块
+- Nunjucks + bootstrap4 UI 定制
+- 可插拔前后台页面模板
+- nuxtjs 支持(待定)
+- ...
+
+
 ## 效果截图
 <img src="https://github.com/baisheng/cmswing-custom/blob/master/screenshot/user_login.png?raw=true" width="375">
 <img src="https://github.com/baisheng/cmswing-custom/blob/master/screenshot/menu_index.png?raw=true" width="375">
