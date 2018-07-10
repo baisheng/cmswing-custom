@@ -11,7 +11,7 @@
 
 
 ## 目录结构 
-
+```bash
 .
 ├── README.md                   # README
 ├── development.js              # dev 环境配置
@@ -39,3 +39,4 @@
 │   └── upload
 └── yarn.lock
 
+```
