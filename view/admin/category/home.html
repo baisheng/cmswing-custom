@@ -1,0 +1,386 @@
+{% extends "./_cate_base.html" %}
+
+
+{% block content %}
+
+{% for i in range(1, list.length + 1) -%}
+{% if i%2-1 == 0%}
+<div class="row">
+    {% endif %}
+    <div class="col-md-6">
+        <div class="panel alpha-grey {% if list[i].mold == 2%} border-top-lg border-top-pink {% elseif list[i].mold == 1 %} border-top-lg border-top-indigo {% endif %}">
+
+            <div class="panel-body">
+                <div class="text-left">
+                    <h6 class="no-margin text-semibold">#{{list[i].id}}. {{list[i].name}}
+                        <a class="text-info-dker" href="{{list[i].url}}" target="_blank"><i
+                                class="fa fa-external-link text-primary position-right"></i></a></h6>
+
+                    <p class="content-group-sm text-muted">Using <code>.list-inline-separate</code> class</p>
+                </div>
+                <div class="heading-elements">
+                    <ul class="icons-list">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i
+                                    class="icon-menu7"></i> </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="#" class="">编辑 </a></li>
+                                <li><a href="#" class="">删除 </a></li>
+                                {% if list[i].mold != 2 %}
+                                <li><a href="#" class="">移动 </a></li>
+                                <li><a href="#" class="">合并 </a></li>
+                                {% endif %}
+                                <li class="divider"></li>
+                                <li><a href="#">内容管理</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h6 class="text-semibold no-margin-top">{{list[i].description}}</h6>
+
+                        <ul class="list list-unstyled">
+                            <a href="#"><img src="/static/limitless/assets/images/demo/users/face5.jpg"
+                                             class="img-circle img-xs" alt=""></a>
+                            <a href="#"><img src="/static/limitless/assets/images/demo/users/face8.jpg"
+                                             class="img-circle img-xs" alt=""></a>
+                            <a href="#"><img src="/static/limitless/assets/images/demo/users/face2.jpg"
+                                             class="img-circle img-xs" alt=""></a>
+                            <a href="#" class="position-relative"><img
+                                    src="/static/limitless/assets/images/demo/users/face6.jpg" class="img-circle img-xs"
+                                    alt=""></a>
+                            <a href="#" class="text-default">&nbsp;<i class="icon-plus22"></i></a>
+                            <!--<li>Invoice #: &nbsp;0028</li>-->
+                            <!--<li>Issued on: <span class="text-semibold">2015/01/25</span></li>-->
+                        </ul>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <ul class="list list-unstyled text-right">
+                            <li><span class="text-semibold">综合类版块</span></li>
+                            <li class="dropdown">
+                                <a href="#" class="label bg-teal-400 dropdown-toggle" data-toggle="dropdown"
+                                   aria-expanded="false">所有人可见 <span class="caret"></span></a>
+                                <ul class="dropdown-menu dropdown-menu-right active">
+                                    <li class="active"><a href="#"><i class="icon-alert"></i> 所有人可见</a></li>
+                                    <li><a href="#"><i class="icon-alarm"></i> 不可见</a></li>
+                                    <li><a href="#"><i class="icon-checkmark3"></i> 管理员可见</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#"><i class="icon-spinner2 spinner"></i> On hold</a></li>
+                                    <li><a href="#"><i class="icon-cross2"></i> Canceled</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="panel-footer panel-footer-condensed panel-group-control panel-group-control-left"><a
+                    class="heading-elements-toggle"><i class="icon-more"></i></a>
+                <div class="heading-elements">
+                    <span class="panel-title heading-text">
+                        <a data-toggle="collapse" data-parent="#accordion-control-right"
+                           href="#accordion-{{list[i].id}}" aria-expanded="false"
+                           class="collapsed text-slate">栏目管理</a>
+                    </span>
+                    <span class="heading-text pull-right">
+                        {% if list[i].mold != 2%}
+                        <span class="position-left">包含模块: </span>
+
+                        {%for m in list[i].model|strToArray%}
+
+                        <a href="" class="text-slate" title="{{m|getmode('title')}}"> <span
+                                class="{{m|getmode('icon')}} position-left"></span></a>
+
+                        {%endfor%}
+                        {% else %}
+                        <span class="position-left text-indigo text-semibold">页面版块</span>
+                        {% endif %}
+
+                    </span>
+                </div>
+
+                <div id="accordion-{{list[i].id}}" class="panel-collapse collapse" aria-expanded="false"
+                     style="height: 0px;">
+                    <div class="panel-body">
+                        <ul class="media-list media-list-container  media-list-bordered" id="media-list-target-left">
+
+                            {% if list[i].children %}
+
+                            {% for v in list[i].children %}
+                            <li class="media">
+                                <div class="media-left media-middle">
+                                    <i class="icon-dots dragula-handle"></i>
+                                </div>
+                                {#
+                                <div class="media-left">
+                                    <a href="#"><img src="assets/images/placeholder.jpg" class="img-circle" alt=""></a>
+                                </div>
+                                #}
+
+                                <div class="media-body">
+                                    <div class="media-heading text-semibold">
+                                        {{v.name}}
+                                        <a><i class="fa fa-external-link position-right"></i></a>
+
+                                    </div>
+                                    {{v.description}}
+
+                                    {#
+                                    <ul class="list-inline list-inline-separate heading-text">
+                                        <li><a href="#" class=""><code class="text-slate alpha-grey">修改</code> </a></li>
+                                        <li><a href="#" class=""><code class="text-slate alpha-grey">删除</code> </a></li>
+                                        <li><a href="#" class=""><code class="text-slate alpha-grey">移动</code> </a></li>
+                                        <li><a href="#" class=""><code class="text-slate alpha-grey">合并</code> </a></li>
+
+                                    </ul>
+                                    #}
+                                </div>
+
+                                <div class="media-right media-middle">
+                                    <ul class="icons-list text-nowrap">
+                                        {% if list[i].mold < 1 %}
+                                        <li>
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                                                    class="icon-menu7"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li><a href="/admin/category/edit/cid/{{list[i].id}}" class=""><i
+                                                        class="icon-comment-discussion pull-right"></i> 编辑</a></li>
+                                                <li><a href="#"><i class="icon-phone2 pull-right"></i> 删除</a></li>
+                                                <li><a href="/admin/category/move/from/{{list[i].id}}"><i class="icon-mail5 pull-right"></i> 移动</a></li>
+                                                <li><a href="/admin/category/move/merge/1/from/{list[i].id}}"><i class="icon-mail5 pull-right"></i> 合并</a></li>
+                                                <li class="divider"></li>
+                                                <li><a class="delcate" href="javascript:void(0)" data-id="{{val.id}}"><i class="icon-gear pull-right"></i> 内容管理</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                               data-hover="dropdown">
+                                                <i class="icon-plus2"></i>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                {%for m in list[i].model|strToArray%}
+                                                <li><a href="#"><i class="{{m|getmode('icon')}} pull-right"></i>添加 <code
+                                                        class="">{{m|getmode('title')}}</code> 内容</a></li>
+
+                                                {%endfor%}
+                                                <li class="divider"></li>
+                                                <li><a href="#"><i class="icon-gear pull-right"></i> 内容管理</a></li>
+                                            </ul>
+                                        </li>
+                                        {% else %}
+                                        <a href="" class="btn btn-xs">内容管理</a>
+                                        {% endif %}
+                                    </ul>
+
+
+                                </div>
+
+                            </li>
+                            {% endfor %}
+
+                            {% endif %}
+
+                            <li class="text-center">
+                                <a href="/admin/category/add/pid/{{list[i].id}}/mold/{{list[i].mold}}" class="btn btn-xs ">
+                                    <i class="fa fa-plus-circle "></i>
+                                    {% if list[i].mold == 2 %} 子页面 {% else %} 子栏目 {% endif %}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if i%2 == 0%}
+</div>
+{% endif %}
+{%- endfor %}
+
+
+
+<div class="panel panel-flat">
+    <div class="tabbable tab-content-bordered">
+        <ul class="nav nav-tabs nav-tabs-bottom">
+            <li class="{{active|default('active', true)}}"><a href="/admin/category/index"> 全部 </a></li>
+            <li class="{%if active==0%}active{%endif%}"><a href="/admin/category/index/mold/0">系统</a>
+            <li class="{%if active==1%}active{%endif%}"><a href="/admin/category/index/mold/1">独立</a>
+            <li class="{%if active==2%}active{%endif%}"><a href="/admin/category/index/mold/2">单页</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover tree-table treetable" id="category">
+            <thead>
+            <tr>
+                <th> 栏目名称</th>
+                <th style="width:46px;"><i class="fa fa-sort"></i></th>
+                <!--<th> 栏目ID</th>-->
+                <th class="">目录标识</th>
+                <th>栏目类型</th>
+                <th>绑定模型</th>
+                <th class="">发布</th>
+                <th style="width:46px;"><i class="fa fa-check"></i></th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {%for val in list%}
+            <tr data-tt-id="{{val.id}}" {%if val.pid !=0 %} data-tt-parent-id="{{val.pid}}"
+                {%else%}class="active" {%endif%}>
+
+                <td>
+                    <span class='folder ui-draggable'>{{val.title}}</span>
+                    <a class="text-info-dker" href="{{val.url}}" target="_blank"><i
+                            class="fa fa-link text-brown-300 position-right"></i></a>
+                    <a
+                            href="/admin/category/add/pid/{{val.id}}/mold/{{val.mold}}" class=""> <i
+                            class="fa fa-plus-circle position-right"></i>
+                    </a>
+
+                </td>
+
+                <td>
+                    <input class="form-control form-control-text sort text-center" value="{{val.sort}}" name="sort"
+                           data-id="{{val.id}}"/></td>
+                <!--<td>{{val.id}}</td>-->
+
+                <td>{{val.name}}</td>
+                <td> {%if val.mold == 0%}系统{%elif val.mold == 1%}独立{%elif val.mold==2%}单页{%endif%}</td>
+                <td> {%for m in val.model|strToArray%}
+                    {{m|getmode('title')}}&nbsp;&nbsp;
+                    {%endfor%}
+                </td>
+
+                <td>
+                    {%if val.allow_publish == 0 %}封面{% elif val.allow_publish==1%}列表{%endif%}
+                </td>
+                <td><a href="/admin/category/setstatus/ids/{{val.id}}/status/{{1-val.status}}"
+                       class="active ajax-get" data-toggle="class">
+                    <i class=" {%if val.status %}fa fa-check text-success text-active{%else%} fa-times text-danger text{%endif%}"></i>
+                </a></td>
+
+                <td><a class="btn btn-xs" href="/admin/category/edit/cid/{{val.id}}">编辑</a>
+                    {%if val.mold!=2%}
+                    <a class="btn  btn-xs" href="/admin/category/move/from/{{val.id}}">移动</a>
+                    <a class="btn  btn-xs" href="/admin/category/move/merge/1/from/{{val.id}}">合并</a>
+                    {%endif%}
+
+                    <a class="btn text-danger btn-xs delcate" href="javascript:void(0)" data-id="{{val.id}}">删除</a>
+
+                </td>
+
+            </tr>
+            {%endfor%}
+
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="/static/admin/js/treetable/jquery.treetable.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $("#category").treetable({expandable: true});
+
+    jQuery('#category').treetable('expandAll')
+
+    $(function () {
+        $(".delcate").click(function () {
+            var id = $(this).attr("data-id");
+            swal({
+                title: "确定删除?",
+                text: "删除后不可恢复，请谨慎操作!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定!",
+                cancelButtonText: "算了",
+                closeOnConfirm: false
+            }, function () {
+                $.ajax({
+                    url: "/admin/category/del/confirm/1/id/" + id,
+                    success: function (data) {
+                        if (data.ok == 0) {
+                            swal({title: data.info, text: "", type: "success"}, function () {
+                                location.reload();
+                            });
+
+                        } else if (data.ok == 1) {
+                            swal({
+                                title: "确定删除?",
+                                text: data.info + "删除后不可恢复，请谨慎操作!</br><code>您可以将该栏目内容移动到其它栏目，然后再删除</code></br><code>如果该栏目内容不需要保留，点击确定连同该栏目的内容一起删除！</code>",
+                                html: true,
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#DD6B55",
+                                confirmButtonText: "确定!",
+                                cancelButtonText: "算了",
+                                closeOnConfirm: false
+                            }, function () {
+                                $.ajax({
+                                    url: "/admin/category/del/type/one/id/" + id,
+                                    success: function (data) {
+                                        if (data.ok == 0) {
+                                            swal({title: data.info, text: "", type: "success"}, function () {
+                                                location.reload();
+                                            });
+
+                                        } else {
+
+                                        }
+                                    }
+                                });
+                            })
+                        } else if (data.ok == 2) {
+                            swal({
+                                title: "确定删除?",
+                                text: data.info + "删除后不可恢复，请谨慎操作!</br><code>您可以将该栏目的子栏目以及内容移动到其它栏目，然后再删除</code></br><code>如果该栏目(子栏目)下所有内容不需要保留，点击确定将一起删除！</code>",
+                                html: true,
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#DD6B55",
+                                confirmButtonText: "确定!",
+                                cancelButtonText: "算了",
+                                closeOnConfirm: false
+                            }, function () {
+                                $.ajax({
+                                    url: "/admin/category/del/type/all/id/" + id,
+                                    success: function (data) {
+                                        if (data.ok == 0) {
+                                            swal({title: data.info, text: "", type: "success"}, function () {
+                                                location.reload();
+                                            });
+
+                                        } else {
+
+                                        }
+                                    }
+                                });
+                            })
+                        }
+                    }
+                });
+            })
+
+
+        })
+    })
+</script>
+
+
+<script type="text/javascript" src="/static/limitless/assets/js/plugins/ui/dragula.min.js"></script>
+<script type="text/javascript" src="/static/limitless/assets/js/pages/extension_dnd.js"></script>
+{% endblock %}

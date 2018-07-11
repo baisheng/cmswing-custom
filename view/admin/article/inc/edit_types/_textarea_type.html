@@ -1,0 +1,6 @@
+<div class="col-md-8">
+    <textarea
+            class="form-control"
+            name="sortid_{{ val.option.identifier }}"
+            {% if val.required == 1 %}data-required="true"{% endif %}  {% if val.option.rules.rowsize %} rows="{{ val.option.rules.rowsize }}" {% endif %}>{{ val.option.value }}</textarea>
+</div>

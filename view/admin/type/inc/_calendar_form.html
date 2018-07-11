@@ -1,0 +1,23 @@
+<div {% if info.type != 'calendar' %}style="display: none;"{% endif %} id="style_calendar">
+    <legend class="text-bold">
+        日历(calendar)
+    </legend>
+    {% if info.type == "calendar" %}
+        {% set rules = info.rules|strToJson %}
+    {% endif %}
+    <div class="form-group">
+        <label class="col-sm-2 control-label">表单显示长度(可选)</label>
+        <div class="col-sm-10">
+            <div class="row">
+                <div class="col-md-4"><input name="rules[calendar][inputsize]" type="text"
+                                             class="form-control parsley-validated"
+                                             value="{% if info.type == 'calendar' %}{{ rules.inputsize }}{% endif %}"
+                                             data-required="true"></div>
+                <div class="col-md-12 hidden">
+                    <span class="help-block m-b-none text-muted"><i
+                                class="fa fa-info-circle text-info"></i> 名称不能为空.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

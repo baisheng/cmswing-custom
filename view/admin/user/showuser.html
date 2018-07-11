@@ -1,0 +1,54 @@
+{% import '../../_ui/components/fields.html' as fields -%}
+
+{% extends '../../_ui/views/modals.html' %}
+
+{% block title %} {{ controller.meta_title }} {% endblock %}
+
+
+{% block body %}
+    <div class="content-group">
+        <div class="panel-body bg-blue border-radius-top text-center"
+             style="background-image: url(http://demo.interface.club/limitless/assets/images/bg.png); background-size: contain;">
+            <div class="content-group-sm">
+                <h5 class="text-semibold no-margin-bottom">
+                    {{ user.username }}
+                </h5>
+
+                <span class="display-block">
+                                 {% for v in usergroup %}
+                                     {% if v.groupid == user.groupid %}
+                                         <p class="form-control-static">{{ v.name }}</p>
+                                     {% endif %}
+                                 {% endfor %}
+
+                </span>
+            </div>
+
+            <a href="#" class="display-inline-block content-group-sm">
+
+                <img src="/u/avatar/{{ user.id }}" alt="{{ user.username }}" class="img-circle img-responsive" alt=""
+                     style="width: 120px; height: 120px;">
+            </a>
+
+            {#<ul class="list-inline no-margin-bottom">#}
+            {#<li><a href="#" class="btn bg-blue-700 btn-rounded btn-icon"><i class="icon-phone"></i></a></li>#}
+            {#<li><a href="#" class="btn bg-blue-700 btn-rounded btn-icon"><i class="icon-bubbles4"></i></a></li>#}
+            {#<li><a href="#" class="btn bg-blue-700 btn-rounded btn-icon"><i class="icon-envelop4"></i></a></li>#}
+            {#</ul>#}
+        </div>
+
+        <div class="panel panel-body no-border-top no-border-radius-top">
+            <div class="form-group">
+                <label class="text-semibold">真实姓名:</label>
+                <span class="pull-right-sm">{{ user.real_name }}</span>
+            </div>
+            <div class="form-group">
+                <label class="text-semibold">电话:</label>
+                <span class="pull-right-sm">{{ user.mobile }}</span>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block footer %}{% endblock %}

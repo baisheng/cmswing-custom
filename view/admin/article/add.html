@@ -1,0 +1,287 @@
+{#{% extends "../inc/base.html" %}#}
+{% extends "../inc/experiment_base.html" %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb position-right">
+        <li>
+            <a href="/admin/article/index">
+                实验内容
+            </a>
+        </li>
+        {% for nav in breadcrumb %}
+            {% if info.category_id == nav.id %}
+                <li class="active">{{ nav.title }} : {{ controller.meta_title }}</li>
+            {% else %}
+                <li><a href="/admin/article/index?cate_id={{ nav.id }}"><i class="fa fa-list-ul"></i> {{ nav.title }}
+                    </a></li>
+            {% endif %}
+        {% endfor %}
+        {% if article.id>0 %}
+            <li> <a href="{:U('index','cate_id='.$cate_id.'&pid='.$article['id'])}"><i
+                        class="fa fa-list-ul"></i> {{ article.title }}</a> </li>{% endif %}
+
+    </ul>
+{% endblock %}
+
+{% block pageHeaderScript %}
+    <!--<link rel="stylesheet" href="/static/admin/js/zTree/metroStyle/metroStyle.css" type="text/css">-->
+    {#<link rel="stylesheet" href="/static/admin/js/zTree/zTreeStyle/zTreeStyle.css" type="text/css">#}
+    <link rel="stylesheet" href="/static/admin/js/datepicker/bootstrap-datetimepicker.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/admin/js/chosen/chosen.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/admin/js/jQuery-Tags-Input/src/jquery.tagsinput.css" type="text/css"/>
+    <link href="/static/admin/js/jquery-ui-1.12.1.custom/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
+    <!--<link rel="stylesheet" href="/static/admin/js/uploadify/uploadify.css" type="text/css">-->
+    <script src="/static/admin/js/jquery.min.js"></script>
+    <script src="/static/admin/js/chosen/chosen.jquery.min.js"></script>
+    <!--<script src="/static/admin/js/uploadify/jquery.uploadify.min.js"></script>-->
+    {# 上传组件 #}
+    <script type="text/javascript"
+            src="/themes/admin/assets/js/plugins/uploaders/fileinput/plugins/purify.min.js"></script>
+    <script type="text/javascript"
+            src="/themes/admin/assets/js/plugins/uploaders/fileinput/plugins/sortable.min.js"></script>
+    <script type="text/javascript" src="/themes/admin/assets/js/plugins/uploaders/fileinput/fileinput.min.js"></script>
+    <script type="text/javascript"
+            src="/themes/admin/assets/js/plugins/uploaders/fileinput/fileinput_locale_zh.js"></script>
+
+    <script type="text/javascript" src="/themes/admin/assets/js/pages/uploader_bootstrap.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="/static/admin/js/jquery.coolautosuggest.js"></script>
+    <style type="text/css">
+        .tab-content > .tab-pane {
+            position: absolute !important;
+            clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+            clip: rect(1px, 1px, 1px, 1px);
+            display: block;
+        }
+
+        .tab-content > .active {
+            position: static !important;
+            clip: inherit; /* IE6, IE7 */
+            clip: inherit;
+            display: block;
+        }
+
+        table tr td {
+            font-weight: normal;
+            vertical-align: middle !important;
+
+        }
+
+        .tabelselet select {
+            display: inline-table;
+            width: inherit
+        }
+    </style>
+{% endblock %}
+
+{% block bodyClass %} sidebar-xs {% endblock %}
+
+{% block sidebar2 %}
+    {% include "../inc/article_side.html" %}
+{% endblock %}
+
+{% block content %}
+
+    {#<h6 class="content-group text-semibold">#}
+    {#Chat inside tabs#}
+    {#<small class="display-block">Place conversation inside tabs or pills</small>#}
+    {#</h6>#}
+    {#<div class="panel panel-default">#}
+    <div class="panel panel-flat">
+
+        <form id="ajaxForm"
+              action="/admin/article/update"
+              method="post"
+              class="form-horizontal"
+              data-validate="parsley">
+            <div class="panel-body">
+
+                <div class="tabbable tab-content-bordered content-group-lg">
+                    <ul class="nav nav-tabs nav-tabs-highlight ">
+                        {% for key ,group in model.field_group | parse_config_attr %}
+                            <li {% if 1 == key %} class="active" {% endif %}>
+                                <a data-toggle="tab" href="#tabl-{{ key }}">
+                                    {{ group }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    <div class="tab-content">
+                        {% for key ,group in model.field_group | parse_config_attr %}
+                            <div id="tabl-{{ key }}"
+                                 class="tab-pane fade has-padding {% if 1 == key %} in active{% endif %}">
+
+                                {% if sort and key ==1 %}
+                                    {% include "./inc/types/index.html" %}
+                                {% endif %}
+
+                                {% if groups and key==1 %}
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">
+                                            分组
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <select class="form-control " name="group_id">
+                                                        <option value="0">不分组</option>
+                                                        {% for k ,v in groups %}
+                                                            <option value="{{ k }}" {% if controller.get('group_id')==k %} selected{% endif %}>{{ v }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                {% for field in fields[key] %}
+                                    {% include "./inc/fields/index.html" %}
+                                {% endfor %}
+
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="col-lg-12">
+                    <button class="btn btn-primary ajax-post" type="submit"
+                            target-form="form-horizontal">
+                        <i class="icon-check position-left"></i>
+                        确定
+                    </button>
+                    <button class="btn btn-default" onclick="javascript:history.back(-1);return false;"
+                            type="submit">
+                        <i class="icon-cross2 position-left"></i>
+                        取消
+                    </button>
+                    <input type="hidden" name="pid" value="{{ info.pid }}"/>
+                    <input type="hidden" name="topid" value="{{ info.topid }}"/>
+                    <input type="hidden" name="model_id" value="{{ info.model_id }}"/>
+                    <input type="hidden" name="category_id" value="{{ info.category_id }}">
+                    <input type="hidden" name="uid" value="{{ userinfo.uid }}">
+                    <input type="hidden" name="backurl" value="{{ ctx.referer() }}">
+                </div>
+            </div>
+        </form>
+
+    </div>
+    {#</div>#}
+
+{% endblock %}
+
+{% block script %}
+    <script src="/static/admin/js/zTree/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
+    <script src="/static/admin/js/datepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+    <script src="/static/admin/js/datepicker/locales/bootstrap-datetimepicker.zh-CN.js" type="text/javascript"></script>
+
+    <script src="/static/admin/js/parsley/parsley.min.js"></script>
+    <script src="/static/admin/js/parsley/parsley.extend.js"></script>
+    <script src="/static/admin/js/chosen/chosen.jquery.min.js"></script>
+    <script src="/static/admin/js/jQuery-Tags-Input/src/jquery.tagsinput.js"></script>
+    <script src="/static/admin/js/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <!-- select 2 -->
+    <script type="text/javascript"
+            src="/themes/default/assets/js/core/libraries/jquery_ui/interactions.min.js"></script>
+    <script type="text/javascript" src="/themes/default/assets/js/plugins/forms/selects/select2.min.js"></script>
+
+    <script>
+      //
+      // Single select with icons
+      //
+
+      // Format icon
+      function iconFormat (icon) {
+        var originalOption = icon.element;
+        if (!icon.id) {
+          return icon.text;
+        }
+        var $icon = "<image style='width: 24px; height: 24px;' class='position-left' src=" + $(icon.element).data('icon') + "></image>" + icon.text;
+
+        return $icon;
+      }
+
+      // Initialize with options
+      $(".select-icons").select2({
+        templateResult: iconFormat,
+        minimumResultsForSearch: Infinity,
+        templateSelection: iconFormat,
+        escapeMarkup: function (m) {
+          return m;
+        }
+      });
+
+
+    </script>
+    <script type="text/javascript">
+      <!--
+      var zTree;
+      var demoIframe;
+
+      var setting = {
+        async: {
+          enable: true,
+          url: "/admin/article/getmenu",
+          otherParam: ["action", "add"]
+        },
+        view: {
+
+          showLine: true,
+          selectedMulti: false,
+        },
+        callback: {
+          onAsyncSuccess: zTreeOnAsyncSuccess
+        }
+      };
+
+      function zTreeOnAsyncSuccess (event, treeId, treeNode, msg) {
+        //console.log(treeNode)
+        var treeObj = $.fn.zTree.getZTreeObj(treeId);
+        treeObj.expandAll(true);
+        var id = $("#" + treeId).attr("data-cate");
+        curMenu = treeObj.getNodeByParam("id", id, null);
+        //console.log(treeId)
+        treeObj.selectNode(curMenu);
+      };
+
+      function expandNode (e) {
+        var zTree = $.fn.zTree.getZTreeObj("tree"),
+          type = e.data.type,
+          nodes = zTree.getSelectedNodes();
+        if (type == "expandAll") {
+          zTree.expandAll(true);
+        } else if (type == "collapseAll") {
+          zTree.expandAll(false);
+        }
+      }
+
+
+      //-->
+      $(function () {
+        var t = $("#tree");
+        t = $.fn.zTree.init(t, setting).expandAll(true);
+        $("#expandAllBtn").bind("click", {type: "expandAll"}, expandNode);
+        $("#collapseAllBtn").bind("click", {type: "collapseAll"}, expandNode);
+        $('.date').datetimepicker({
+          format: 'yyyy-mm-dd',
+          language: "zh-CN",
+          minView: 2,
+          autoclose: true
+        });
+        $('.time').datetimepicker({
+          format: 'yyyy-mm-dd hh:ii',
+          language: "zh-CN",
+          minView: 2,
+          autoclose: true
+        });
+
+
+      })
+
+
+    </script>
+
+{% endblock %}

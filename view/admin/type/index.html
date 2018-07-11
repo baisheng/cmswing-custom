@@ -1,0 +1,228 @@
+{% extends "../inc/category/base.html" %}
+{% block pageToolbar %}
+    <div class="navbar navbar-default navbar-component navbar-xs">
+        <ul class="nav navbar-nav visible-xs-block">
+            <li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter"><i
+                            class="icon-menu7"></i></a></li>
+        </ul>
+
+        <div class="navbar-collapse collapse" id="navbar-filter">
+            <ul class="nav navbar-nav">
+                <li class="{% if ctx.action == 'index' %}active{% endif %}">
+                    <a href="/admin/type/index">
+                        分类信息
+                    </a>
+                    {#<a href="/{{ ctx.controller }}/index"#}
+                    {#class="c-tabs__link">#}
+                    {#<i class="icon-users4 position-left"></i>#}
+                    {#用户组#}
+                    {#</a>#}
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        字段类别
+                        <b class="caret"></b></a>
+                    <ul class="dropdown-menu text-left">
+                        {% for val in typeoption %}
+                            <li>
+                                <a href="/admin/type/typeoption/?classid={{ val.optionid }}">
+                                    {{ val.title }}
+                                </a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+        <!-- /toolbar -->
+
+    </div>
+{% endblock %}
+
+{% block header %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-header-content">
+
+            <div class="page-title">
+
+                <h4>
+                    <span class="text-semibold">系统配置</span> - {{ controller.meta_title }}</h4>
+            </div>
+            <div class="heading-elements">
+
+
+                <a href="/admin/category/add" class="btn btn-labeled btn-labeled-right bg-primary heading-btn"
+                   data-toggle="class:show">
+                    <!--<i class="fa fa-plus text"></i>-->
+                    <span class="text">添加栏目</span>
+                    <b><i class=" icon-add"></i></b>
+
+                    <!--<i class="fa fa-minus text-active"></i>-->
+                    <!--<span class="text-active">添加完成</span>-->
+                </a>
+            </div>
+        </div>
+        <div class="breadcrumb-line breadcrumb-line-component"><a class="breadcrumb-elements-toggle"><i
+                        class="icon-menu-open"></i></a>
+            <ul class="breadcrumb">
+                <li><a href="index.html"><i class="icon-home2 position-left"></i> 首页</a></li>
+                <li><a href="/admin/database/index">系统配置</a></li>
+                <li class="active">{{ controller.meta_title }}</li>
+            </ul>
+            <ul class="breadcrumb-elements">
+                <!--<li>-->
+                <!--<a class=" " href="#asideres" data-toggle="class:show">-->
+                <!--<i class="fa fa-plus-circle position-left"></i> 新增-->
+                <!--</a>-->
+                <!--</li>-->
+                <li>
+                    <a class="ajax-post" target-form="ids" href="/admin/action/setstatus/status/1"
+                       target-form="ids">
+
+                        <i class="fa fa-play-circle position-left text-success-600"></i>启用
+                    </a>
+                </li>
+                <li>
+                    <a class="ajax-post" href="/admin/action/setstatus/status/0" target-form="ids">
+                        <i class="fa fa-stop-circle position-left text-warning"></i>禁用
+                    </a>
+                </li>
+                <li>
+                    <a class="ajax-post confirm" href="/admin/action/setstatus/status/-1"
+                       target-form="ids">
+                        <i class="fa fa-minus-circle position-left text-danger"></i> 删除
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+
+
+    </div>
+    <!-- /page header -->
+
+{% endblock %}
+
+{% block content %}
+
+    <form method="post" class="" autocomplete="off" action="/admin/type/update" id="threadtypeform" enctype="multipart/form-data" >
+
+        <div class="panel panel-white">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered" id="export-form">
+                    <thead>
+                    <tr>
+                        <th style="width:80px;"><input type="checkbox"></th>
+                        <th style="width: 90px">显示顺序</th>
+                        <th style="width: 200px">名称</th>
+                        <th>描述</th>
+                        <th>关联栏目</th>
+                        <th style="width:130px;">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {%for val in list%}
+                        <tr>
+                            <input type="hidden" name="typeid" value="{{val.typeid}}">
+                            <td><input type="checkbox" name="isdel" value="1"><span class="text-danger ml-5">删?</span></td>
+                            <td> <input type="text" class="form-control form-control-text" name="displayorder" value="{{val.displayorder}}" ></td>
+
+                            <td><input type="text" class="form-control form-control-text" name="name" value="{{val.name}}"></td>
+                            <td><input type="text" class="form-control form-control-text" name="description" value="{{val.description}}"></td>
+                            <td>
+                                {%set i = 1%}
+                                {% for v in val.cate%}
+                                    {%if i !=1%}, {%endif%}<a href="/admin/category/edit/?cid={{v.id}}" class="text-primary">{{v.title}}</a>
+                                    {% set i = i+1%}
+                                {%else%}
+                                    <span class="text-muted">无关联</span>
+                                {%endfor%}
+                            </td>
+
+                            <td><a href="/admin/type/typeview/?typeid={{val.typeid}}" class="text-primary"> 详情</a>
+                                {#<a href="#" class="text-primary"> 模版</a> <a href="#" class="text-primary"> 导出</a>#}
+                            </td>
+                        </tr>
+                    {%endfor%}
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="panel-footer">
+                <div class="col-md-12">
+                    <!--<a href="javascript:void(0)" class="btn btn-default btn-xs"><i class="icon-plus"></i> 导入</a>-->
+                    <a href="javascript:void(0)" class="btn btn-default addtr"><i
+                                class="icon-add position-left"></i> 添加属性分类</a>
+                    <button class="btn btn-default posttype">
+                        <i class="icon-check position-left"></i>
+                        确定
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+
+
+{% endblock %}
+{% block script %}
+    <script>
+      $(function () {
+        $(".addtr").click(function () {
+          var tr = '<tr>' +
+            '<td></td>' +
+            '<td> <input type="text" class="form-control form-control-text" name="displayorder" value="" ></td>' +
+            '<td><input type="text" class="form-control form-control-text" name="name" value=""></td>' +
+            '<td><input type="text" class="form-control form-control-text" name="description" value=""></td>' +
+            '<td></td>' +
+            '<td></td>' +
+            '</tr>';
+          $("#export-form>tbody").append(tr);
+        })
+//提交数据
+        $(".posttype").click(function () {
+          var tr = $("#export-form>tbody>tr");
+          var dataarr = []
+          $.each(tr, function (k, v) {
+            var obj = {};
+            obj.isdel = $(v).find("input[name='isdel']:checked").val() || 0;
+            obj.typeid = $(v).find("input[name='typeid']").val() || 0;
+            obj.displayorder = $(v).find("input[name='displayorder']").val() || 0;
+            obj.name = $(v).find("input[name='name']").val();
+            obj.description = $(v).find("input[name='description']").val();
+            //console.log(obj);
+            dataarr.push(obj);
+          })
+
+          $.ajax({
+            url: "/admin/type/update",
+            data: {data: JSON.stringify(dataarr)},
+            type: "post",
+            success: function (res) {
+              if (res.errno === 0) {
+                if (res.data.url) {
+
+                  toastr.success(res.data.name + ' 页面即将自动跳转~');
+                } else {
+                  toastr.success(res.data.name);
+                }
+                setTimeout(function () {
+                  if (res.data.url) {
+                    location.href = res.data.url;
+                  } else {
+                    location.reload();
+                  }
+                }, 1500);
+              }
+            }
+          })
+          return false;
+        })
+
+      })
+    </script>
+{% endblock %}

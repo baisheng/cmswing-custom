@@ -1,0 +1,7 @@
+<div class="col-md-8">
+    <input type="text"
+           class="form-control "
+           name="sortid_{{ val.option.identifier }}"
+           value="{{ val.option.rules.defaultvalue }}"
+           {% if val.required == 1 %}data-required="true"{% endif %}>
+</div>

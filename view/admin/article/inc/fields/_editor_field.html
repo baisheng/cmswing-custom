@@ -1,0 +1,22 @@
+<label class="col-sm-2 control-label text-semibold">
+    {{ field.title }}
+    {% if field.remark %}
+        <span class="m-b-none text-muted">
+            <i class="fa fa-info-circle text-info"></i>
+            {{ field.remark|safe }}
+        </span>
+    {% endif %}
+</label>
+<div class="col-sm-12">
+    {% if model.editor == '1' %}
+    {{HOOKS@adminEdit@1[field.name]|safe}}
+    {%elif model.editor == '2_1'%}
+    {{HOOKS@adminEdit@2_1[field.name]|safe}}
+    {%elif model.editor == '2_2'%}
+    {{HOOKS@adminEdit@2_2[field.name]|safe}}
+    {%elif model.editor == '3'%}
+    {{HOOKS@adminEdit@3[field.name]|safe}}
+    {%else%}
+    {{HOOKS@adminEdit[field.name]|safe}}
+    {%endif%}
+</div>

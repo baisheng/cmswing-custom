@@ -1,0 +1,113 @@
+{% extends "../inc/base.html" %}
+{% block header %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-header-content">
+
+            <div class="page-title">
+
+                <h4><i class="icon-arrow-left52 position-left"></i> <span
+                            class="text-semibold">系统配置</span> - {{ controller.meta_title }}</h4>
+            </div>
+            <div class="heading-elements">
+
+
+                <a href="/admin/category/add" class="btn btn-labeled btn-labeled-right bg-primary heading-btn"
+                   data-toggle="class:show">
+                    <!--<i class="fa fa-plus text"></i>-->
+                    <span class="text">添加栏目</span>
+                    <b><i class=" icon-add"></i></b>
+
+                    <!--<i class="fa fa-minus text-active"></i>-->
+                    <!--<span class="text-active">添加完成</span>-->
+                </a>
+            </div>
+        </div>
+        <div class="breadcrumb-line breadcrumb-line-component"><a class="breadcrumb-elements-toggle"><i
+                        class="icon-menu-open"></i></a>
+            <ul class="breadcrumb">
+                <li><a href="index.html"><i class="icon-home2 position-left"></i> 首页</a></li>
+                <li><a href="/admin/database/index">系统配置</a></li>
+                <li class="active">{{ controller.meta_title }} <span
+                            class="badge badge-primary position-right">{{ _total }}</span></li>
+            </ul>
+            <ul class="breadcrumb-elements">
+                <li>
+                    <a class="cw-cf" href="/admin/article/clear">
+                        <i class="fa fa-trash position-left text-danger"></i>清空
+                    </a>
+                </li>
+                <li>
+                    <a class="ajax-post confirm" href="/admin/article/setstatus/status/1" target-form="ids">
+                        <i class="fa fa-reply position-left text-primary"></i>还原
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+
+
+    </div>
+    <!-- /page header -->
+
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="panel panel-flat">
+        <div class="table-responsive">
+            <table class="table table-striped b-t b-light">
+                <thead>
+                <tr>
+                    <th style="width:20px;"><input type="checkbox"></th>
+                    <th style="width:80px;">编号</th>
+                    <th class="">标题</th>
+                    <th class="">创建者</th>
+                    <th class="">类型</th>
+                    <th class="">分类</th>
+                    <th class="">删除时间</th>
+                    <th class="">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in list %}
+                    <tr>
+                        <td><input class="ids" type="checkbox" name="ids" value="{{ item.id }}"></td>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.title }}</td>
+                        <td>{{ item.username }}</td>
+                        <td>{{ item.type|get_document_type }}</td>
+                        <td>{{ item.category }}</td>
+                        <td>{{ item.update_time|dateformat("Y-m-d H:i:s") }}</td>
+                        <td>
+                            <a href="/admin/article/setstatus/status/1?ids={{ item.id }}"
+                               class="btn btn-default btn-xs confirm ajax-get ">还原</a></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8">
+                            <div class="alert alert-warning alert-block">
+                                <button data-dismiss="alert" class="close" type="button">×</button>
+                                <p>还没有内容。</p>
+                            </div>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+        </div>
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-12 text-right text-center-xs">
+                    {{ pagerData | safe }}
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+{% endblock %}

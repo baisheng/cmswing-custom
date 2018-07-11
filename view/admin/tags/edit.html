@@ -1,0 +1,108 @@
+{% import "../../_ui/components/fields.html" as fields -%}
+{% extends "../inc/base.html" %}
+{% block pageHeader %}
+    <div class="page-header">
+        <!-- Header content -->
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4>
+                    <i class="fa fa-flask position-left"></i>
+                    <span class="text-semibold">实验管理</span> - {{ controller.meta_title }}
+                </h4>
+                {% block breadcrumb %}
+                    <ul class="breadcrumb position-right">
+                        <li>
+                            <a href="index.html">
+                                首页
+                            </a>
+                        </li>
+                        <li><a href="/admin/tags/index">实验图标管理</a></li>
+                        <li class="active">{{ controller.meta_title }}</li>
+
+                    </ul>
+                {% endblock %}
+                <a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
+
+            <div class="heading-elements">
+                {% block pageAction %}{% endblock %}
+            </div>
+        </div>
+        <!-- /header content -->
+        {% block pageToolbar %}{% endblock %}
+    </div>
+
+{% endblock %}
+
+{% block content %}
+<div class="panel panel-flat col-lg-6">
+    <form class="form-validate" id="_form">
+
+        <div class="panel-body">
+            <input type="hidden" value="{{ data.id }}" name="id">
+            <fieldset>
+                <div class="collapse in" id="demo1" aria-expanded="true">
+                    {{ fields.input(data.name, { name: 'name', label: '图标名',  required: 'required', placeholder: '输入图标名称'}) }}
+                    {{ fields.input(data.sort, { name: 'sort', label: '排序',  required: 'required', placeholder: '为图标排序'}) }}
+
+                    <div class="form-group ">
+                        <label class="control-label text-semibold">图标图片</label>
+                        {{ HOOKS@adminUpPic['icon']|safe}}
+                    </div>
+
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="panel-footer">
+            <div class="col-lg-12">
+                <button class="btn btn-primary" type="submit">确定</button>
+                <button class="btn btn-default"
+                        onclick="javascript:history.back(-1);return false;" >返回
+                </button>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="/static/assets/js/pages/form_validation.js"></script>
+
+<script>
+  $('#_form').submit(function (e) {
+    e.preventDefault();
+    if ($(".form-validate").valid()) {
+      $.post("/admin/tags/edit", $(this).serialize()).done(function (data) {
+        if (data.errno > 0) {
+          new PNotify({
+            title: '出错啦',
+            icon: 'icon-blocked',
+            text: data.errmsg,
+            addclass: 'bg-danger',
+            type: 'danger'
+          });
+        } else {
+          new PNotify({
+            icon: 'icon-check',
+            text: data.data.name,
+            addclass: 'bg-success',
+            type: 'success'
+          })
+
+          window.location.href = data.data.url;
+        }
+      }).fail(function () {
+        new PNotify({
+          title: '出错啦',
+          icon: 'icon-blocked',
+          text: data.errmsg,
+          addclass: 'bg-danger',
+          type: 'danger'
+        });
+      });
+    }
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,51 @@
+<div {% if info.type != 'select' %}style="display: none;"{% endif %} id="style_select">
+    <legend class="text-bold">
+        选择(select)
+    </legend>
+    {% if info.type == "select" %}
+        {% set rules = info.rules|strToJson %}
+    {% endif %}
+    <div class="form-group">
+        <label class="col-sm-2 control-label">字段内容</label>
+        <div class="col-sm-10">
+            <div class="row">
+                <div class="col-md-4"><textarea name="rules[select][choices]"
+                                                class="form-control">{% if info.type == 'select' %}{{ rules.choices }}{% endif %}</textarea>
+                </div>
+                <div class="col-md-12 ">
+                                    <span class="help-block m-b-none text-muted"><i
+                                                class="fa fa-info-circle text-info"></i>
+                                        只在项目为可选时有效，每行一个字段，等号前面为字段索引(建议用数字)，后面为内容，例如:
+<pre>1:选项1
+2:选项2
+3:选项3
+1.1:选项1-1
+1.2:选项1-2
+1.2.1:选项1-2-1</pre>
+注意:<br>
+1、 <code>"1.2.1:选项1-2-1"</code>必须有<code>"1.2 = 选项 1-2"</code>和<code>"1 = 选项1"</code>这两项<br>
+2、 <code>"1.2.1"</code>之间不能有空格<br>
+3、 字段确定后请勿修改索引和内容的对应关系，但仍可以新增字段。如需调换显示顺序，可以通过移动整行的上下位置来实现<br>
+</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed b-b line-lg pull-in"></div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">表单显示长度(可选)</label>
+        <div class="col-sm-10">
+            <div class="row">
+                <div class="col-md-4"><input name="rules[select][inputsize]" type="text"
+                                             class="form-control parsley-validated"
+                                             value="{% if info.type == 'select' %}{{ rules.inputsize }}{% endif %}"
+                                             data-required="true"></div>
+                <div class="col-md-12 hidden">
+                    <span class="help-block m-b-none text-muted"><i
+                                class="fa fa-info-circle text-info"></i> 名称不能为空.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

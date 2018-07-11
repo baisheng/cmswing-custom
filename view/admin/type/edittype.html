@@ -1,0 +1,379 @@
+{% extends "../inc/category/base.html" %}
+
+{% block pageToolbar %}
+    <div class="navbar navbar-default navbar-component navbar-xs">
+        <ul class="nav navbar-nav visible-xs-block">
+            <li class="full-width text-center">
+                <a data-toggle="collapse" data-target="#navbar-filter">
+                    <i class="icon-menu7"></i>
+                </a>
+            </li>
+        </ul>
+
+        <div class="navbar-collapse collapse" id="navbar-filter">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="/admin/type/index">
+                        分类信息
+                    </a>
+                </li>
+                <li class="dropdown active">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        {{ clas.title }}
+                        <b class="caret"></b></a>
+                    <ul class="dropdown-menu text-left">
+                        {% for val in typeoption %}
+                            <li>
+                                <a href="/admin/type/typeoption/?classid={{ val.optionid }}">
+                                    {{ val.title }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+        <!-- /toolbar -->
+
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    <form method="post" class="form-horizontal" autocomplete="off" action="/admin/type/update"
+          id="threadtypeform" enctype="multipart/form-data">
+        <div class="panel panel-flat">
+            <div class="panel-heading">
+                <h5 class="panel-title">
+                    分类选项设置
+                </h5>
+                <div class="heading-elements">
+                </div>
+            </div>
+            <div class="panel-body">
+
+                <fieldset class="content-group">
+                    <legend class="text-bold">基础选项</legend>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">名称</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input name="title" type="text"
+                                           class="form-control parsley-validated"
+                                           value="{{ info.title }}" data-required="true">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">变量名</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input name="identifier" type="text"
+                                           class="form-control parsley-validated"
+                                           value="{{ info.identifier }}" data-required="true">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">类型</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <select class="form-control" name="type"
+                                            onchange="var styles, key;styles=new Array('number','text','radio', 'checkbox', 'checkicon', 'textarea', 'select', 'image', 'calendar', 'range', 'info'); for(key in styles) {var obj=document.getElementById('style_'+styles[key]); if(obj) { obj.style.display=styles[key]==this.options[this.selectedIndex].value?'':'none';}}">
+                                        <option value="number" {% if info.type == 'number' %}selected=""{% endif %}>
+                                            数字(number)
+                                        </option>
+                                        <option value="text" {% if info.type == 'text' %}selected=""{% endif %} >
+                                            字串(text)
+                                        </option>
+                                        <option value="radio" {% if info.type == 'radio' %}selected=""{% endif %} >
+                                            单选(radio)
+                                        </option>
+                                        <option value="checkbox"
+                                                {% if info.type == 'checkbox' %}selected=""{% endif %} >多选(checkbox)
+                                        </option>
+                                        <option value="checkicon"
+                                                {% if info.type == 'checkicon' %}selected=""{% endif %} >
+                                            多选带图标(checkicon)
+                                        </option>
+                                        <option value="textarea"
+                                                {% if info.type == 'textarea' %}selected=""{% endif %}>文本(textarea)
+                                        </option>
+                                        <option value="select" {% if info.type == 'select' %}selected=""{% endif %}>
+                                            选择(select)
+                                        </option>
+                                        <option value="calendar"
+                                                {% if info.type == 'calendar' %}selected=""{% endif %}>日历(calendar)
+                                        </option>
+                                        <option value="email" {% if info.type == 'email' %}selected=""{% endif %}>
+                                            电子邮件(email)
+                                        </option>
+                                        <option value="url" {% if info.type == 'url' %}selected=""{% endif %}>
+                                            超级链接(url)
+                                        </option>
+                                        <option value="image" {% if info.type == 'image' %}selected=""{% endif %}>
+                                            上传图片(image)
+                                        </option>
+                                        <option value="range" {% if info.type == 'range' %}selected=""{% endif %}>
+                                            范围(range)
+                                        </option>
+                                    </select></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">简短描述(可选)</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <textarea name="description"
+                                              class="form-control">{{ info.description }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">单位</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input name="unit" type="text"
+                                           class="form-control parsley-validated"
+                                           value="{{ info.unit }}" data-required="true"></div>
+                            </div>
+                        </div>
+                    </div>
+                    {#
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">是否限制有效期</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <label class="radio-inline i-checks">
+                                        <input type="radio" value="0" name="expiration"><i></i> 是
+                                    </label>
+                                    <label class="radio-inline i-checks">
+                                        <input type="radio" value="1" name="expiration" checked="checked"><i></i> 否
+                                    </label>
+                                </div>
+                                <div class="col-md-12">
+                                        <span class="help-block m-b-none text-muted"><i
+                                                    class="fa fa-info-circle text-info"></i> 选择是则超过有效期信息自动隐藏.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                   #}
+
+                </fieldset>
+                <fieldset class="content-group">
+                    {% include "./inc/_number_form.html" %}
+                    {% include "./inc/_radio_form.html" %}
+                    {% include "./inc/_checkbox_form.html" %}
+                    {% include "./inc/_select_form.html" %}
+                    {% include "./inc/_text_form.html" %}
+                    {% include "./inc/_textarea_form.html" %}
+                    {% include "./inc/_calendar_form.html" %}
+                    {% include "./inc/_image_form.html" %}
+                    {% include "./inc/_range_form.html" %}
+                </fieldset>
+
+            </div>
+            <div class="panel-footer ">
+                <input type="hidden" name="sortid" value="{{ info.typeid }}">
+                <div class="col-sm-12">
+                    <button class="btn btn-primary btn-s-md posttype" type="submit">保存</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
+{% block script %}
+    <script>
+      new Vue({
+        el: '#threadtypeform',
+        data: {
+          selected: {},
+          types: [
+            {
+              text: '单选（radio）',
+              value: 'radio',
+              active: false
+            },
+            {
+              text: '多选（checkbox）',
+              value: 'checkbox',
+              active: true
+            },
+            {
+              text: '文本（textarea）',
+              value: 'textarea',
+              active: false
+            },
+            {
+              text: '选择（select）',
+              value: 'select',
+              active: true
+            },
+            {
+              text: '日历（calendar）',
+              value: 'calendar',
+              active: false
+            },
+            {
+              text: '邮件（email）',
+              value: 'email',
+              active: false
+            },
+            {
+              text: '链接（url）',
+              value: 'url',
+              active: false
+            },
+            {
+              text: '上传图片（image）',
+              value: 'image',
+              active: false
+            },
+            {
+              text: '范围（range）',
+              value: 'range',
+              active: false
+            }
+          ]
+        },
+        delimiters: ['${', '}'],
+        mounted () {
+          this.selected = this.types[1]
+        }
+      })
+    </script>
+
+    <script>
+      $(function () {
+        $(".addtr").click(function () {
+          var tr = '<tr>' +
+            '<td></td>' +
+            '<td> <input type="text" class="form-control form-control-text" name="displayorder" value="" ></td>' +
+            '<td><input type="text" class="form-control form-control-text" name="name" value=""></td>' +
+            '<td><input type="text" class="form-control form-control-text" name="description" value=""></td>' +
+            '<td></td>' +
+            '<td></td>' +
+            '</tr>';
+          $("#export-form>tbody").append(tr);
+        })
+        $(".checkdom").click(function () {
+          var val = $(this).val();
+          var name = $(this).attr('data-name');
+          var type = $(this).attr('data-type');
+          if ($(this).attr("checked")) {
+            $(this).removeAttr("checked");
+            var id = 'tr[data-id="' + val + '"]';
+            $(id).remove();
+          } else {
+            $(this).attr("checked", 'true');
+            var tr = '  <tr data-id="' + val + '">' +
+              '<input type="hidden" name="optionid" value="' + val + '">' +
+              '<td> <input type="text" class="form-control form-control-text" name="displayorder" value="0" ></td>' +
+              '<td><label class="checkbox m-n i-checks"><input type="checkbox" name="available" value="1" checked="checked"><i></i></label></td>' +
+              '<td>' + name + '</td>' +
+              '<td>' + type + '</td>' +
+              '<td><label class="checkbox m-n i-checks"><input type="checkbox" name="required" value="1" ><i></i></label></td>' +
+              '<td><label class="checkbox m-n i-checks"><input type="checkbox" name="unchangeable" value="1" ><i></i></label></td>' +
+              '<td><label class="checkbox m-n i-checks"><input type="checkbox" name="search_form" value="1"><i></i></label></td>' +
+              '<td><label class="checkbox m-n i-checks"><input type="checkbox" name="search_font" value="2" ><i></i></label></td>' +
+              '<td><label class="checkbox m-n i-checks"><input type="checkbox" name="subjectshow" value="1" ><i></i></label></td>' +
+              '<td><a href="/admin/type/typeview/typeid/{{ val.typeid }}" class="text-info"> 编辑</a></td></tr>';
+            $('#type-list>tbody').append(tr);
+          }
+        })
+//提交数据
+        $(".posttype").click(function () {
+          var rules = {};
+          var data = {};
+          data.optionid = '{{ info.optionid }}';
+          data.title = $('input[name="title"]').val() || '';
+          data.identifier = $('input[name="identifier"]').val() || '';
+          data.type = $('select[name="type"]').val();
+          data.description = $('input[name="description"]').val() || '';
+          data.unit = $('input[name="unit"]').val() || '';
+          if (data.type == "number") {
+            rules.maxnum = $('input[name="rules[number][maxnum]"]').val() || '';
+            rules.minnum = $('input[name="rules[number][minnum]"]').val() || '';
+            rules.inputsize = $('input[name="rules[number][inputsize]"]').val() || '';
+            rules.defaultvalue = $('input[name = "rules[number][defaultvalue]"]').val() || '';
+            data.rules = JSON.stringify(rules);
+          } else if (data.type == "text") {
+            rules.maxlength = $('input[name="rules[text][maxlength]"]').val() || '';
+            rules.inputsize = $('input[name="rules[text][inputsize]"]').val() || '';
+            rules.profile = $('select[name="rules[text][profile]"]').val() || '';
+            rules.defaultvalue = $('input[name="rules[text][defaultvalue]"]').val() || '';
+            data.rules = JSON.stringify(rules);
+          } else if (data.type == "radio") {
+            rules.choices = $("textarea[name='rules[radio][choices]']").val() || '';
+            data.rules = JSON.stringify(rules);
+          } else if (data.type == "checkbox") {
+            rules.choices = $("textarea[name='rules[checkbox][choices]']").val() || '';
+            data.rules = JSON.stringify(rules);
+          } else if (data.type == "textarea") {
+            rules.maxlength = $('input[name="rules[textarea][maxlength]"]').val() || '';
+            rules.colsize = $('input[name="rules[textarea][colsize]"]').val() || '';
+            rules.rowsize = $('input[name="rules[textarea][rowsize]"]').val() || '';
+            rules.defaultvalue = $('input[name="rules[textarea][defaultvalue]"]').val() || '';
+            data.rules = JSON.stringify(rules);
+          } else if (data.type == "select") {
+            rules.choices = $("textarea[name='rules[select][choices]']").val() || '';
+            rules.inputsize = $('input[name="rules[select][inputsize]"]').val() || '';
+            data.rules = JSON.stringify(rules);
+          } else if (data.type == "calendar") {
+            rules.inputsize = $('input[name="rules[calendar][inputsize]"]').val() || '';
+            data.rules = JSON.stringify(rules);
+          } else if (data.type == "range") {
+            rules.maxnum = $('input[name="rules[range][maxnum]').val() || '';
+            rules.minnum = $('input[name="rules[range][minnum]"]').val() || '';
+            rules.inputsize = $('input[name="rules[range][inputsize]"]').val() || '';
+            rules.searchtxt = $('input[name="rules[range][searchtxt]"]').val() || '';
+            data.rules = JSON.stringify(rules);
+          } else if (data.type == "image") {
+            rules.maxwidth = $('input[name="rules[image][maxwidth]').val() || '';
+            rules.maxheight = $('input[name="rules[image][maxheight]"]').val() || '';
+            rules.inputsize = $('input[name="rules[image][inputsize]"]').val() || '';
+            data.rules = JSON.stringify(rules);
+          }
+
+          console.log(data);
+          $.ajax({
+            url: "/admin/type/edittype",
+            data: data,
+            type: "post",
+            success: function (res) {
+              if (res.errno == 0) {
+                if (res.data.url) {
+
+                  toastr.success(res.data.name + ' 页面即将自动跳转~');
+                } else {
+                  toastr.success(res.data.name);
+                }
+                setTimeout(function () {
+                  if (res.data.url) {
+                    location.href = res.data.url;
+                  } else {
+                    location.reload();
+                  }
+                }, 1500);
+              }
+            }
+          })
+          return false;
+        })
+
+      })
+    </script>
+{% endblock %}

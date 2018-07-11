@@ -1,0 +1,70 @@
+{% extends "./base.html" %}
+
+{% block pageHeader %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4>
+                    <span class="text-semibold">扩展</span> - {{ controller.meta_title }}
+                </h4>
+            </div>
+
+        </div>
+        <div class="breadcrumb-line breadcrumb-line-component"><a class="breadcrumb-elements-toggle"><i
+                        class="icon-menu-open"></i></a>
+            <ul class="breadcrumb">
+                <li><a href="index.html"><i class="icon-home2 position-left"></i> 首页</a></li>
+                <li><a href="/admin/model/ext">独立模型</a></li>
+                <li class="active">{{ controller.meta_title }}</li>
+            </ul>
+
+        </div>
+
+
+    </div>
+    <!-- /page header -->
+
+{% endblock %}
+
+{% block content %}
+    <div class="panel panel-flat">
+        <div class="tabbable tab-content-bordered ">
+            <ul class="nav nav-tabs nav-tabs-bottom">
+                {% for v in list %}
+                    {% set index = loop.index %}
+                    <li class="{{ 'active' if index==1 }}">
+                        <a href="#table{{ index }}" data-toggle="tab">
+                            <i class="fa fa-list-alt text-muted"></i>
+                            {{ v.Table }}
+                        </a>
+                    </li>
+                {% endfor %}
+                {#
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog text-muted"></i> 字段管理 <b
+                                                class="caret"></b></a>
+                                    <ul class="dropdown-menu text-left">
+                                        {% for val in typeoption %}
+                                            <li><a href="/admin/type/typeoption/?classid={{val.optionid}}"
+                                                   style="padding-top: 5px;padding-bottom: 5px">{{val.title}}</a></li>
+                                        {%endfor%}
+                                    </ul>
+                                </li>#}
+            </ul>
+        </div>
+
+        <div class="panel-body">
+
+            <div class="tab-content">
+                {% for v in list %}
+                    {% set index = loop.index %}
+                    <div class="tab-pane fade {{ 'active in' if index==1 }}" id="table{{ index }}">
+                        <pre>{{ v['Create Table']| nl2br | safe }}</pre>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

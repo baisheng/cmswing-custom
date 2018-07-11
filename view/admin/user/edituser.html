@@ -1,0 +1,137 @@
+{% extends "../../_ui/views/modal_form.html" %}
+{% block size %}default{% endblock %}
+
+{% block _content %}
+    <input type="hidden" value="{{ user.id }}" name="id">
+
+    <div class="form-group">
+        <label class=" control-label">用户名称</label>
+        <p class="form-control-static">{{ user.username }}</p>
+    </div>
+    <div class="form-group">
+        <label class="display-block control-label" style="padding-top: 25px">头像</label>
+        <a href="#" class="pull-left thumb-md avatar b-3x m-r">
+            <img src="/u/avatar/{{ user.id }}" alt="{{ user.username }}" class="img-circle img-lg">
+        </a>
+        <label class="checkbox-inline i-checks ml-15" style="padding-top: 25px">
+            <input type="checkbox" value="1" name="delavatar"><i></i> 删除头像
+        </label>
+    </div>
+    <div class="form-group">
+        <label class=" control-label">密码</label>
+        <input type="password" name="password" class="input-sm form-control" placeholder="不修改密码请留空">
+    </div>
+    <div class="form-group">
+        <label class=" control-label">确认密码</label>
+        <input type="password" class="input-sm form-control" placeholder="不修改密码请留空"
+               name="repassword">
+    </div>
+    <div class="form-group">
+        <label class=" control-label">邮箱</label>
+        <input type="text" name="email" class="form-control input-sm" data-type="email"
+               data-required="true" value="{{ user.email }}">
+    </div>
+    <div class="form-group">
+        <label class=" control-label">手机</label>
+        <input type="text" name="mobile" class="form-control input-sm" data-type="number"
+               value="{{ user.mobile }}">
+    </div>
+    <div class="form-group">
+        <label class=" control-label">会员组</label>
+
+        <select class="form-control input-sm" name="groupid">
+            {% for v in usergroup %}
+                <option value="{{ v.groupid }}" {% if v.groupid== user.groupid %} selected{% endif %}>
+                    {{ v.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+    </div>
+    <div class="form-group">
+        <label class=" control-label">用户类型</label>
+
+        <label class="radio-inline i-checks">
+            <input type="radio" value="0" name="is_admin" {% if
+                user.is_admin==0 %}checked{% endif %}><i></i> 用户
+        </label><label class="radio-inline i-checks">
+            <input type="radio" value="1" name="is_admin" {% if
+                user.is_admin==1 %}checked{% endif %}><i></i> 管理员
+        </label>
+
+        <span class="help-block m-b-none"><span class="help-block m-b-none text-muted"><i
+                        class="fa fa-info-circle "></i> 选择前台用户不能登陆后台管理</span></span>
+    </div>
+    <div class="form-group is_admin_group {% if user.is_admin==0 %}hide{% endif %}">
+        <label class=" control-label">管理组</label>
+
+        <select class="form-control " name="role_id">
+            {% for v in role %}
+                <option value="{{ v.id }}" {% if v.id== roleid %} selected{% endif %}>{{ v.desc }}</option>
+            {% endfor %}
+        </select>
+
+        <span class="help-block m-b-none"><span class="help-block m-b-none text-muted"><i
+                        class="fa fa-info-circle "></i> 选择后台时才生效</span></span>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    {{ super() }}
+
+    <script type="text/javascript">
+      $('#_form').submit(function (e) {
+        e.preventDefault();
+        if ($(".form-validate").valid()) {
+          $.post("/admin/user/edituser", $(this).serialize()).done(function (data) {
+            if (data.errno > 0) {
+              new PNotify({
+                title: '出错啦',
+                icon: 'icon-blocked',
+                text: data.errmsg,
+                addclass: 'bg-danger',
+                type: 'danger'
+              });
+            } else {
+              new PNotify({
+                icon: 'icon-check',
+                text: data.data.name,
+                addclass: 'bg-success',
+                type: 'success'
+              })
+              location.reload();
+            }
+          }).fail(function () {
+            new PNotify({
+              title: '出错啦',
+              icon: 'icon-blocked',
+              text: data.errmsg,
+              addclass: 'bg-danger',
+              type: 'danger'
+            });
+          });
+        }
+      });
+
+      $(function () {
+
+        $('.time').datetimepicker({
+          format: 'yyyy-mm-dd hh:ii',
+          language: "zh-CN",
+          minView: 2,
+          autoclose: true
+        });
+        //用户组选择
+        $("input[name='is_admin']").on("change", function () {
+          var val = $(this).val();
+          console.log(val);
+          if (val == 1) {
+            $(".is_admin_group").removeClass('hide');
+          } else {
+            $(".is_admin_group").addClass('hide');
+          }
+        })
+      })
+    </script>
+{% endblock %}

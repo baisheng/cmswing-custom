@@ -1,0 +1,84 @@
+{% if field.is_show == 1 or field.is_show == 2 %}
+    <div class="form-group">
+        {% if field.type == "editor" %}
+        <div class="col-sm-12">
+            {% else %}
+            <label class="col-sm-2 control-label text-semibold">{{ field.title }}</label>
+            <div class="col-sm-10">
+                {% endif %}
+                <div class="row">
+                    {% if field.type == "num" %}
+                        {% include "./_num_field.html" %}
+
+                        {% elif field.type == "string" %}
+                        {% include "./_string_field.html" %}
+
+                        {% elif field.type == "textarea" %}
+                        {% include "./_textarea_field.html" %}
+
+                        {% elif field.type == "date" %}
+                        {% include "./_date_filed.html" %}
+
+                        {% elif field.type == "datetime" %}
+                        {% include "./_datetime_field.html" %}
+
+                        {% elif field.type == "keyword" %}
+                        {% include "./_keyword_field.html" %}
+
+                        {% elif field.type == 'relation' %}
+                        {% include "./_relation_field.html" %}
+
+                        {% elif field.type == "freight" %}
+                        {% include "./_freight_field.html" %}
+
+                        {% elif field.type == "suk" %}
+                        {% include "./_suk_field.html" %}
+
+                        {% elif field.type == "price" %}
+                        {% include "./_price_field.html" %}
+
+                        {% elif field.type == "pics" %}
+                        {% include "./_pics_field.html" %}
+
+                        {% elif field.type == "atlas" %}
+                        {% include "./_atlas_field.html" %}
+
+                        {% elif field.type == "bool" %}
+                        {% include "./_bool_field.html" %}
+
+                        {% elif field.type == "select" %}
+                        {% include "./_select_field.html" %}
+
+                        {% elif field.type == "icons" %}
+                        {% include "./_icons_field.html" %}
+
+                        {% elif field.type == "radio" %}
+                        {% include "./_radio_field.html" %}
+
+                        {% elif field.type == "checkbox" %}
+                        {% include "./_checkbox_field.html" %}
+
+                        {% elif field.type == "editor" %}
+                        {% include "./_editor_field.html" %}
+
+                        {% elif field.type == "picture" %}
+                        {% include "./_picture_field.html" %}
+
+                        {% elif field.type == "file" %}
+                        {% include "./_file_field.html" %}
+                        {% elif field.type == "htmlfile" %}
+                        {#{% include "./_file_field.html" %}#}
+                        {% include "./_fileHtml_field.html" %}
+                        {#{% include "./_file_field.html" %}#}
+
+                    {% else %}
+                        {% include "./_text_field.html" %}
+                    {% endif %}
+
+                    {% if field.remark and field.type != "editor" %}
+                        {% include "./_remark_field.html" %}
+                    {% endif %}
+                </div>
+        </div>
+    </div>
+{% endif %}

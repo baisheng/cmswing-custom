@@ -1,0 +1,8 @@
+<div class="col-md-8">
+    {% for k ,v in val.option.rules.choices %}
+        <label class="radio-inline i-checks">
+            <input type="radio" value="{{ k }}"
+                   name="sortid_{{ val.option.identifier }}"><i></i> {{ v }}
+        </label>
+    {% endfor %}
+</div>

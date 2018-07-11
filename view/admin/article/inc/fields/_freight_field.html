@@ -1,0 +1,103 @@
+<div class="col-md-5">
+    <input type="hidden"
+           name="{{ field.name }}"
+           value='{"type":0,"val":0}'
+           id="{{ field.name }}"/>
+    <table class="table table-bordered b-t b-light m-b-none">
+        <tr>
+            <td>
+                <div class="radio i-checks">
+                    <label>
+                        <input type="radio"
+                               checked=""
+                               value="0"
+                               id="js-unified-postage"
+                               name="{{ field.name }}_radio">
+                        <i></i>
+                        统一运费
+                    </label>
+
+                </div>
+            </td>
+            <td>
+                <div class="radio i-checks">
+                    <label>
+                        <input type="radio"
+                               value="1"
+                               id="js-use-delivery"
+                               name="{{ field.name }}_radio">
+                        <i></i>
+                        运费模板
+                    </label>
+                </div>
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="radio-tab1">
+                    <div class="input-group ">
+                        <span class="input-group-addon">￥</span>
+                        <input type="text"
+                               class="form-control"
+                               style="width:100px"
+                               value="0"
+                               id="js-postage">
+                    </div>
+                </div>
+                <div class="radio-tab2 hide ">
+                    <select style="width:260px"
+                            data-placeholder="请选择运费模板"
+                            class="chosen-select1"
+                            id="js-delivery-template">
+                        <option value=""></option>
+                        <option value="1">
+                            测试运费模板1
+                        </option>
+                        <option value="2">
+                            测试运费模板2
+                        </option>
+                    </select>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <script>
+      $.each($("[name='{{ field.name }}_radio']"), function () {
+
+        $(this).click(function () {
+          var id = $(this).val();
+          var val;
+          if (0 == id) {
+            val = $("#js-postage").val()
+            $(".radio-tab1").removeClass('hide');
+            $(".radio-tab2").addClass('hide');
+          } else {
+            val = $("#js-delivery-template  option:selected").val();
+            $(".radio-tab1").addClass('hide');
+            $(".radio-tab2").removeClass('hide');
+          }
+          var o = {"type": id, "val": val};
+          $("#{{ field.name }}").val(JSON.stringify(o));
+        })
+
+      })
+      $("#js-postage").on("focus", function () {
+        val = $("#js-postage").val()
+        var o = {"type": 0, "val": val};
+        $("#{{ field.name }}").val(JSON.stringify(o));
+      })
+      $("#js-postage").on("change", function () {
+        val = $("#js-postage").val()
+        var o = {"type": 0, "val": val};
+        $("#{{ field.name }}").val(JSON.stringify(o));
+      })
+
+      $(".chosen-select1").chosen().change(function () {
+        //$("#js-unified-postage").attr("checked",false);
+        val = $("#js-delivery-template  option:selected").val();
+        var o = {"type": 1, "val": val};
+        $("#{{ field.name }}").val(JSON.stringify(o));
+      })
+    </script>
+</div>

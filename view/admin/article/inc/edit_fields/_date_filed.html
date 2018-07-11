@@ -1,0 +1,8 @@
+<div class="col-md-3">
+    <input type="text"
+           name="date|||{{ field.name }}"
+           class="form-control date"
+           value="{% if data[field.name]==0 %}{% else %}{{ data[field.name]|moment('YYYY-MM-DD') }}{% endif %}"
+           placeholder="请选择日期"/>
+
+</div>

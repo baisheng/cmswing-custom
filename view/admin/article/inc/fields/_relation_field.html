@@ -1,0 +1,34 @@
+<div class="col-md-3">
+    <input type="hidden"
+           name="{{ field.name }}"
+           value=""
+           id="{{ field.name }}">
+    <input type="text"
+           class="form-control"
+           id="{{ field.name }}_show"
+           name="{{ field.name }}_show"/>
+
+    {% set relext = field.extra|parse_config_attr %}
+
+    <script language="javascript" type="text/javascript">
+      $("#{{ field.name }}_show").change(function () {
+        var v = $(this).val();
+        if (v.length == 0) {
+          $("#{{ field.name }}").val(0);
+        }
+      })
+      $("#{{ field.name }}_show").coolautosuggest({
+        url: "/admin/public/getrelation/?model={{ relext.model }}&id={{ relext.id }}&val={{ relext.val }}&key=",
+        onSelected: function (result) {
+          // Check if the result is not null
+          if (result != null) {
+            $("#{{ field.name }}").val(result.id); // Get the ID field
+          }
+          else {
+            $("#{{ field.name }}").val(""); // Empty the ID field
+
+          }
+        }
+      });
+    </script>
+</div>

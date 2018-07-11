@@ -1,0 +1,140 @@
+{% extends "./_base.html" %}
+
+{% block pageHeader %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-header-content">
+
+            <div class="page-title">
+
+                <h4><i class="icon-arrow-left52 position-left"></i> <span
+                            class="text-semibold">系统配置</span> - {{ controller.meta_title }}</h4>
+            </div>
+
+            <div class="heading-elements">
+
+                <a href="/admin/setup/add"
+                   class="active btn btn-labeled btn-labeled-right bg-primary heading-btn ">
+                    添加模型
+                    <b><i class=" icon-add"></i></b>
+
+                </a>
+            </div>
+        </div>
+        <div class="breadcrumb-line breadcrumb-line-component"><a class="breadcrumb-elements-toggle"><i
+                        class="icon-menu-open"></i></a>
+            <ul class="breadcrumb">
+                <li><a href="index.html"><i class="icon-home2 position-left"></i> 首页</a></li>
+                <li><a href="/admin/database/index">系统配置</a></li>
+                <li class="active">{{ controller.meta_title }}</li>
+            </ul>
+            <ul class="breadcrumb-elements">
+                <!--<li><a href="/admin/channel/add">-->
+                <!--<i class="  icon-add-to-list position-left"></i> 添加分类-->
+                <!--</a></li>-->
+                <li>
+                    <a class=" " href="/admin/model/add">
+                        <i class="icon-plus22 position-left"></i>系统模型
+                    </a>
+
+                </li>
+                <li>
+                    <a class=" " href="/admin/model/addext">
+                        <i class="icon-plus22 position-left"></i>独立模型
+                    </a>
+                </li>
+                <li><a class="ajax-post" target-form="ids" href="/admin/model/setstatus/?status=1" target-form="ids"><i
+                                class="icon-arrow-right5 position-left"></i> 启用</a></li>
+                <li><a class="ajax-post" href="/admin/model/setstatus/?status=0" target-form="ids"><i
+                                class="    icon-primitive-square position-left"></i> 禁用</a></li>
+                <li><a href="/admin/model/generate"><i
+                                class=" icon-primitive-dot position-left"></i> 生成</a></li>
+
+
+            </ul>
+
+        </div>
+
+    </div>
+    <!-- /page header -->
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th style="width:20px;"><input type="checkbox"></th>
+                    <th style="width:80px;">编号</th>
+                    <th class="">标识</th>
+                    <th class="">名称</th>
+                    <th class="">创建时间</th>
+                    <th class="">状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in list %}
+                    <tr>
+                        <td><input class="ids" type="checkbox" name="ids"
+                                   value="{% if item.id !=1 %}{{ item.id }}{% endif %}" {% if
+                                       item.id==1 %}disabled="true"{% endif %}></td>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.name }}</td>
+                        <td><a data-id="{{ item.id }}" href="/admin/model/edit?id={{ item.id }}"
+                               class="">{{ item.title }}</a>
+                        </td>
+                        <td>{{ item.create_time | format_time(1) }}</td>
+                        <td>
+                            <a href="/admin/model/setstatus/ids/{{ item.id }}/status/{{ 1-item.status }}"
+                               class="active ajax-get"
+                               data-toggle="class">
+                                <i class="fa {% if item.status %}fa-check text-success text-active{% else %}fa-times text-danger text{% endif %}"></i>
+                            </a>
+                        </td>
+
+                        <td>
+                            <!--
+                            <a class="btn btn-default btn-xs" href="/admin/cms/list/model/{{ item.name }}"
+                               class="">数据</a>
+                               -->
+                            <a class="btn btn-default btn-xs" href="/admin/model/edit?id={{ item.id }}" class="">编辑</a>
+                            <a class="btn btn-default btn-xs" href="/admin/attribute/index/?model_id={{ item.id }}"
+                               class="">字段</a>
+                            {% if item.id !=1 %}
+                            <a href="/admin/model/del?id={{ item.id }}"
+                               class="btn btn-danger btn-xs confirm ajax-get ">删除</a></td>
+                        {% endif %}
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7">
+                            <div class="alert alert-warning alert-block">
+                                <button data-dismiss="alert" class="close" type="button">×</button>
+                                <p>还没有内容。</p>
+                            </div>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+        </div>
+        {% if pagerData %}
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-sm-12 text-right text-center-xs">
+                        {{ pagerData | safe }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+
+{% endblock %}

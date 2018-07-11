@@ -1,4 +1,4 @@
-{% extends "../inc/setup/base.html" %}
+{% extends "./_base.html" %}
 {% block pageAction %}
     <a href="/{{ ctx.controller }}/roleadd"
        class="btn btn-default btn-primary"
@@ -133,39 +133,39 @@
 
     <div class="tab-content">
         <div class="tab-pane active">
-            <div class="panel panel-white">
-{#
-                <div class="panel-toolbar panel-toolbar-inbox panel-body" style="padding-left: 0;">
-                    <div class="navbar navbar-default">
-                        <ul class="nav navbar-nav visible-xs-block no-border">
-                            <li>
-                                <a class="text-center collapsed" data-toggle="collapse"
-                                   data-target="#inbox-toolbar-toggle-multiple">
-                                    <i class="icon-circle-down2"></i>
-                                </a>
-                            </li>
-                        </ul>
+            <div class="card">
+                {#
+                                <div class="panel-toolbar panel-toolbar-inbox panel-body" style="padding-left: 0;">
+                                    <div class="navbar navbar-default">
+                                        <ul class="nav navbar-nav visible-xs-block no-border">
+                                            <li>
+                                                <a class="text-center collapsed" data-toggle="collapse"
+                                                   data-target="#inbox-toolbar-toggle-multiple">
+                                                    <i class="icon-circle-down2"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
 
-                        <div class="navbar-collapse collapse" id="inbox-toolbar-toggle-multiple">
+                                        <div class="navbar-collapse collapse" id="inbox-toolbar-toggle-multiple">
 
-                            <div class="btn-group navbar-btn">
-                                <a href="/{{ ctx.controller }}/roledel"
-                                   target-form="ids"
-                                   class="btn btn-default ajax-post confirm">
-                                    <i class="icon-bin"></i>
-                                    <span class="hidden-xs position-right">删除</span>
-                                </a>
-                                <a target-form="sort" href="/{{ ctx.controller }}/sort"
-                                   class="btn btn-default ajax-post">
-                                    <i class="icon-sort-numeric-asc"></i>
-                                    <span class="hidden-xs position-right ">排序</span>
-                                </a>
-                            </div>
+                                            <div class="btn-group navbar-btn">
+                                                <a href="/{{ ctx.controller }}/roledel"
+                                                   target-form="ids"
+                                                   class="btn btn-default ajax-post confirm">
+                                                    <i class="icon-bin"></i>
+                                                    <span class="hidden-xs position-right">删除</span>
+                                                </a>
+                                                <a target-form="sort" href="/{{ ctx.controller }}/sort"
+                                                   class="btn btn-default ajax-post">
+                                                    <i class="icon-sort-numeric-asc"></i>
+                                                    <span class="hidden-xs position-right ">排序</span>
+                                                </a>
+                                            </div>
 
-                        </div>
-                    </div>
-                </div>
-#}
+                                        </div>
+                                    </div>
+                                </div>
+                #}
 
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
@@ -177,7 +177,7 @@
                             <th>描述</th>
                             <th class="text-center">授权</th>
                             {#<th class="text-center" style="width: 80px;">#}
-                                {#状态#}
+                            {#状态#}
                             {#</th>#}
 
                             <th style="width: 145px;"></th>
@@ -187,30 +187,30 @@
                         {% for item in list %}
                             <tr>
                                 {#<td>{% if item.issystem !=1 %}<input class="ids" type="checkbox" name="ids"#}
-                                                                     {#value="{{ item.id }}" >{% endif %}</td>#}
+                                {#value="{{ item.id }}" >{% endif %}</td>#}
                                 {#<td><input class="form-control form-control-text text-center sort"#}
-                                           {#value="{{ item.sort }}"#}
-                                           {#name="sort" data-id="{{ item.id }}"/></td>#}
+                                {#value="{{ item.sort }}"#}
+                                {#name="sort" data-id="{{ item.id }}"/></td>#}
                                 <td>{{ item.desc }}</td>
 
                                 <td>{{ item.description }}</td>
                                 <td class="text-center">
                                     <div class="btn-group">
                                         <a class="btn btn-xs"
-                                        href="/admin/auth/access/?id={{ item.id }}">权限设置</a>
+                                           href="/admin/auth/access/?id={{ item.id }}">权限设置</a>
                                         <a class="btn btn-xs"
-                                        href="/admin/auth/catepriv/?id={{ item.id }}">栏目权限</a>
+                                           href="/admin/auth/catepriv/?id={{ item.id }}">栏目权限</a>
                                         <a class="btn btn-xs"
                                            href="/admin/auth/userlist/?id={{ item.id }}">成员管理</a>
                                     </div>
                                 </td>
                                 {#<td>#}
-                                    {#<a href="/admin/auth/setstatus/ids/{{ item.id }}/status/{{ 1-item.status }}/model/auth_role"#}
-                                       {#class="active ajax-get"#}
-                                       {#data-toggle="class"#}
-                                       {#style="text-align: center;">#}
-                                        {#<i class="fa  {% if item.status %}fa-check text-success text-active{% else %} fa-times text-danger text{% endif %}"></i>#}
-                                    {#</a>#}
+                                {#<a href="/admin/auth/setstatus/ids/{{ item.id }}/status/{{ 1-item.status }}/model/auth_role"#}
+                                {#class="active ajax-get"#}
+                                {#data-toggle="class"#}
+                                {#style="text-align: center;">#}
+                                {#<i class="fa  {% if item.status %}fa-check text-success text-active{% else %} fa-times text-danger text{% endif %}"></i>#}
+                                {#</a>#}
                                 {#</td>#}
                                 <td>
                                     <a href="/admin/auth/roleedit/?id={{ item.id }}"
@@ -219,8 +219,8 @@
                                 </td>
 
                                 {#{% if item.issystem !=1 %}#}
-                                    {#<a href="/admin/auth/roledel/?ids={{ item.id }}"#}
-                                       {#class="confirm ajax-get btn btn-xs text-danger-600">删除</a>#}
+                                {#<a href="/admin/auth/roledel/?ids={{ item.id }}"#}
+                                {#class="confirm ajax-get btn btn-xs text-danger-600">删除</a>#}
                                 {#{% endif %}#}
                             </tr>
                         {% else %}
@@ -284,12 +284,3 @@
         </aside>
     </section>
 {% endblock %}
-
-    {% block script %}
-        <script src="/static/admin/js/parsley/parsley.min.js"></script>
-        <script src="/static/admin/js/parsley/parsley.extend.js"></script>
-
-        <script>
-
-        </script>
-    {% endblock %}

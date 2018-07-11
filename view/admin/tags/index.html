@@ -1,0 +1,66 @@
+{#{% extends "../inc/setup/base.html" %}#}
+{% extends "../inc/experiment_base.html" %}
+{% block pageAction %}
+    <a href="/admin/tags/add"
+       class="btn btn-default btn-primary ">
+        <i class="icon-plus-circle2 position-left"></i>
+        添加图标
+    </a>
+{% endblock %}
+
+{% block content %}
+
+    <div class="panel panel-flat">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    {#<th style="width:20px;"><input type="checkbox"></th>#}
+                    <th style="width:80px;">编号</th>
+                    <th class="">图标预览</th>
+                    <th class="">名称</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in list %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>
+                            <img src="{{ item.icon|get_pic('m=1') }}" class="img-rounded img-sm" alt="">
+                        </td>
+                        <td>{{ item.name }}</td>
+                        <td>
+                            <a class="btn " href="/admin/tags/edit?id={{ item.id }}" class="">编辑</a>
+                            <a href="/admin/tags/delete?id={{ item.id }}" class="btn confirm ajax-get ">删除</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">
+                            <div class="alert alert-warning alert-block">
+                                <button data-dismiss="alert" class="close" type="button">×</button>
+                                <p>还没有图标内容</p>
+                            </div>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+        </div>
+        {% if pagerData %}
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-12 text-right text-center-xs">
+                        {{ pagerData | safe }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+
+{% endblock %}

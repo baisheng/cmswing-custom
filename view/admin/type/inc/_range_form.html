@@ -1,0 +1,69 @@
+<div {% if info.type != 'range' %}style="display: none;"{% endif %} id="style_range">
+    <legend class="text-bold">
+        范围(range)
+    </legend>
+    {% if info.type == "range" %}
+        {% set rules = info.rules|strToJson %}
+    {% endif %}
+    <div class="form-group">
+        <label class="col-sm-2 control-label">数值最大值(可选)</label>
+        <div class="col-sm-10">
+            <div class="row">
+                <div class="col-md-4"><input name="rules[range][maxnum]" type="text"
+                                             class="form-control parsley-validated"
+                                             value="{% if info.type == 'range' %}{{ rules.maxnum }}{% endif %}"
+                                             data-required="true"></div>
+                <div class="col-md-12 hidden">
+                    <span class="help-block m-b-none text-muted"><i
+                                class="fa fa-info-circle text-info"></i> 名称不能为空.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed b-b line-lg pull-in"></div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">数值最小值(可选)</label>
+        <div class="col-sm-10">
+            <div class="row">
+                <div class="col-md-4"><input name="rules[range][minnum]" type="text"
+                                             class="form-control parsley-validated"
+                                             value="{% if info.type == 'range' %}{{ rules.minnum }}{% endif %}"
+                                             data-required="true"></div>
+                <div class="col-md-12 hidden">
+                    <span class="help-block m-b-none text-muted"><i class="fa fa-info-circle text-info"></i> 此宽度设置仅在自定义"分类信息发布内容显示模板"时生效.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed b-b line-lg pull-in"></div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">表单显示长度(可选)</label>
+        <div class="col-sm-10">
+            <div class="row">
+                <div class="col-md-4"><input name="rules[range][inputsize]" type="text"
+                                             class="form-control parsley-validated"
+                                             value="{% if info.type == 'range' %}{{ rules.inputsize }}{% endif %}"
+                                             data-required="true"></div>
+                <div class="col-md-12 hidden">
+                    <span class="help-block m-b-none text-muted"><i
+                                class="fa fa-info-circle text-info"></i> 名称不能为空.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line line-dashed b-b line-lg pull-in"></div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">搜索范围预置值(可选)</label>
+        <div class="col-sm-10">
+            <div class="row">
+                <div class="col-md-4"><input name="rules[range][searchtxt]" type="text"
+                                             class="form-control parsley-validated"
+                                             value="{% if info.type == 'range' %}{{ rules.searchtxt }}{% endif %}"
+                                             data-required="true"></div>
+                <div class="col-md-12 ">
+                    <span class="help-block m-b-none text-muted"><i class="fa fa-info-circle text-info"></i> 设置项目的快速搜索预置数值，逗号分隔，例如：“0,50,100”，将显示 0 - 50、50 - 100 的搜索快捷链接.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

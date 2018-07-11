@@ -1,0 +1,8 @@
+<div class="col-md-3">
+    <select class="form-control "
+            name="{{ field.name }}">
+        {% for k ,v in field.extra|parse_config_attr %}
+            <option value="{{ k }}" {% if field.value == k %} selected {% endif %}>{{ v }}</option>
+        {% endfor %}
+    </select>
+</div>

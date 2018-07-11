@@ -1,0 +1,69 @@
+{% extends "../inc/base.html" %}
+
+{% block sidebar %}
+<!-- Main sidebar -->
+<div class="sidebar sidebar-default">
+    <div class="sidebar-content">
+
+        <!-- Main navigation -->
+        <div class="sidebar-category sidebar-category-visible">
+            <div class="category-title h6">
+                <span>{{controller.meta_title}}</span>
+                <ul class="icons-list">
+                <li><a href="#" data-action="collapse"></a></li>
+                </ul>
+            </div>
+
+            <div class="category-content no-padding ">
+                <ul class="navigation navigation-main navigation-accordion navigation-bordered">
+                    <!--<li class="navigation-header"><span>{{controller.meta_title}}</span> <i class="icon-menu" title="{{controller.meta_title}}"></i></li>-->
+
+                    <li>
+                        <a href="/admin/category/add" class="">
+                            <i class="fa fa-plus-circle position-left text-teal-600"></i>
+
+                            <span>创建栏目</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="jQuery('#category').treetable('expandAll'); return false;"
+                           class=" ">
+                            <i class=" icon-unfold position-left"></i>
+                           <span> 展开全部</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="jQuery('#category').treetable('collapseAll'); return false;" href="#"
+                           class="">
+                            <i class=" icon-fold position-left"></i>
+                            <span>收起全部</span>
+                        </a>
+                    </li>
+
+                    <li>
+
+                        <a class="ajax-post" target-form="sort"
+                           href="/{{ctx.controller}}/sort">
+                            <i class="fa fa-sort-alpha-asc position-left"></i>
+                            <span>排序</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ajax-post" target-form="sort"
+                           href="/{{ctx.controller}}/puliccache">
+                            <i class="fa fa-refresh position-left"></i>
+                            <span> 更新缓存</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <!-- /main navigation -->
+
+    </div>
+</div>
+<!-- /main sidebar -->
+
+{% endblock %}
+

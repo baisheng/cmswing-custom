@@ -1,0 +1,124 @@
+{% extends "../../_ui/views/modal_form.html" %}
+{% block _content %}
+    <fieldset>
+
+        <div class="collapse in" id="demo1" aria-expanded="true">
+            {{ fields.input('', { name: 'username', label: '用户名称',  required: 'required', placeholder: '输入用户名'}) }}
+
+            {{ fields.input('', { type: 'password', name: 'password', label: '密码',  required: 'required', placeholder: '用户密码, 不少于 6 位'}) }}
+            {{ fields.input('', { type: 'password', name: 'repassword', label: '确认密码',  required: 'required', placeholder: '再次输入密码' }) }}
+
+            <div class="form-group">
+                <label class="text-semibold">邮箱</label>
+                <input type="text" name="email" class="form-control input-sm" data-type="email"
+                       data-required="true" data-Remote="/admin/user/parsley">
+            </div>
+            <div class="form-group">
+                <label class="text-semibold">手机</label>
+                <input type="text" name="mobile" class="form-control input-sm" data-type="number">
+            </div>
+            <div class="form-group is_user_group ">
+                <label class="text-semibold">用户组</label>
+
+                <select class="form-control input-sm select" name="groupid">
+                    {% for v in usergroup %}
+                        <option value="{{ v.groupid }}" {% if v.groupid == 2 %} selected{% endif %}>{{ v.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {{ fields.radio({ name: 'is_admin', label: '用户类型', checked: 1, helper: '仅管理员用户可以登陆后台管理', items: [{
+                label: '用户',
+                value: 0
+            },{
+                label: '管理员',
+                value: 1
+            }]}) }}
+
+            <div class="form-group is_admin_group">
+                <label class="text-semibold">管理组</label>
+
+                <select class="form-control select" name="role_id">
+                    {% for v in role %}
+                        <option value="{{ v.id }}" {% if v.id == 3 %} selected{% endif %}>{{ v.desc }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+
+        </div>
+    </fieldset>
+
+{% endblock %}
+
+{% block script %}
+    {{ super() }}
+
+    <script>
+      $('#_form').submit(function (e) {
+        e.preventDefault();
+        if ($(".form-validate").valid()) {
+          $.post("/admin/user/adduser", $(this).serialize()).done(function (data) {
+            if (data.errno > 0) {
+              new PNotify({
+                title: '出错啦',
+                icon: 'icon-blocked',
+                text: data.errmsg,
+                addclass: 'bg-danger',
+                type: 'danger'
+              });
+            } else {
+              new PNotify({
+                icon: 'icon-check',
+                text: data.data.name,
+                addclass: 'bg-success',
+                type: 'success'
+              })
+
+              location.reload();
+
+            }
+          }).fail(function () {
+            new PNotify({
+              title: '出错啦',
+              icon: 'icon-blocked',
+              text: data.errmsg,
+              addclass: 'bg-danger',
+              type: 'danger'
+            });
+          });
+        }
+      });
+
+      $(function () {
+
+        // Default initialization
+        $(".styled, .multiselect-container input").uniform({
+          radioClass: 'choice'
+        });
+
+        $('.time').datetimepicker({
+          format: 'yyyy-mm-dd hh:ii',
+          language: "zh-CN",
+          minView: 2,
+          autoclose: true
+        });
+        //用户组选择
+        $("input[name='is_admin']").on("change", function () {
+          var val = $(this).val();
+//            console.log(val);
+          if (val == 1) {
+            $(".is_admin_group").removeClass('hide');
+          } else {
+            $(".is_admin_group").addClass('hide');
+          }
+
+          // if (val == 0) {
+          //   $(".is_user_group").removeClass('hide');
+          // } else {
+          //   $(".is_user_group").addClass('hide');
+          // }
+        })
+
+      })
+    </script>
+{% endblock %}

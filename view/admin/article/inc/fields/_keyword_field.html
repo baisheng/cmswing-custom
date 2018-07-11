@@ -1,0 +1,21 @@
+<div class="col-md-10">
+    <input type="text"
+           class="form-control"
+           id="{{ field.name }}"
+           name="{{ field.name }}"
+           value="{{ field.value }}">
+</div>
+<script>
+  $(function () {
+    $('#{{ field.name }}').tagsInput({
+      autocomplete_url: '/admin/public/getkeyword',
+      autocomplete: {
+        selectFirst: true,
+        autoFill: true
+      },
+      width: 'auto',
+      height: '43px',
+      defaultText: 'add a tag',
+    });
+  })
+</script>

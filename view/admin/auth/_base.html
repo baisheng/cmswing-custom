@@ -1,0 +1,35 @@
+{% extends "../default.html" %}
+
+{% block pageHeader %}
+    <div class="page-header">
+        <!-- Header content -->
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4>
+                    <i class="icon-cabinet position-left"></i>
+                    <span class="text-semibold">系统管理</span> - {{ controller.meta_title }}
+                </h4>
+                {% block breadcrumb %}
+                    <ul class="breadcrumb position-right">
+                        <li>
+                            <a href="index.html">
+                                首页
+                            </a>
+                        </li>
+                        {#<li><a href="/admin/setup/index">系统管理</a></li>#}
+                        <li class="active">{{ controller.meta_title }}</li>
+
+                    </ul>
+                {% endblock %}
+                <a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
+
+            <div class="heading-elements">
+                {% block pageAction %}{% endblock %}
+            </div>
+        </div>
+        <!-- /header content -->
+        {% block pageToolbar %}{% endblock %}
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,89 @@
+{% block script %}
+
+  <script src="/static/admin/js/chosen/chosen.jquery.min.js"></script>
+    <script src="/static/admin/js/file-input/bootstrap-filestyle.min.js"></script>
+    <script src="/static/admin/js/parsley/parsley.min.js"></script>
+    <script src="/static/admin/js/parsley/parsley.extend.js"></script>
+    <script type="text/javascript">
+      $(function () {
+
+        //获取上级菜单
+        $.ajax({
+          url: "/admin/category/gettree",
+          success: function (msg) {
+            /* 展示生成的HTML */
+            $("#pid").html(category_to_html(msg));
+
+          }
+        })
+
+        //添加
+        function addtype () {
+          var required = $('input[name="documentsorts[required]"]:checked').val();
+          var prefix = $('input[name="documentsorts[prefix]"]:checked').val();
+          var defaults = $('input[name="documentsorts[default]"]:checked').val();
+          var defaultshow = $('input[name="documentsorts[defaultshow]"]:checked').val();
+          var types = []
+          $("#typelist>tbody>tr").each(function (k, v) {
+            var obj = {}
+            obj.enable = $(v).find("input[name='documentsorts[options][enable]']:checked").val() || 0;
+            obj.name = $(v).find("td").eq(1).text();
+            obj.description = $(v).find("td").eq(2).text();
+            obj.show = $(v).find("input[name='documentsorts[options][show]']:checked").val() || 0;
+            if (obj.enable != 0) {
+              types.push(obj);
+            }
+          });
+          var documentsorts = {
+            required: required,
+            prefix: prefix,
+            default: defaults,
+            defaultshow: defaultshow,
+            types: types
+          }
+          $('input[name="documentsorts"]').val("");
+          $('input[name="documentsorts"]').val(JSON.stringify(documentsorts));
+        }
+
+        $('.enable,.show,.defaultshow,[name="documentsorts[required]"],[name="documentsorts[prefix]"],[name="documentsorts[default]"]').on('change', function () {
+          addtype()
+        })
+
+        $('input[name="documentsorts[status]"]').click(function () {
+          var val = $(this).val();
+          if (val == 1) {
+            $("#documentsortscon").show();
+            addtype();
+          } else {
+            $("#documentsortscon").hide();
+            $('input[name="documentsorts"]').val("");
+          }
+        })
+
+        /* 生成HTML ul/li 形式 */
+        function category_to_html (nodes) {
+          var html = [];
+          var size = nodes.length;
+          var left = null;
+          var pid = "{{ controller.get('pid') }}";
+          html.push('<option value="0" selected="selected">一级菜单</option>');
+          for (var i = 0; i < size; i++) {
+            left = nodes[i];
+            if (pid === left.id) {
+              html.push('<option value="' + left['id'] + '" selected="selected">' + new Array(left["deep"] + 1).join("= ") + left['title'] + '</option>');
+            } else {
+              html.push('<option value="' + left['id'] + '">' + new Array(left["deep"] + 1).join("= ") + left['title'] + '</option>');
+            }
+          }
+          return html.join("\n");
+        }
+
+        $(".addtemp").click(function () {
+          var href = $(this).attr("id");
+          var id = "#" + href.split("_")[0];
+          var url = $(id).find(".addtemp").attr("data-url");
+          window.location.href = url;
+        })
+      })
+    </script>
+{% endblock %}

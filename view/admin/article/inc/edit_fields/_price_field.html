@@ -1,0 +1,10 @@
+<div class="col-md-5">
+    <input type="hidden" name="{{field.name}}" value="{{data[field.name]}}" id="price">
+    <div class="row">
+        <div class="col-md-6">   <div class="input-group ">
+                <span class="input-group-addon">￥</span>
+                <input type="text" class="form-control" value="{{data[field.name]|get_price('1')}}" id="present_price">
+            </div>  </div>
+        <div class="col-md-6">  <input type="text" placeholder="原价：¥99.99"  value="{{data[field.name]|get_price('2')}}"  class="form-control" id="discount_price">  </div>
+    </div>
+</div>

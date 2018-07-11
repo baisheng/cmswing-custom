@@ -1,4 +1,4 @@
-{% extends "../inc/setup/base.html" %}
+{% extends "./_base.html" %}
 
 {% block pageHeader %}
     <div class="page-header">
@@ -43,11 +43,11 @@
                             权限设置
                         </a>
                     </li>
-{#                    <li class="active">
-                        <a href="/admin/auth/catepriv/?id={{ controller.get('id') }}">
-                            栏目权限
-                        </a>
-                    </li>#}
+                    {#                    <li class="active">
+                                            <a href="/admin/auth/catepriv/?id={{ controller.get('id') }}">
+                                                栏目权限
+                                            </a>
+                                        </li>#}
                     <li class="">
                         <a href="/admin/auth/userlist/?id={{ controller.get('id') }}">
                             成员管理
@@ -65,7 +65,7 @@
 
 {% block content %}
 
-    <div class="panel panel-default">
+    <div class="card">
 
 
         <form action="/admin/auth/catepriv" class="_form" method="post" data-validate="parsley">
@@ -170,7 +170,7 @@
                     </table>
                 </div>
             </div>
-            <div class="panel-footer">
+            <div class="card-footer">
                 <div class="col-sm-12">
                     <input type="hidden" value="{{ controller.get('id') }}" name="roleid">
                     <button type="submit" class="btn btn-primary ajax-post" target-form="_form">提交</button>

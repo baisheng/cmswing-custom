@@ -1,0 +1,17 @@
+<div class="col-md-10">
+    {% if icons %}
+        <select multiple="multiple" data-placeholder="选择实验图标" class="select-icons" name="{{ field.name }}">
+            {% for item in icons %}
+                <option value="{{ item.id }}" data-icon="{{ item.icon }}">
+                    {{ item.name }}
+                </option>
+            {% endfor %}
+        </select>
+    {% endif %}
+</div>
+{#<select class="form-control "#}
+        {#name="{{ field.name }}">#}
+    {#{% for k ,v in field.extra|parse_config_attr %}#}
+            {#<option value="{{ k }}" {% if field.value == k %} selected {% endif %}>{{ v }}</option>#}
+    {#{% endfor %}#}
+{#</select>#}

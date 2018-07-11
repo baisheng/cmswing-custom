@@ -1,0 +1,214 @@
+{% extends "../inc/category/base.html" %}
+
+{% block content %}
+    <div class="panel panel-flat">
+
+        <!-- Panel heading -->
+        <div class="panel-heading">
+            <h6 class="panel-title">{{ info.name }}
+                <small class="text-thin">- 分类信息字段</small>
+                <a class="heading-elements-toggle"><i class="icon-more"></i></a>
+            </h6>
+        </div>
+        <!-- /panel heading -->
+        <ul class="nav nav-tabs nav-tabs-bottom no-border-radius">
+            {% for val in typeoption %}
+                <li class="{% if val.optionid == 1 %}active{% endif %}">
+                    <a href="#type-{{ val.optionid }}" data-toggle="tab">{{ val.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <!-- /tabs nav -->
+
+        <!-- Tabs content -->
+        <div class="tab-content panel-body">
+            {% for val in typeoption %}
+                <div class="tab-pane fade {% if val.optionid == 1 %}active in{% endif %}"
+                     id="type-{{ val.optionid }}">
+                    <div class="form-group">
+                        <label class="display-block text-semibold">分类属性</label>
+
+                        {% for v in option %}
+                            {% if v.classid==val.optionid %}
+                                <label class="checkbox-inline">
+                                    <input class="checkdom" type="checkbox" data-name="{{ v.title }}"
+                                           data-type="{{ v.type }}" value="{{ v.optionid }}"
+                                           name="option" {% if info.typeid|in_Array(v.sortid) %} checked="checked"
+                                            {% endif %}>
+                                    {{ v.title }}
+                                </label>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+        <!-- /tabs content -->
+        <div class="list-group-divider"></div>
+        <!-- Panel heading -->
+        <div class="panel-heading">
+            <h6 class="panel-title">{{ info.name }}
+                <small class="text-thin">- 已有属性</small>
+            </h6>
+        </div>
+        <!-- /panel heading -->
+        <form method="post" autocomplete="off"
+              action="/admin/type/update" id="threadtypeform"
+              enctype="multipart/form-data" style="padding: 0; margin: 0;">
+
+            <div class="panel-body">
+
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="type-list">
+                        <thead>
+                        <tr>
+                            <th style="width:80px;">删?</th>
+                            <th style="width: 90px">排序</th>
+                            <th>可用</th>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>必填</th>
+                            <th>不可修改</th>
+                            <th>表单搜索</th>
+                            <th>文字检索</th>
+                            <th>主题展示</th>
+                            <th style="width:130px;">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for val in typevar %}
+                            <tr data-id="{{ val.optionid }}">
+                                <input type="hidden" name="optionid" value="{{ val.optionid }}">
+
+                                <td><input type="checkbox" name="isdel" value="1"></td>
+                                <td><input type="text" class="form-control form-control-text" name="displayorder"
+                                           value="{{ val.displayorder }}"></td>
+                                <td><input type="checkbox" name="available" value="1"
+                                           {% if val.available==1 %}checked="checked"{% endif %}></td>
+                                <td>{{ val.title }}</td>
+                                <td>{{ val.type }}</td>
+                                <td><input type="checkbox" name="required" value="1"
+                                           {% if val.required==1 %}checked{% endif %}>
+                                </td>
+                                <td><input type="checkbox" name="unchangeable" value="1" {% if
+                                        val.unchangeable==1 %}checked{% endif %}>
+                                </td>
+                                <td><input type="checkbox" name="search_form" value="1"
+                                           {% if val.search==1 or val.search==3 %}checked{% endif %}></td>
+                                <td><input type="checkbox" name="search_font" value="2"
+                                           {% if val.search==2 or val.search==3 %}checked{% endif %}></td>
+                                <td><input type="checkbox" name="subjectshow" value="1"
+                                           {% if val.subjectshow==1 %}checked{% endif %}>
+                                </td>
+
+                                <td><a href="/admin/type/edittype/?optionid={{ val.optionid }}"
+                                       class="text-primary">编辑</a></td>
+
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                <input type="hidden" name="sortid" value="{{ info.typeid }}">
+                <div class="col-sm-12">
+                    <button class="btn btn-default posttype" type="submit">
+                        <i class="icon-check position-left"></i>
+                        确定
+                    </button>
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+
+
+{% endblock %}
+{% block script %}
+    <script>
+      $(function () {
+
+        $(".checkdom").click(function () {
+          var val = $(this).val();
+          var name = $(this).attr('data-name');
+          var type = $(this).attr('data-type');
+          if ($(this).attr("checked")) {
+            $(this).removeAttr("checked");
+            var id = 'tr[data-id="' + val + '"]';
+            $(id).remove();
+          } else {
+            $(this).attr("checked", 'true');
+            var tr = '  <tr data-id="' + val + '">' +
+              '<input type="hidden" name="optionid" value="' + val + '">' +
+              '<td><input type="checkbox" name="isdel" value="1"></td>' +
+              '<td> <input type="text" class="form-control form-control-text" name="displayorder" value="0" ></td>' +
+              '<td><input type="checkbox" name="available" value="1" checked="checked"></td>' +
+              '<td>' + name + '</td>' +
+              '<td>' + type + '</td>' +
+              '<td><input type="checkbox" name="required" value="1"></td>' +
+              '<td><input type="checkbox" name="unchangeable" value="1"></td>' +
+              '<td><input type="checkbox" name="search_form" value="1"></td>' +
+              '<td><input type="checkbox" name="search_font" value="2"></td>' +
+              '<td><input type="checkbox" name="subjectshow" value="1"></td>' +
+              '<td></td></tr>';
+            $('#type-list>tbody').append(tr);
+          }
+        })
+//提交数据
+        $(".posttype").click(function () {
+          var tr = $("#type-list>tbody>tr");
+          var dataarr = []
+          $.each(tr, function (k, v) {
+            var obj = {};
+            obj.isdel = $(v).find("input[name='isdel']:checked").val() || 0;
+
+            obj.sortid = $("input[name='sortid']").val();
+            obj.optionid = $(v).find("input[name='optionid']").val();
+            obj.available = $(v).find("input[name='available']:checked").val() || 0;
+            obj.required = $(v).find("input[name='required']:checked").val() || 0;
+            obj.unchangeable = $(v).find("input[name='unchangeable']:checked").val() || 0;
+            obj.search = Number($(v).find("input[name='search_form']:checked").val() || 0) + Number($(v).find("input[name='search_font']:checked").val() || 0)
+            obj.displayorder = $(v).find("input[name='displayorder']").val() || 0;
+            obj.subjectshow = $(v).find("input[name='subjectshow']:checked").val() || 0;
+            //console.log(obj);
+            dataarr.push(obj);
+
+
+          })
+          var datas = {id: $("input[name='sortid']").val(), datarr: dataarr}
+          //console.log(datas);
+
+          $.ajax({
+            url: "/{{ ctx.controller }}/updatetypevar",
+            data: {data: JSON.stringify(datas)},
+            type: "post",
+            success: function (res) {
+              if (res.errno == 0) {
+                if (res.data.url) {
+
+                  toastr.success(res.data.name + ' 页面即将自动跳转~');
+                } else {
+                  toastr.success(res.data.name);
+                }
+                setTimeout(function () {
+                  if (res.data.url) {
+                    location.href = res.data.url;
+                  } else {
+                    location.reload();
+                  }
+                }, 1500);
+              }
+            }
+          })
+          return false;
+        })
+
+      })
+    </script>
+{% endblock %}
