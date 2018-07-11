@@ -15,13 +15,6 @@
     <div class="card">
         <div class="card-header header-elements-inline">
             <h5 class="card-title">菜单列表</h5>
-            <div class="header-elements">
-                <div class="list-icons">
-                    {#<a class="list-icons-item" data-action="collapse"></a>#}
-                    <a class="list-icons-item" data-action="reload"></a>
-                    {#<a class="list-icons-item" data-action="remove"></a>#}
-                </div>
-            </div>
         </div>
 
         <div class="card-body">
@@ -45,10 +38,4 @@
             </thead>
         </table>
     </div>
-{% endblock %}
-
-{% block script %}
-    <script src="{{ GLOBAL_ASSETS }}/js/plugins/tables/datatables/datatables.min.js"></script>
-    <script src="{{ ASSETS }}/js/menu.js"></script>
-
 {% endblock %}

@@ -42,7 +42,7 @@
 {% block afterMain %}
     <!-- Remote source -->
     <div id="modal_remote" class="modal fade" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog wmin-400">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Remote source</h5>
@@ -70,12 +70,16 @@
     <!-- /core JS files -->
     <script src="{{ GLOBAL_ASSETS }}/js/plugins/notifications/bootbox.min.js"></script>
     <script src="{{ GLOBAL_ASSETS }}/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript" src="{{ GLOBAL_ASSETS }}/js/plugins/notifications/pnotify/dist/iife/PNotify.js"></script>
+    <script type="text/javascript" src="{{ GLOBAL_ASSETS }}/js/plugins/notifications/pnotify/dist/iife/PNotifyButtons.js"></script>
 
     {% block beforeAppScript %}{% endblock %}
     <script src="{{ ASSETS }}/js/app.js"></script>
     <script src="{{ ASSETS }}/js/custom.js"></script>
-    {#<script src="{{ GLOBAL_ASSETS }}/js/demo_pages/components_modals.js"></script>#}
     <script src="{{ GLOBAL_ASSETS }}/js/demo_pages/components_modals.js"></script>
+    <script type="text/javascript">
+      PNotify.defaults.width = '300px';
+    </script>
 {% endblock %}
 
 <!-- /theme JS files -->

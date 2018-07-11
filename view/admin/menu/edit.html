@@ -136,10 +136,10 @@
         success: function (json) {
           if (json) {
             oTable.ajax.reload();
-            toastr.success("编辑成功！")
+            Notify.success("编辑成功！")
             $('#modal_remote').modal('hide');
           } else {
-            toastr.error("编辑失败！")
+            Notify.error("编辑失败！")
           }
         }
       });

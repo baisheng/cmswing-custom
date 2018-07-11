@@ -194,49 +194,33 @@
           success: function (data) {
             if (data.errno === 0) {
               if (data.data.url) {
-                new PNotify({
-                  icon: 'icon-check',
-                  text: data.data.name + ' 页面即将自动跳转',
-                  addclass: 'bg-success',
-                  type: 'success'
-                })
-                // toastr.success(data.data.name + ' 页面即将自动跳转~');
+                Notify.success(data.data.name + ' （即将自动跳转)')
+
               } else {
-                new PNotify({
-                  icon: 'icon-check',
-                  text: data.data.name,
-                  addclass: 'bg-success',
-                  type: 'success'
-                })
-                // toastr.success(data.data.name);
+                Notify.success(data.data.name)
+
               }
               setTimeout(function () {
                 $(self).removeClass('disabled').prop('disabled', false);
                 if (data.data.url) {
                   location.href = data.data.url;
                 } else if ($(this).hasClass('no-refresh')) {
-                  // toastr.clear()
+                  Notify.close()
                 } else {
                   location.reload();
                 }
               }, 1500);
             } else {
-              // toastr.error(data.errmsg);
-              new PNotify({
-                text: data.errmsg,
-                addclass: 'alert bg-danger border-danger alert-styled-left',
-                type: 'danger'
-              })
-              // PNotify.error({
-              //   text: "I'm an error message."
-              // });
-              //console.log(data);
+              Notify.error(data.errmsg)
+
               setTimeout(function () {
+
                 $(self).removeClass('disabled').prop('disabled', false);
                 if (data.data) {
                   location.href = data.data;
                 } else {
                   // toastr.clear()
+                  Notify.close()
                 }
               }, 1500);
             }

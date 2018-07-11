@@ -60,16 +60,20 @@
     <!-- Core JS files -->
     <script src="{{ GLOBAL_ASSETS }}/js/main/jquery.min.js"></script>
     <script src="{{ GLOBAL_ASSETS }}/js/main/bootstrap.bundle.min.js"></script>
-    <script src="{{ GLOBAL_ASSETS }}/js/plugins/loaders/blockui.min.js"></script>
+    {#<script src="{{ GLOBAL_ASSETS }}/js/plugins/loaders/blockui.min.js"></script>#}
     <!-- /core JS files -->
-    <script src="{{ GLOBAL_ASSETS }}/js/plugins/notifications/pnotify.min.js"></script>
+    {#<script src="{{ GLOBAL_ASSETS }}/js/plugins/notifications/pnotify.min.js"></script>#}
+    <script type="text/javascript" src="{{ GLOBAL_ASSETS }}/js/plugins/notifications/pnotify/dist/iife/PNotify.js"></script>
+    <script type="text/javascript" src="{{ GLOBAL_ASSETS }}/js/plugins/notifications/pnotify/dist/iife/PNotifyButtons.js"></script>
     {#{% block pageScript %} {% endblock %}#}
     {% block beforeAppScript %}{% endblock %}
     <script src="{{ ASSETS }}/js/app.js"></script>
-    <script src="{{ GLOBAL_ASSETS }}/js/demo_pages/extra_pnotify.js"></script>
-    {#{% block afterAppScript %}#}
-        {#<script src="{{ GLOBAL_ASSETS }}/js/demo_pages/dashboard.js"></script>#}
-    {#{% endblock %}#}
+    <script src="{{ ASSETS }}/js/custom.js"></script>
+    {#<script src="{{ GLOBAL_ASSETS }}/js/demo_pages/components_modals.js"></script>#}
+    <script type="text/javascript">
+      PNotify.defaults.width = '300px';
+
+    </script>
 {% endblock %}
 
 <!-- /theme JS files -->
