@@ -1,7 +1,8 @@
 /* eslint-disable no-undef,max-depth,dot-notation */
 const moment = require('moment');
 moment.locale('zh-cn');
-const pagination = require('think-pagination');
+// const pagination = require('think-pagination');
+const pagination = require('./pagination');
 const path = require('path');
 
 module.exports = {

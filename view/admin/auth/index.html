@@ -1,0 +1,138 @@
+{% extends "../inc/setup/base.html" %}
+{% block pageAction %}
+    <a href="/{{ ctx.controller }}/adduser"
+       class="btn btn-default btn-primary" data-toggle="modal" data-target="#modal_remote">
+        <i class="icon-plus-circle2 position-left"></i>
+        <span class="text">添加用户组</span>
+    </a>
+{% endblock %}
+{% block pageToolbar %}
+    <div class="navbar navbar-default navbar-component navbar-xs">
+        <ul class="nav navbar-nav visible-xs-block">
+            <li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter"><i
+                            class="icon-menu7"></i></a></li>
+        </ul>
+
+        <div class="navbar-collapse collapse" id="navbar-filter">
+            <ul class="nav navbar-nav">
+                <li class="{% if ctx.action == 'index' %}active{% endif %}">
+                    <a href="/{{ ctx.controller }}/index"
+                       class="c-tabs__link">
+                        <i class="icon-users4 position-left"></i>
+                        用户组
+                    </a>
+                </li>
+                <li class="{% if ctx.action == 'admin' %}active{% endif %}">
+                    <a href="/{{ ctx.controller }}/admin"
+                       class="c-tabs__link">
+                        <i class="icon-user-tie position-left"></i>
+                        管理员角色
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /toolbar -->
+
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="tab-content">
+        <div class="tab-pane active">
+            <div class="panel panel-white">
+
+     {#           <div class="panel-toolbar panel-toolbar-inbox panel-body" style="padding-left: 0;">
+                    <div class="navbar navbar-default">
+                        <ul class="nav navbar-nav visible-xs-block no-border">
+                            <li>
+                                <a class="text-center collapsed" data-toggle="collapse"
+                                   data-target="#inbox-toolbar-toggle-multiple">
+                                    <i class="icon-circle-down2"></i>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="navbar-collapse collapse" id="inbox-toolbar-toggle-multiple">
+                            <div class="btn-group navbar-btn">
+                                <a target-form="sort"
+                                   href="/{{ ctx.controller }}/sort/?type=1"
+                                   class="btn btn-default ajax-post">
+                                    <i class="icon-sort-numeric-asc"></i>
+                                    <span class="hidden-xs position-right ">排序</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>#}
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+
+                        <thead>
+                        <tr>
+                            {#<th style="width:40px;">#}
+                                {#<input type="checkbox">#}
+                            {#</th>#}
+                            {#<th style="width:80px;" class="text-center">排序</th>#}
+                            <th class="text-center">组名</th>
+                            <th class="text-center">用户数</th>
+
+                            <th style="width:200px; text-align:center;">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in list %}
+                            <tr>
+           {#                     <td>
+                                    {% if item.issystem !=1 %}
+                                        <input class="ids" type="checkbox"
+                                               name="ids"
+                                               value="{{ item.groupid }}">
+                                    {% endif %}
+                                </td>#}
+            {#                    <td>
+                                    <input class="form-control form-control-text sort" value="{{ item.sort }}"
+                                           name="sort"
+                                           data-id="{{ item.groupid }}" style="text-align: center;"/>
+                                </td>#}
+                                <td>{{ item.name }}</td>
+                                <td class="text-center">{{ item.count }}</td>
+
+                                <td class="text-center">
+                                    <a href="/admin/auth/edituser?id={{ item.groupid }}"
+                                       class="btn  btn-xs" data-toggle="modal" data-target="#modal_remote">编辑</a>
+                                    {% if item.issystem !=1 %}
+                                    <a href="/admin/auth/deluser?id={{ item.groupid }}"
+                                       class="btn  btn-xs text-danger confirm ajax-get ">删除</a></td>
+                                {% endif %}
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="14">
+                                    <div class="alert alert-warning alert-block">
+                                        <button data-dismiss="alert" class="close" type="button">×</button>
+                                        <p>还没有用户组数据！</p>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+                {% if pagerData %}
+                    <div class="panel-footer">
+                        <div class="col-sm-12 text-right text-center-xs">
+                            {{ pagerData | safe }}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+
+    </div>
+
+{% endblock %}

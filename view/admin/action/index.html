@@ -1,0 +1,133 @@
+{% extends "../default.html" %}
+
+{% block pageHeader %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-header-content">
+
+            <div class="page-title">
+
+                <h4><i class="icon-arrow-left52 position-left"></i> <span
+                            class="text-semibold">系统配置</span> - {{ controller.meta_title }}</h4>
+            </div>
+
+            <div class="heading-elements">
+
+                <a href="/admin/action/add"
+                   class=" btn btn-labeled btn-labeled-right bg-primary heading-btn ">
+                    添加规则
+                    <b><i class=" icon-add"></i></b>
+                </a>
+            </div>
+        </div>
+        <div class="breadcrumb-line breadcrumb-line-component"><a class="breadcrumb-elements-toggle"><i
+                        class="icon-menu-open"></i></a>
+            <ul class="breadcrumb">
+                <li><a href="index.html"><i class="icon-home2 position-left"></i> 首页</a></li>
+                <li><a href="/admin/index">系统配置</a></li>
+                <li class="active">{{ controller.meta_title }}</li>
+            </ul>
+            <ul class="breadcrumb-elements">
+                <!--<li>-->
+                <!--<a class=" " href="/admin/action/add">-->
+                <!--<i class="fa fa-plus-circle position-left"></i> 新增-->
+                <!--</a>-->
+                <!--</li>-->
+                <li>
+                    <a class="ajax-post" target-form="ids" href="/admin/action/setstatus/status/1"
+                       target-form="ids">
+
+                        <i class="fa fa-play-circle position-left text-success-600"></i>启用
+                    </a>
+                </li>
+                <li>
+                    <a class="ajax-post" href="/admin/action/setstatus/status/0" target-form="ids">
+                        <i class="fa fa-stop-circle position-left text-warning"></i>禁用
+                    </a>
+                </li>
+                <li>
+                    <a class="ajax-post confirm" href="/admin/action/setstatus/status/-1"
+                       target-form="ids">
+                        <i class="fa fa-minus-circle position-left text-danger"></i> 删除
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+
+
+    </div>
+    <!-- /page header -->
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-striped b-t b-light">
+                <thead>
+                <tr>
+                    <th style="width:20px;">
+                        <input
+                                type="checkbox">
+                    </th>
+                    <th style="width:80px;">编号</th>
+                    <th class="">标识</th>
+                    <th class="">名称</th>
+                    <th class="">类型</th>
+                    <th class="">规则</th>
+                    <th class="">状态</th>
+                    <th class="">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in list %}
+                    <tr>
+                        <td><input class="ids" type="checkbox" name="ids"
+                                   value="{{ item.id }}"></td>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.name }}</td>
+                        <td><a data-id="{{ item.id }}" href="/admin/action/edit?id={{ item.id }}"
+                               class="">{{ item.title }}</a>
+                        </td>
+                        <td><span>{{ item.type|get_action_type }}</span></td>
+                        <td>{{ item.remark }}</td>
+                        <td>
+                            <a href="/admin/action/setstatus/ids/{{ item.id }}/status/{{ 1-item.status }}"
+                               class="active ajax-get" data-toggle="class">
+                                <i class="fa  {% if item.status %}fa-check text-success text-active{% else %} fa-times text-danger text{% endif %}"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/admin/action/edit?id={{ item.id }}" class="btn btn-default btn-xs">编辑</a>
+                            <a href="/admin/action/setstatus?ids={{ item.id }}&status=-1"
+                               class="btn btn-danger btn-xs confirm ajax-get ">删除</a></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7">
+                            <div class="alert alert-warning alert-block">
+                                <button data-dismiss="alert" class="close" type="button">×</button>
+                                <p>还没有内容</p>
+                            </div>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+        </div>
+        {% if pagerData %}
+        <div class="card-footer">
+            <div class="pull-right">
+                {{ pagerData | safe }}
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+{% endblock %}

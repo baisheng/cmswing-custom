@@ -1,0 +1,91 @@
+{% extends "../default.html" %}
+
+{% block pageHeader %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-header-content">
+
+            <div class="page-title">
+
+                <h4><i class="icon-arrow-left52 position-left"></i> <span
+                            class="text-semibold">系统配置</span> - {{ controller.meta_title }}</h4>
+            </div>
+
+        </div>
+        <div class="breadcrumb-line breadcrumb-line-component"><a class="breadcrumb-elements-toggle"><i
+                        class="icon-menu-open"></i></a>
+            <ul class="breadcrumb">
+                <li><a href="index.html"><i class="icon-home2 position-left"></i> 首页</a></li>
+                <li><a href="/admin/index">系统配置</a></li>
+                <li class="active">{{ controller.meta_title }}</li>
+            </ul>
+            <ul class="breadcrumb-elements">
+                <li><a class="ajax-post confirm" href="/admin/action/clear"><i
+                                class="fa fa-trash-o position-left"></i> 清空</a></li>
+                <li><a class="ajax-post confirm" href="/admin/action/remove" target-form="ids"><i
+                                class="fa fa-minus-circle position-left"></i> 删除</a></li>
+            </ul>
+
+        </div>
+
+
+    </div>
+    <!-- /page header -->
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-striped b-t b-light">
+                <thead>
+                <tr>
+                    <th style="width:20px;"><input type="checkbox"></th>
+
+                    <th style="width:120px;">行为名称</th>
+                    <th style="width:120px;">执行者</th>
+                    <th style="width:150px;">执行时间</th>
+                    <th class="">详细信息</th>
+                    <th style="width:70px;">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in list %}
+                    <tr>
+                        <td><input class="ids" type="checkbox" name="ids" value="{{ item.id }}"></td>
+
+                        <td>{{ item.action_id }}</td>
+                        <td>{{ item.user_id }}</td>
+                        <td>{{ item.create_time|dateformat("Y-m-d H:i:s") }}</td>
+                        <td class="text-sm">{{ item.remark }}</td>
+                        <td>
+                            <!--<a href="/admin/action/edit?id={{ item.id }}" class="text-info">详情</a>-->
+                            <a href="/admin/action/remove?ids={{ item.id }}"
+                               class="btn btn-danger btn-xs confirm ajax-get ">删除</a></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7">
+                            <div class="alert alert-warning alert-block">
+                                <button data-dismiss="alert" class="close" type="button">×</button>
+                                <p>没有日志数据</p>
+                            </div>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+        </div>
+        {% if pagerData %}
+            <div class="card-footer">
+                <div class="pull-right">
+                    {{ pagerData | safe }}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

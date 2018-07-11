@@ -1,0 +1,99 @@
+{% extends "../../_ui/views/modal_form.html" %}
+
+{% block size %}default{% endblock %}
+{% block _content %}
+
+    {{ fields.input(info.name if info.name else null, { label: '用户组名',name: 'name', required:'required', placeholder: '会员组名称'}) }}
+    {#{{ fields.input(info.point if info.point else null, { label: '用户积分',name: 'point', required:'required', placeholder: '积分点数，输入1—8 位的数字'}) }}#}
+    {#{{ fields.input(info.starnum, { label: '用户星级',name: 'starnum', required:'required', placeholder: '用户星级数，输入1—8 位的数字'}) }}#}
+
+
+    {#<div class="form-group">#}
+        {#<label class=" control-label display-block text-semibold">组用户权限</label>#}
+        {#{{ fields.checkbox('allowpowt', '提交报告', 1) }}#}
+        {#{{ fields.checkbox('allowpostverify', '报告审核', 1) }}#}
+        {#{{ fields.checkbox('allowupgrade', '自助升级', 1) }}#}
+        {#{{ fields.checkbox('allowsendmessage', '发短消息', 1) }}#}
+        {#{{ fields.checkbox('allowattachment', '上传附件', 1) }}#}
+        {#{{ fields.checkbox('allowsearch', '检索', 1) }}#}
+    {#</div>#}
+
+    {#    <div class="form-group">
+            <label class=" control-label text-semibold">升级价格</label>
+
+            <div class="row">
+            <div class="col-md-12">
+
+                <div class="col-md-4">
+                    <div class="input-group ">
+                        <span class="input-group-addon ">包日</span>
+                        <input type="text" class="form-control" name="price_d" placeholder="包日价格">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group ">
+                        <span class="input-group-addon ">包月</span>
+                        <input type="text" class="form-control" name="price_m" placeholder="包月价格">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group ">
+                        <span class="input-group-addon ">包年</span>
+                        <input type="text" class="form-control" name="price_y" placeholder="包年价格">
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>#}
+
+    {#{{ fields.input(info.allowmessage, { label: '最大消息数',name: 'allowmessage',  placeholder: '允许发短信消息数量'}) }}#}
+    {#{{ fields.input(info.allowpostnum, { label: '最大投稿数',name: 'allowpostnum',  placeholder: '单日最大投稿数量, 0 为不受限'}) }}#}
+    {#{{ fields.input(info.usernamecolor, { label: '组成员名颜色',name: 'usernamecolor',  placeholder: '用户组成员名称，个性化颜色'}) }}#}
+    {#{{ fields.input('/static/admin/images/group/vip.jpg', { label: '用户组图标',name: 'icon',  placeholder: '用户组标识图标'}) }}#}
+
+    <div class="form-group">
+        <label class=" control-label text-semibold">组描述</label>
+        <textarea class="form-control" placeholder="输入组描述" name="description">{{ info.description }}</textarea>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    {{ super() }}
+    <script type="text/javascript">
+
+      $('#_form').submit(function (e) {
+        e.preventDefault();
+        if ($(".form-validate").valid()) {
+          $.post("/admin/auth/adduser",
+            $(this).serialize()).done(function (data) {
+            if (data.errno > 0) {
+              new PNotify({
+                title: '出错啦',
+                icon: 'icon-blocked',
+                text: data.errmsg,
+                addclass: 'bg-danger',
+                type: 'danger'
+              });
+            } else {
+              new PNotify({
+                icon: 'icon-check',
+                text: data.data.name,
+                addclass: 'bg-success',
+                type: 'success'
+              })
+              window.location.href = data.data.url;
+            }
+          }).fail(function () {
+            new PNotify({
+              title: '出错啦',
+              icon: 'icon-blocked',
+              text: data.errmsg,
+              addclass: 'bg-danger',
+              type: 'danger'
+            });
+          });
+        }
+      });
+    </script>
+{% endblock %}

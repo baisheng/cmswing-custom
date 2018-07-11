@@ -1,0 +1,58 @@
+{% extends "../../_ui/views/modal_form.html" %}
+{% block size %}default{% endblock %}
+
+{% block subtitle%}{{ info.name }}{% endblock %}
+
+{% block _content %}
+    {{ fields.input(info.name if info.name else null, { label: '组名称',name: 'name', required:'required', placeholder: '会员组名称'}) }}
+
+    <div class="form-group form-group-material">
+        <label class=" control-label text-semibold">组描述</label>
+        <textarea class="form-control" placeholder="输入组描述" name="description">{{ info.description }}</textarea>
+
+    </div>
+    <input type="hidden" name="groupid" value="{{info.groupid}}">
+{% endblock %}
+
+{% block script%}
+    {{ super() }}
+
+    <script type="text/javascript">
+      // http://zy.caixie.la/admin/auth/edituser?id=2
+        $('#_form').submit(function (e) {
+            e.preventDefault();
+            if ($(".form-validate").valid()) {
+                $.post("/admin/auth/edituser",
+                  $(this).serialize()).done(function (data) {
+                    if (data.errno > 0) {
+                        new PNotify({
+                            title: '出错啦',
+                            icon: 'icon-blocked',
+                            text: data.errmsg,
+                            addclass: 'bg-danger',
+                            type: 'danger'
+                        });
+                    } else {
+                        new PNotify({
+                            icon: 'icon-check',
+                            text: data.data.name,
+                            addclass: 'bg-success',
+                            type: 'success'
+                        })
+                        window.location.href = data.data.url;
+
+                    }
+                }).fail(function () {
+                    new PNotify({
+                        title: '出错啦',
+                        icon: 'icon-blocked',
+                        text: data.errmsg,
+                        addclass: 'bg-danger',
+                        type: 'danger'
+                    });
+                });
+            }
+        });
+    </script>
+
+{% endblock %}
