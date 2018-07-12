@@ -1,71 +1,68 @@
 {% extends "../default.html" %}
 
-{% block pageHeader %}
-    <!-- Page header -->
-    <div class="page-header">
-        <div class="page-header-content">
-
-            <div class="page-title">
-
-                <h4><i class="icon-arrow-left52 position-left"></i> <span
-                            class="text-semibold">系统配置</span> - {{ controller.meta_title }}</h4>
-            </div>
-
-            <div class="heading-elements">
-
-                <a href="/admin/action/add"
-                   class=" btn btn-labeled btn-labeled-right bg-primary heading-btn ">
-                    添加规则
-                    <b><i class=" icon-add"></i></b>
-                </a>
-            </div>
-        </div>
-        <div class="breadcrumb-line breadcrumb-line-component"><a class="breadcrumb-elements-toggle"><i
-                        class="icon-menu-open"></i></a>
-            <ul class="breadcrumb">
-                <li><a href="index.html"><i class="icon-home2 position-left"></i> 首页</a></li>
-                <li><a href="/admin/index">系统配置</a></li>
-                <li class="active">{{ controller.meta_title }}</li>
-            </ul>
-            <ul class="breadcrumb-elements">
-                <!--<li>-->
-                <!--<a class=" " href="/admin/action/add">-->
-                <!--<i class="fa fa-plus-circle position-left"></i> 新增-->
-                <!--</a>-->
-                <!--</li>-->
-                <li>
-                    <a class="ajax-post" target-form="ids" href="/admin/action/setstatus/status/1"
-                       target-form="ids">
-
-                        <i class="fa fa-play-circle position-left text-success-600"></i>启用
-                    </a>
-                </li>
-                <li>
-                    <a class="ajax-post" href="/admin/action/setstatus/status/0" target-form="ids">
-                        <i class="fa fa-stop-circle position-left text-warning"></i>禁用
-                    </a>
-                </li>
-                <li>
-                    <a class="ajax-post confirm" href="/admin/action/setstatus/status/-1"
-                       target-form="ids">
-                        <i class="fa fa-minus-circle position-left text-danger"></i> 删除
-                    </a>
-                </li>
-            </ul>
-
-        </div>
-
-
-    </div>
-    <!-- /page header -->
-
-{% endblock %}
-
 {% block content %}
+    <div class="navbar navbar-expand-lg navbar-light navbar-component rounded">
+        <div class="text-center d-lg-none w-100">
+            <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-filter">
+                <i class="icon-unfold mr-2"></i>
+                Filters
+            </button>
+        </div>
 
+        <div class="navbar-collapse collapse" id="navbar-filter">
+
+            <div class="mt-3 mt-lg-0">
+                <div class="btn-group">
+                    <a href="/admin/action/add" class="btn btn-light"><i class="icon-add"></i>
+                        <span
+                                class="d-none d-lg-inline-block ml-2">添加</span></a>
+                </div>
+
+                <div class="btn-group ml-3 mr-lg-3">
+                    <a target-form="ids" href="/admin/action/setstatus?status=1"
+                       class="btn btn-light ajax-post"><i class="icon-checkmark3"></i> <span
+                                class="d-none d-lg-inline-block ml-2">启用</span></a>
+                    <a href="/admin/action/setstatus?status=0" target-form="ids"
+                       class="btn btn-light ajax-post"><i class="icon-cross2"></i> <span
+                                class="d-none d-lg-inline-block ml-2">禁用</span></a>
+                    <a href="/admin/action/setstatus?status=-1"
+                       target-form="ids" class="btn btn-light ajax-post confirm"><i class="icon-trash-alt"></i>
+                        <span
+                                class="d-none d-lg-inline-block ml-2">删除</span></a>
+                </div>
+            </div>
+
+            <span class="navbar-text mr-3 ml-lg-auto">
+									排序:
+								</span>
+
+            <ul class="navbar-nav flex-wrap">
+                <li class="nav-item">
+                    <a href="#" class="navbar-nav-link active">
+                        <i class="icon-sort-alpha-asc"></i>
+                        <span class="d-lg-none ml-2">Ascending</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="navbar-nav-link">
+                        <i class="icon-sort-alpha-desc"></i>
+                        <span class="d-lg-none ml-2">Descending</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <div class="card">
+        {#<div class="card-header bg-transparent header-elements-inline">#}
+            {#<h6 class="card-title">{{ controller.meta_title }}</h6>#}
+
+            {#<div class="header-elements">#}
+                {#<span class="badge bg-blue">259 new today</span>#}
+            {#</div>#}
+        {#</div>#}
         <div class="table-responsive">
-            <table class="table table-striped b-t b-light">
+            <table class="table b-t b-light">
                 <thead>
                 <tr>
                     <th style="width:20px;">
@@ -78,7 +75,7 @@
                     <th class="">类型</th>
                     <th class="">规则</th>
                     <th class="">状态</th>
-                    <th class="">操作</th>
+                    <th class="text-center">操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -99,10 +96,21 @@
                                 <i class="fa  {% if item.status %}fa-check text-success text-active{% else %} fa-times text-danger text{% endif %}"></i>
                             </a>
                         </td>
-                        <td>
-                            <a href="/admin/action/edit?id={{ item.id }}" class="btn btn-default btn-xs">编辑</a>
-                            <a href="/admin/action/setstatus?ids={{ item.id }}&status=-1"
-                               class="btn btn-danger btn-xs confirm ajax-get ">删除</a></td>
+                        <td class="text-center">
+                            <div class="list-icons">
+                                <div class="list-icons-item dropdown">
+                                    <a href="#" class="list-icons-item dropdown-toggle caret-0"
+                                       data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="/admin/action/edit?id={{ item.id }}" class="dropdown-item"><i
+                                                    class="icon-pencil7"></i> 修改</a>
+                                        <a href="/admin/action/setstatus?ids={{ item.id }}&status=-1"
+                                           class="dropdown-item ajax-get"><i class="icon-trash-alt"></i> 删除</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                 {% else %}
                     <tr>
@@ -121,11 +129,11 @@
             </table>
         </div>
         {% if pagerData %}
-        <div class="card-footer">
-            <div class="pull-right">
-                {{ pagerData | safe }}
+            <div class="card-footer p-2">
+                <div class="pull-right">
+                    {{ pagerData | safe }}
+                </div>
             </div>
-        </div>
         {% endif %}
 
     </div>
