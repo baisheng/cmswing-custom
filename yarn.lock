@@ -1214,6 +1214,14 @@ cluster-key-slot@^1.0.6:
   version "1.0.9"
   resolved "http://registry.npm.taobao.org/cluster-key-slot/download/cluster-key-slot-1.0.9.tgz#a538b001da90157efe6f758ae9ddde2ecd9a3077"
 
+co-wechat-api@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/co-wechat-api/-/co-wechat-api-3.7.1.tgz#4603b764039357b4ccc7f422d4cddebbbcc33b74"
+  dependencies:
+    formstream ">=0.0.8"
+    httpx "^2.1.1"
+    json-bigint "^0.2.3"
+
 co-with-promise@^4.6.0:
   version "4.6.0"
   resolved "http://registry.npm.taobao.org/co-with-promise/download/co-with-promise-4.6.0.tgz#413e7db6f5893a60b942cf492c4bec93db415ab7"
@@ -2253,7 +2261,7 @@ formidable@^1.1.1, formidable@^1.2.0:
   version "1.2.1"
   resolved "http://registry.npm.taobao.org/formidable/download/formidable-1.2.1.tgz#70fb7ca0290ee6ff961090415f4b3df3d2082659"
 
-formstream@1.1.0:
+formstream@1.1.0, formstream@>=0.0.8:
   version "1.1.0"
   resolved "http://registry.npm.taobao.org/formstream/download/formstream-1.1.0.tgz#51f3970f26136eb0ad44304de4cebb50207b4479"
   dependencies:

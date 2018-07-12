@@ -1,0 +1,94 @@
+{% extends "../inc/base.html" %} {% block style %}
+<!--<link rel="stylesheet" href="/static/admin/js/zTree/metroStyle/metroStyle.css" type="text/css">-->
+{% endblock%}
+{% block bodyClass %} sidebar-xs {% endblock %}
+
+{% block sidebar2%}
+{% include "../inc/template_side.html" %}
+{% endblock %}
+
+{% block toolbar %}
+<li>
+    <a class="" href="/admin/template/add/temptype/column/type/{%if http.get('type')==2%}2{%else%}1{%endif%}">
+        <i class="fa fa-plus-circle text-primary position-left"></i> {%if http.get('type')==2%} 移动端 {%else%} PC端 {%endif%} 列表模板
+    </a>
+</li>
+{% endblock %}
+
+{% block content %}
+
+<div class="panel panel-flat">
+    <div class="tabbable tab-content-bordered">
+        <ul class="nav nav-tabs nav-tabs-bottom">
+            <li {%if http.get(
+                'type')!=2%}class="active"{%endif%}><a href="/admin/template/column"><i
+                            class="icon-screen-desktop text-muted"></i>
+                    PC端模板 </a></li>
+            <li {%if http.get(
+                'type')==2%}class="active"{%endif%}><a href="/admin/template/column/type/2"><i
+                            class="icon-screen-smartphone text-muted"></i> 移动端模板</a>
+            </li>
+
+            <li class="pull-right">
+                <a class="" href="/admin/template/add/temptype/column/type/{%if http.get('type')==2%}2{%else%}1{%endif%}">
+                    <i class="fa fa-plus-circle text-primary position-left"></i> {%if http.get('type')==2%} 移动端 {%else%} PC端
+                    {%endif%} 列表模板
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+
+    <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+            <tr>
+                <th style="width:20px;"><input type="checkbox"></th>
+                <th style="width:80px;">编号</th>
+                <th class="">模板名称</th>
+                <th class="">模板路径</th>
+                <th style="width: 200px;"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in list %}
+            <tr>
+                <td><input class="ids" type="checkbox" name="ids" value="{%if item.id !=1%}{{item.id}}{%endif%}" {%if item.id==1%}disabled="true"{%endif%}></td>
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>view/{{item.module}}/{%if http.get("type")==2%}mobile/{%endif%}{{item.controller}}/{{item.action}}{{think.config('view.file_ext')}}</td>
+
+
+                <td><a href="/admin/template/edit/id/{{item.id}}" class="btn btn-xs">修改</a>
+                    <a href="#" class="btn btn-xs">复制</a>
+                    {%if item.action != "index"%}
+                    <a href="#" class="btn btn-xs text-danger confirm ajax-get ">删除</a></td>
+                {%endif%}
+            </tr>
+            {% else %}
+            <tr><td colspan="7"><div class="alert alert-warning alert-block">
+                <button data-dismiss="alert" class="close" type="button">×</button>
+                <p>This would display if the 'item' collection were empty</p>
+            </div></td></tr>
+
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+    </div>
+    <footer class="panel-footer">
+        <div class="row">
+
+
+            <div class="col-sm-12 text-right text-center-xs">
+                {{pagerData | safe}}
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+{% endblock %} {% block script %}
+{% endblock %}}

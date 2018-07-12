@@ -1,0 +1,38 @@
+
+<div class="sidebar sidebar-secondary sidebar-default " id="sidebar">
+
+    <div class="sidebar-content">
+
+        <!-- Sub navigation -->
+        <div class="sidebar-category">
+            <div class="category-title">
+                <!--<button class="btn btn-default btn-xs" id="expandAllBtn" type="button">展开</button>-->
+                <!--<button class="btn btn-default btn-xs" id="collapseAllBtn" type="button">折叠</button>-->
+                <span>内容分类</span>
+                <ul class="icons-list">
+                    <li>
+
+                        <a href="#" id="expandAllBtn">
+                            <i class=" icon-arrow-down12"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <!--<button class="btn btn-default btn-xs" id="expandAllBtn" type="button">展开</button>-->
+                        <a href="#" id="collapseAllBtn">
+                            <i class=" icon-arrow-up12"></i>
+                        </a>
+                        <!--<a href="#" data-action="collapse"></a>-->
+                    </li>
+                </ul>
+            </div>
+
+            <div class="category-content no-padding">
+                <ul id="tree" class="ztree" data-cate="{{controller.get('cate_id')}}"></ul>
+
+            </div>
+        </div>
+        <!-- /sub navigation -->
+
+
+    </div>
+</div>

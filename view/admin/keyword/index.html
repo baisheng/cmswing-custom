@@ -1,0 +1,178 @@
+{% extends "../inc/base.html" %}
+{% block header%}
+<!-- Page header -->
+<div class="page-header">
+    <div class="page-header-content">
+
+        <div class="page-title">
+
+            <h4><i class="icon-arrow-left52 position-left"></i> <span
+                    class="text-semibold">系统配置</span> - {{controller.meta_title}}</h4>
+        </div>
+        <div class="heading-elements">
+
+
+            <!--<a href="/admin/category/add" class="btn btn-labeled btn-labeled-right bg-primary heading-btn"-->
+               <!--data-toggle="class:show">-->
+                <!--<i class="fa fa-plus text"></i>-->
+                <!--<span class="text">添加栏目</span>-->
+                <!--<b><i class=" icon-add"></i></b>-->
+
+                <!--<i class="fa fa-minus text-active"></i>-->
+                <!--<span class="text-active">添加完成</span>-->
+            <!--</a>-->
+        </div>
+    </div>
+    <div class="breadcrumb-line breadcrumb-line-component"><a class="breadcrumb-elements-toggle"><i
+            class="icon-menu-open"></i></a>
+        <ul class="breadcrumb">
+            <li><a href="index.html"><i class="icon-home2 position-left"></i> 首页</a></li>
+            <li><a href="/admin/database/index">系统配置</a></li>
+            <li class="active">{{controller.meta_title}} <span class="badge badge-primary position-right">{{_total}}</span></li>
+        </ul>
+        <ul class="breadcrumb-elements">
+            <li>
+                <a class="cw-cf" href="/admin/keyword/add">
+                    <i class="fa fa-plus position-left text-primary"></i>新建
+                </a>
+            </li>
+            <li>
+                <a class="ajax-post confirm" href="/admin/article/setstatus/status/1" target-form="ids">
+                    <i class="fa fa-remove position-left text-danger"></i>删除
+                </a>
+            </li>
+            <li>
+                <a class="ajax-post confirm" href="/admin/article/setstatus/status/1" target-form="ids">
+                    <i class="fa fa-lock position-left text-warning-300"></i>锁定
+                </a>
+            </li>
+
+            <li class="pr-10 pb-5 pt-5 pl-20">
+                <div class="input-group  search-form">
+                    <input type="text" class="input-xs  no-border form-control" name="keyname" placeholder="请输入关键字"
+                           value="{{controller.get('keyname')}}">
+                    <span class="input-group-btn">
+                        <button class="btn btn-xs btn-default" type="button" id="search" url="/admin/keyword/index">搜索</button>
+                      </span>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+
+
+</div>
+<!-- /page header -->
+
+{% endblock %}
+{% block content %}
+
+<div class="panel panel-flat">
+    <div class="tabbable">
+        <ul class="nav nav-tabs nav-tabs-bottom">
+            <li class="{{controller.get('type')|default('active', true)}}"><a  href="/admin/keyword/index"> 话题列表 </a></li>
+            <li class="{%if controller.get('type')=='parent'%}active{%endif%}"><a  href="/admin/keyword/index/?type=parent">根话题</a>
+            <li ><a class="todo"  href="/admin/keyword/search">搜索</a>
+            <li ><a class="todo" href="/admin/keyword/today">今日话题</a>
+            </li>
+
+        </ul>
+
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped b-t b-light" id="export-form">
+            <thead>
+            <tr>
+                <th style="width:20px;"><input type="checkbox">
+                </th>
+                <th>话题标题</th>
+                <th>内容	</th>
+                <th>关注</th>
+                <th>合并</th>
+                <th>状态	</th>
+                <th>最后编辑用户</th>
+                <th>最后编辑时间</th>
+                <th style="width:150px;">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in list.data %}
+            <tr>
+                <td><input type="checkbox" value="{{ item.Name }}"
+                           name="tables" >
+                </td>
+                <td>{{ item.keyname }}</td>
+                <td>{{ item.videonum }}</td>
+                <td>{{ item.focus_count}}</td>
+                <td>{%if item.merged_id==0%}否{%else%}是{%endif%}</td>
+                <td> <a href="/admin/keyword/lock/ids/{{item.id}}/lock/{{1-item.lock}}" class="active ajax-get" data-toggle="class">
+                    <i class="fa  {%if item.lock %}fa-lock text-warning-300 text-active{%else%} fa-unlock text-success text{%endif%}"></i>
+                </a></td>
+                <td>{{item.lastuser|get_nickname}}</td>
+                <td>
+                    {{item.add_time|moment('YYYY-MM-DD HH:mm:ss')}}
+
+                </td>
+                <td>
+                    <a href="/admin/keyword/edit/id/{{item.id}}" class="btn btn-default btn-xs ">编辑</a>
+                    <a href="/admin/keyword/del/ids/{{item.id}}" class="btn btn-danger btn-xs">删除</a>
+                </td>
+
+                </td>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default todo" target-form="ids" href="#">
+                        微信图文
+                    </a>
+                    <a class="btn btn-sm btn-default todo" target-form="ids" href="#">
+                        高级图文
+                    </a>
+                    <a class="btn btn-sm btn-default todo" target-form="ids" href="#">
+                        推送
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-9 text-right text-center-xs">
+                {{pagerData | safe}}
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+
+{% endblock %}
+{% block script %}
+    <script>
+        //搜索功能
+        $("#search").click(function(){
+            var url = $(this).attr('url');
+            var query  = $('.search-form').find('input').serialize();
+            query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
+            query = query.replace(/^&/g,'');
+            if( url.indexOf('?')>0 ){
+                url += '&' + query;
+            }else{
+                url += '?' + query;
+            }
+            window.location.href = url;
+        });
+
+        //回车自动提交
+        $('.search-form').find('input').keyup(function(event){
+            if(event.keyCode===13){
+                $("#search").click();
+            }
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,389 @@
+{% extends "../inc/base.html" %}
+{% block pageHeader %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-header-content">
+
+            <div class="page-title">
+
+                <h4><i class="icon-arrow-left52 position-left"></i> <span
+                            class="text-semibold">系统配置</span> - {{ controller.meta_title }}</h4>
+            </div>
+
+            <div class="heading-elements">
+
+                <a href="/admin/setup/add"
+                   class="active btn btn-labeled btn-labeled-right bg-primary heading-btn ">
+                    添加配置
+                    <b><i class=" icon-add"></i></b>
+
+                </a>
+            </div>
+        </div>
+        <div class="breadcrumb-line breadcrumb-line-component"><a class="breadcrumb-elements-toggle"><i
+                        class="icon-menu-open"></i></a>
+            <ul class="breadcrumb">
+                <li><a href="index.html"><i class="icon-home2 position-left"></i> 首页</a></li>
+                <li><a href="/admin/database/index">系统配置</a></li>
+                <li class="active">{{ controller.meta_title }}</li>
+            </ul>
+            <ul class="breadcrumb-elements">
+                <!--<li><a href="/admin/channel/add">-->
+                <!--<i class="  icon-add-to-list position-left"></i> 添加分类-->
+                <!--</a></li>-->
+                <!--<li><a class="ajax-post" target-form="sort" href="/{{ http.module }}/{{ http.controller }}/sort"><i-->
+                <!--class=" icon-sort position-left"></i> 排序</a></li>-->
+                <!--<li><a href="#" onclick="jQuery('#category').treetable('expandAll'); return false;"><i-->
+                <!--class="  icon-unfold position-left"></i> 展开全部</a></li>-->
+                <!--<li><a href="#" onclick="jQuery('#category').treetable('collapseAll'); return false;"><i-->
+                <!--class="   icon-fold position-left"></i> 合并全部</a></li>-->
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-gear position-left"></i>
+                        全部配置
+                        <span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        {% for ingredient, amount in setup.CONFIG_GROUP_LIST %}
+                            <li><a href="#{{ ingredient }}" data-toggle="tab" data-groupid="{{ ingredient }}"
+                                   class="grouplist">
+                                    {{ amount }}</a></li>
+                        {% endfor %}
+                        <li class="divider"></li>
+                        <li><a href="/admin/setup/group"><i class="icon-gear"></i> 全部配置</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+    <!-- /page header -->
+{% endblock %}
+
+{% block content %}
+    <div class="card content-group-lg">
+        <div class="card-header">
+            <h5 class="panel-title">ping++支付设置<a class="heading-elements-toggle"><i class="icon-more"></i></a></h5>
+
+        </div>
+        <div class="card-body">
+            <P>
+                Ping++ 集成微信、支付宝、银联等主流第三方支付渠道，提供包括商户入网申请、交易处理和支付运营的一站式服务。<br>
+                如果您还没有ping++账号请 <a href="https://www.pingxx.com/" target="_blank"
+                                   class="text-primary">申请Ping++账号</a>
+            </P>
+            <ul class="list-group  list-group-lg no-border">
+                <li class="list-group-item">
+                    <a class=" pull-left m-r-sm" href="https://www.pingxx.com/" target="_blank">
+                        <img class="" src="/static/admin/img/pingxx/logo.png">
+                    </a>
+                    <p class="clear">
+                        <strong class="block m-b-xs appid">App_ID:{% if app_id %}
+                            <small><code>{{ app_id }}</code> <a data-toggle="ajaxModal"
+                                                                href="/admin/ecom/addappid"
+                                                                class="text-primary">修改</a></small>
+                        {% else %}
+                            <small><a class="btn btn-primary btn-xs" data-toggle="ajaxModal"
+                                      href="/admin/ecom/addappid">添加 App_ID</a></small>
+                            {% endif %}
+                            <span class="text-muted " style="font-size: 12px;font-weight: 400"> 用于在 Ping++
+                                        系统中标识你的应用
+                                    </span>
+                        </strong>
+                        <strong class="block m-b-xs LiveSecretKey">Live Secret Key:{% if livesecretkey %}
+                            <small><code>{{ livesecretkey }}</code> <a data-toggle="ajaxModal"
+                                                                       href="/admin/ecom/addlivesecretkey"
+                                                                       class="text-primary">修改</a></small>
+                        {% else %}
+                            <small><a class="btn btn-primary btn-xs" data-toggle="ajaxModal"
+                                      href="/admin/ecom/addlivesecretkey">添加 Live Secret Key</a></small>
+                            {% endif %}
+                            <span class="text-muted " style="font-size: 12px;font-weight: 400"> Server 端真实交易密钥
+                                    </span>
+                        </strong>
+                        <strong class="block m-b-xs RSA">商户私钥:
+                            <small><code>cmswing_rsa_private_key.pem</code> <a data-toggle="ajaxModal"
+                                                                               href="/admin/ecom/rsa/type/private"
+                                                                               class="text-primary">配置</a></small>
+
+                            <span class="text-muted " style="font-size: 12px;font-weight: 400"> 生产 RSA 公私钥对，<a
+                                        href="https://help.pingxx.com/article/123161" target="_blank"
+                                        class="text-primary">如何生成？</a>，
+                                        或者 <a href="http://web.chacuo.net/netrsakeypair" target="_blank"
+                                              class="text-primary"> 用在线生成RSA 公私钥对</a> 公私钥对生成后，把私钥填此处，公钥填到PING++后台。
+                                    </span>
+                        </strong>
+                        <strong class="block m-b-xs RSA">Ping++ 公钥:
+                            <small><code>pingpp_rsa_public_key.pem</code> <a data-toggle="ajaxModal"
+                                                                             href="/admin/ecom/rsa/type/public"
+                                                                             class="text-primary">配置</a></small>
+
+                            <span class="text-muted " style="font-size: 12px;font-weight: 400"> 在 Ping++ 后台>账号和设置 找到 Ping++ 公钥 填到此处。
+                                    </span>
+                        </strong>
+                        <strong class="block webhokks">Webhooks:
+                            <small><a data-toggle="ajaxModal"
+                                      href="/admin/ecom/webhokks"
+                                      class="btn btn-primary btn-xs">查看接收 URL</a></small>
+
+                            <span class="text-muted " style="font-size: 12px;font-weight: 400"> 生产 RSA 公私钥对，<a
+                                        href="https://help.pingxx.com/article/123161" target="_blank"
+                                        class="text-primary">如何生成？</a>，
+                                        或者 <a href="http://web.chacuo.net/netrsakeypair" target="_blank"
+                                              class="text-primary"> 用在线生成RSA 公私钥对</a> 公私钥对生成后，把私钥填此处，公钥填到PING++后台。
+                                    </span>
+                        </strong>
+                    </p>
+                </li>
+
+            </ul>
+            <h6 class=" m-b-xs">支付渠道:
+                <small>{% if controller.setup.PREPAID == 0 %}<code>支持预付款消费</code>{% else %}
+                        <code>不支持预付款消费</code>{% endif %} ,
+                    {% if controller.setup.COD == 0 %}<code>支持货到付款</code>{% else %}<code>不支持货到付款</code>{% endif %}
+                    如要更改，请到 系统设置>网站设置>商城 <a href="/admin/setup/index?id=5" class="text-primary">设置</a>
+                </small>
+            </h6>
+        </div>
+
+        <div class="tabbable">
+            <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+
+                <li class="active"><a href="#tab1" data-toggle="tab"><i class="fa fa-desktop text-muted"></i> 适用于 PC
+                        网页 </a></li>
+                </a></li>
+                <li><a href="#tab2" data-toggle="tab"><i class="fa fa-mobile text-muted"></i> 适用于手机网页</a></li>
+                <li><a href="#tab3" data-toggle="tab"><i class="fa fa-apple text-muted"></i> 适用于 APP</a></li>
+
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab1">
+                    <div class="table-responsive">
+                        <table class="table hover b-t b-light">
+                            <thead>
+                            <tr>
+                                <th>支付名称</th>
+                                <th>支付频道</th>
+                                <th>描述</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in channel %}
+                                {% if item.type == 1 %}
+                                    <tr>
+
+                                        <td><img src="{{ item.logo }}"> {{ item.title }}
+                                        </td>
+                                        <td>{{ item.channel }}</td>
+                                        <td>{{ item.info|safe }}</td>
+                                        <td>
+                                            <a href="/admin/ecom/setstatus/ids/{{ item.id }}/status/{{ 1-item.status }}/table/pingxx"
+                                               class="active ajax-get" data-toggle="class">
+                                                <i class="fa  {% if item.status %}fa-check text-success text-active{% else %} fa-times text-dangertext{% endif %}"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+
+                                            {% if item.status == 0 %}
+                                                <a href="/admin/ecom/setstatus/ids/{{ item.id }}/status/{{ 1-item.status }}/table/pingxx"
+                                                   class="ajax-get text-success">启用</a>
+                                            {% else %}
+                                                <a href="/admin/ecom/setstatus/ids/{{ item.id }}/status/{{ 1-item.status }}/table/pingxx"
+                                                   class="ajax-get text-danger">禁用</a>
+                                            {% endif %}
+
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <div class="tab-pane" id="tab2">
+                    <div class="table-responsive">
+                        <table class="table hover b-t b-light">
+                            <thead>
+                            <tr>
+                                <th>支付名称</th>
+                                <th>支付频道</th>
+                                <th>描述</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in channel %}
+                                {% if item.type == 2 %}
+                                    <tr>
+
+                                        <td><img src="{{ item.logo }}"> {{ item.title }}
+                                        </td>
+                                        <td>{{ item.channel }}</td>
+                                        <td>{{ item.info|safe }}</td>
+                                        <td>
+                                            <a href="/admin/ecom/setstatus/ids/{{ item.id }}/status/{{ 1-item.status }}/table/pingxx"
+                                               class="active ajax-get" data-toggle="class">
+                                                <i class="fa  {% if item.status %}fa-check text-success text-active{% else %} fa-times text-danger text{% endif %}"></i>
+
+                                            </a>
+                                        </td>
+                                        <td>
+
+                                            {% if item.status == 0 %}
+                                                <a href="/admin/ecom/setstatus/ids/{{ item.id }}/status/{{ 1-item.status }}/table/pingxx"
+                                                   class="ajax-get text-success">启用</a>
+                                            {% else %}
+                                                <a href="/admin/ecom/setstatus/ids/{{ item.id }}/status/{{ 1-item.status }}/table/pingxx"
+                                                   class="ajax-get text-danger">禁用</a>
+                                            {% endif %}
+
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab3">
+                    <div class="table-responsive">
+                        <table class="table hover b-t b-light">
+                            <thead>
+                            <tr>
+                                <th>支付名称</th>
+                                <th>支付频道</th>
+                                <th>描述</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in channel %}
+                                {% if item.type == 3 %}
+                                    <tr>
+
+                                        <td><img src="{{ item.logo }}"> {{ item.title }}
+                                        </td>
+                                        <td>{{ item.channel }}</td>
+                                        <td>{{ item.info|safe }}</td>
+                                        <td>
+                                            <a href="/admin/ecom/setstatus/ids/{{ item.id }}/status/{{ 1-item.status }}/table/pingxx"
+                                               class="active ajax-get" data-toggle="class">
+                                                <i class="fa  {% if item.status %}fa-check text-success text-active{% else %} fa-times text-danger text{% endif %}"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+
+                                            {% if item.status == 0 %}
+                                                <a href="/admin/ecom/setstatus/ids/{{ item.id }}/status/{{ 1-item.status }}/table/pingxx"
+                                                   class="ajax-get text-success">启用</a>
+                                            {% else %}
+                                                <a href="/admin/ecom/setstatus/ids/{{ item.id }}/status/{{ 1-item.status }}/table/pingxx"
+                                                   class="ajax-get text-danger">禁用</a>
+                                            {% endif %}
+
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+      $(function () {
+        $(document).on("click", '.addappid', function (e) {
+          var val = $("input[name='appid']").val();
+          if (val.length == 0) {
+            swal("appid不能为空");
+            return false;
+          }
+          $.ajax({
+            url: "/admin/ecom/addappid",
+            type: "POST",
+            data: {appid: val},
+            success: function (res) {
+              if (res.errno == 0) {
+                var html = '<code >' + val + '</code> <a class="text-primary"  data-toggle="ajaxModal" href="/admin/ecom/addappid">修改</a>'
+                $('strong.appid>small').html(html);
+                $('#ajaxModal').modal('hide');
+                Notify.success(res.data.name);
+              } else {
+                Notify.error(res.errmsg);
+              }
+            }
+          })
+        })
+
+        $(document).on("click", '.addlivesecretkey', function (e) {
+          var val = $("input[name='livesecretkey']").val();
+          if (val.length == 0) {
+            swal("livesecretkey不能为空");
+            return false;
+          }
+          $.ajax({
+            url: "/admin/ecom/addlivesecretkey",
+            type: "POST",
+            data: {livesecretkey: val},
+            success: function (res) {
+              if (res.errno == 0) {
+                var html = '<code >' + val + '</code> <a class="text-primary"  data-toggle="ajaxModal" href="/admin/ecom/addlivesecretkey">修改</a>'
+                $('strong.LiveSecretKey>small').html(html);
+                $('#ajaxModal').modal('hide');
+                Notify.success(res.data.name);
+              } else {
+                Notify.error(res.errmsg);
+              }
+            }
+          })
+        })
+        $(document).on("click", '.edit_rsa', function (e) {
+          var val = $("textarea[name='rsa']").val();
+          var type = $("input[name='type']").val();
+          // alert(type);return false;
+          if (val.length == 0) {
+            swal("livesecretkey不能为空");
+            return false;
+          }
+          $.ajax({
+            url: "/admin/ecom/rsa",
+            type: "POST",
+            data: {rsa: val, type: type},
+            success: function (res) {
+              if (res.errno == 0) {
+                // var html = '<code >' + val + '</code> <a class="text-primary"  data-toggle="ajaxModal" href="/admin/ecom/addlivesecretkey">修改</a>'
+                //$('strong.LiveSecretKey>small').html(html);
+                $('#ajaxModal').modal('hide');
+                Notify.success(res.data.name);
+              } else {
+                Notify.error(res.errmsg);
+              }
+            }
+          })
+        })
+      })
+    </script>
+{% endblock %}

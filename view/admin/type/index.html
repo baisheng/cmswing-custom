@@ -1,4 +1,4 @@
-{% extends "../inc/category/base.html" %}
+{% extends "../default.html" %}
 {% block pageToolbar %}
     <div class="navbar navbar-default navbar-component navbar-xs">
         <ul class="nav navbar-nav visible-xs-block">
@@ -39,7 +39,7 @@
     </div>
 {% endblock %}
 
-{% block header %}
+{% block pageHeader %}
     <!-- Page header -->
     <div class="page-header">
         <div class="page-header-content">
@@ -108,7 +108,7 @@
 
     <form method="post" class="" autocomplete="off" action="/admin/type/update" id="threadtypeform" enctype="multipart/form-data" >
 
-        <div class="panel panel-white">
+        <div class="card">
             <div class="table-responsive">
                 <table class="table table-striped table-bordered" id="export-form">
                     <thead>
@@ -150,7 +150,7 @@
                 </table>
             </div>
 
-            <div class="panel-footer">
+            <div class="card-footer">
                 <div class="col-md-12">
                     <!--<a href="javascript:void(0)" class="btn btn-default btn-xs"><i class="icon-plus"></i> 导入</a>-->
                     <a href="javascript:void(0)" class="btn btn-default addtr"><i

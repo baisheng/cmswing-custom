@@ -1,6 +1,6 @@
 {% extends "../inc/base.html" %}
 
-{% block header %}
+{% block pageHeader %}
     <!-- Page header -->
     <div class="page-header">
         <div class="page-header-content">
@@ -64,7 +64,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="panel panel-default">
+    <div class="card">
         <div class="tabbable tab-content-bordered ">
             <ul class="nav nav-tabs nav-tabs-bottom">
                 <li class="active"><a href="/{{ ctx.controller }}/ext">已安装的模型</a></li>
@@ -143,11 +143,13 @@
                 </tbody>
             </table>
         </div>
-        <div class="panel-footer">
-            <div class="col-sm-12 text-right text-center-xs">
+        {% if pagerData %}
+        <div class="card-footer">
+            <div class="pull-right">
                 {{ pagerData | safe }}
             </div>
         </div>
+        {% endif %}
     </div>
 
 {% endblock %}

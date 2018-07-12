@@ -1,5 +1,5 @@
-{% extends "../inc/base.html" %}
-{% block header %}
+{% extends "../default.html" %}
+{% block pageHeader %}
     <!-- Page header -->
     <div class="page-header">
         <div class="page-header-content">
@@ -55,7 +55,7 @@
 {% block content %}
 
 
-    <div class="panel panel-flat">
+    <div class="card">
         <div class="table-responsive">
             <table class="table table-striped b-t b-light">
                 <thead>
@@ -100,13 +100,13 @@
                 </tbody>
             </table>
         </div>
-        <footer class="panel-footer">
-            <div class="row">
-                <div class="col-sm-12 text-right text-center-xs">
-                    {{ pagerData | safe }}
-                </div>
+        {% if pagerData %}
+        <div class="card-footer">
+            <div class="pull-right">
+                {{ pagerData | safe }}
             </div>
-        </footer>
+        </div>
+        {% endif %}
 
     </div>
 

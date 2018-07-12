@@ -1,4 +1,4 @@
-{% extends "../inc/category/base.html" %}
+{% extends "../default.html" %}
 
 {% block pageToolbar %}
     <div class="navbar navbar-default navbar-component navbar-xs">
@@ -43,15 +43,15 @@
 
     <form method="post" class="form-horizontal" autocomplete="off" action="/admin/type/update"
           id="threadtypeform" enctype="multipart/form-data">
-        <div class="panel panel-flat">
-            <div class="panel-heading">
+        <div class="card">
+            <div class="card-header">
                 <h5 class="panel-title">
                     分类选项设置
                 </h5>
                 <div class="heading-elements">
                 </div>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
 
                 <fieldset class="content-group">
                     <legend class="text-bold">基础选项</legend>
@@ -185,7 +185,7 @@
                 </fieldset>
 
             </div>
-            <div class="panel-footer ">
+            <div class="card-footer ">
                 <input type="hidden" name="sortid" value="{{ info.typeid }}">
                 <div class="col-sm-12">
                     <button class="btn btn-primary btn-s-md posttype" type="submit">保存</button>

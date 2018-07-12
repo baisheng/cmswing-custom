@@ -1,0 +1,185 @@
+{% extends "../inc/base.html" %}
+{% block pageHeader %}
+<!-- Page header -->
+<div class="page-header">
+    <div class="page-header-content">
+
+        <div class="page-title">
+
+            <h4><i class="icon-arrow-left52 position-left"></i> <span
+                    class="text-semibold">支付与配送</span> - {{controller.meta_title}}</h4>
+        </div>
+
+        <div class="heading-elements">
+
+            <a href="/admin/ecom/addfare"
+               class="active btn btn-labeled btn-labeled-right bg-primary heading-btn ">
+                运费模板
+                <b><i class=" icon-add"></i></b>
+
+            </a>
+        </div>
+    </div>
+    <div class="breadcrumb-line breadcrumb-line-component"><a class="breadcrumb-elements-toggle"><i
+            class="icon-menu-open"></i></a>
+        <ul class="breadcrumb">
+            <li><a href="index.html"><i class="icon-home2 position-left"></i> 首页</a></li>
+            <li><a href="/admin/database/index">支付与配送</a></li>
+            <li class="active">{{controller.meta_title}}</li>
+        </ul>
+
+    </div>
+
+</div>
+<!-- /page header -->
+{% endblock %}
+{% block content %}
+{% for val in list%}
+
+<div class="card {%if val.is_default == 1 %} border-top-lg border-primary{%else%} panel-default{%endif%} ">
+    <div class="panel-heading">
+        <h6 class="panel-title">
+            {{val.name}}
+
+            {%if val.is_default == 1 %}
+            <span class="label label-primary position-right">当前模板</span>
+            {%else%}
+            <a href="/admin/ecom/defaulffare/?id={{val.id}}" class="position-right btn btn-default btn-xs ajax-get"><i
+                    class="fa fa-check"></i> 应用此模板</a>
+            {%endif%}
+
+        </h6>
+
+        <div class=" heading-elements">
+            <ul class="list-inline list-inline-separate heading-text">
+                <li>
+                    <a href="/admin/ecom/editfare/?id={{val.id}}" class=""><i class="fa fa-edit position-left"></i>编辑</a>
+
+                </li>
+                <li><a href="/admin/ecom/delfare/?id={{val.id}}" class="text-danger"><i
+                        class="fa fa-trash-o position-left"></i> 删除</a></li>
+            </ul>
+
+
+        </div>
+
+    </div>
+
+    <div class="table-responsive">
+        <table class="table  b-t b-light" id="export-form">
+            <thead>
+            <tr>
+
+                <th>运送到</th>
+
+                <th class="active" style="width: 100px">首重(g)</th>
+                <th class="active" style="width: 100px">运费(元)</th>
+                <th class="warning" style="width: 100px">续重(g)</th>
+                <th class="warning" style="width: 100px">运费(元)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="primary">
+                <td>默认运费（指定城市以外的）</td>
+                <td class="primary">{{val.first_weight}}</td>
+                <td class="primary">{{val.first_price|formatCurrency}}</td>
+                <td class="primary">{{val.second_weight}}</td>
+                <td class="primary">{{val.second_price|formatCurrency}}</td>
+            </tr>
+            {% set zoning = val.zoning|strToJson %}
+            {%for v in zoning %}
+            <tr>
+                <td>{{v.title|safe}}</td>
+                <td class="active">{{v.f_weight}}</td>
+                <td class="active">{{v.f_price|formatCurrency}}</td>
+                <td class="warning">{{v.s_weight}}</td>
+                <td class="warning">{{v.s_price|formatCurrency}}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endfor %}
+
+<!--<div class="panel panel-flat">-->
+<!--{% for val in list%}-->
+<!--<section class="panel {%if val.is_default == 1 %} panel-info{%else%} panel-default{%endif%} ">-->
+<!--<header class="panel-heading">-->
+<!--<div class=" pull-right">-->
+<!--<a href="/admin/ecom/editfare/id/{{val.id}}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> 编辑</a>-->
+<!--<a href="/admin/ecom/delfare/id/{{val.id}}" class="btn btn-danger btn-xs confirm ajax-get"><i class="fa fa-trash-o"></i> 删除</a>-->
+
+<!--</div>-->
+<!--{%if val.is_default == 1 %}<span class="label bg-danger">正在使用</span>{%else%}<a href="/admin/ecom/defaulffare/id/{{val.id}}" class="btn btn-info btn-xs ajax-get"><i class="fa fa-check"></i> 使用此模板</a>{%endif%} {{val.name}}-->
+<!--</header>-->
+
+<!--<div class="table-responsive">-->
+<!--<table class="table  b-t b-light" id="export-form">-->
+<!--<thead>-->
+<!--<tr>-->
+
+<!--<th >运送到</th>-->
+
+<!--<th class="active" style="width: 100px">首重(g)</th>-->
+<!--<th class="active" style="width: 100px">运费(元)</th>-->
+<!--<th class="warning" style="width: 100px">续重(g)</th>-->
+<!--<th class="warning" style="width: 100px">运费(元)</th>-->
+<!--</tr>-->
+<!--</thead>-->
+<!--<tbody>-->
+<!--<tr class="primary"><td>默认运费（指定城市以外的）</td> <td class="primary">{{val.first_weight}}</td> <td class="primary">{{val.first_price|formatCurrency}}</td> <td class="primary">{{val.second_weight}}</td> <td class="primary">{{val.second_price|formatCurrency}}</td></tr>-->
+<!--{% set zoning = val.zoning|strToJson %}-->
+<!--{%for v in zoning %}-->
+<!--<tr><td>{{v.title|safe}}</td> <td class="active">{{v.f_weight}}</td> <td class="active">{{v.f_price|formatCurrency}}</td> <td class="warning">{{v.s_weight}}</td> <td class="warning">{{v.s_price|formatCurrency}}</td></tr>-->
+<!--{% endfor %}-->
+<!--</tbody>-->
+<!--</table>-->
+<!--</div>-->
+
+<!--</section>-->
+<!--{% endfor %}-->
+<!--</div>-->
+<!--<section class="vbox">-->
+<!--<section class="scrollable wrapper">-->
+<!--{% for val in list%}-->
+<!--<section class="panel {%if val.is_default == 1 %} panel-info{%else%} panel-default{%endif%} ">-->
+<!--<header class="panel-heading">-->
+<!--<div class=" pull-right">-->
+<!--<a href="/admin/ecom/editfare/id/{{val.id}}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> 编辑</a>-->
+<!--<a href="/admin/ecom/delfare/id/{{val.id}}" class="btn btn-danger btn-xs confirm ajax-get"><i class="fa fa-trash-o"></i> 删除</a>-->
+
+<!--</div>-->
+<!--{%if val.is_default == 1 %}<span class="label bg-danger">正在使用</span>{%else%}<a href="/admin/ecom/defaulffare/id/{{val.id}}" class="btn btn-info btn-xs ajax-get"><i class="fa fa-check"></i> 使用此模板</a>{%endif%} {{val.name}}-->
+<!--</header>-->
+
+<!--<div class="table-responsive">-->
+<!--<table class="table  b-t b-light" id="export-form">-->
+<!--<thead>-->
+<!--<tr>-->
+<!---->
+<!--<th >运送到</th>-->
+<!---->
+<!--<th class="active" style="width: 100px">首重(g)</th>-->
+<!--<th class="active" style="width: 100px">运费(元)</th>-->
+<!--<th class="warning" style="width: 100px">续重(g)</th>-->
+<!--<th class="warning" style="width: 100px">运费(元)</th>-->
+<!--</tr>-->
+<!--</thead>-->
+<!--<tbody>-->
+<!--<tr class="primary"><td>默认运费（指定城市以外的）</td> <td class="primary">{{val.first_weight}}</td> <td class="primary">{{val.first_price|formatCurrency}}</td> <td class="primary">{{val.second_weight}}</td> <td class="primary">{{val.second_price|formatCurrency}}</td></tr>-->
+<!--{% set zoning = val.zoning|strToJson %}-->
+<!--{%for v in zoning %}-->
+<!--<tr><td>{{v.title|safe}}</td> <td class="active">{{v.f_weight}}</td> <td class="active">{{v.f_price|formatCurrency}}</td> <td class="warning">{{v.s_weight}}</td> <td class="warning">{{v.s_price|formatCurrency}}</td></tr>-->
+<!--{% endfor %}-->
+<!--</tbody>-->
+<!--</table>-->
+<!--</div>-->
+
+<!--</section>-->
+<!--{% endfor %}-->
+<!--</section>-->
+<!--</section>-->
+
+{% endblock %}

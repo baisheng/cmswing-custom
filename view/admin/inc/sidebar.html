@@ -1,0 +1,131 @@
+<!-- Main sidebar -->
+<div class="sidebar sidebar-main sidebar-fixed">
+    <div class="sidebar-content" tabindex="0" style="overflow-y: hidden; outline: none;">
+        <div class="sidebar-user">
+            <div class="category-content">
+                <div class="media">
+                    <a href="#" class="media-left"><img src="assets/images/image.png" class="img-circle img-sm" alt=""></a>
+                    <div class="media-body">
+                        <span class="media-heading text-semibold">Victoria Baker</span>
+                        <div class="text-size-mini text-muted">
+                            <i class="icon-pin text-size-small"></i> &nbsp;Santa Ana, CA
+                        </div>
+                    </div>
+
+                    <div class="media-right media-middle">
+                        <ul class="icons-list">
+                            <li>
+                                <a href="#"><i class="icon-cog3"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main navigation -->
+        <div class="sidebar-category sidebar-category-visible">
+            {#
+            <div class="sidebar-user-material">
+                <div class="category-content">
+                    <div class="sidebar-user-material-content">
+
+                        <a href="#" class="legitRipple">
+                            <img src="/static/themes/admin/assets/images/brands/weixin-1.png"
+                                 class="img-circle img-responsive" alt="">
+                        </a>
+                        <h6>{{ config.setup.wx_name }}</h6>
+                        <span class="text-size-small">
+                            {% if config.setup.wx_type==1 %}
+                            未认证订阅号
+                            {% elif config.setup.wx_type==2 %}
+                            认证订阅号
+                            {% elif config.setup.wx_type==3 %}
+                            未认证服务号
+                            {% elif config.setup.wx_type==4 %}
+                            微信认证服务号
+                            {% endif %}
+                        </span>
+                    </div>
+
+                    <div class="sidebar-user-material-menu">
+                        <a href="#user-nav" data-toggle="collapse" class="legitRipple"><span>公众平台管理</span> <i
+                                    class="caret"></i></a>
+                    </div>
+                </div>
+
+                <div class="navigation-wrapper collapse" id="user-nav">
+                    <ul class="navigation">
+                        <li>
+                            <a href="/admin/mpbase/index">管理首页</a>
+                        </li>
+                        <li>
+                            <span class="arrow bottom hidden-nav-xs"></span>
+                            <a class="legitRipple" href="/admin/setup/index?id=6">公众号信息</a>
+                        </li>
+                        <li>
+                            <a class="legitRipple" href="/admin/mpbase/mass">群发功能</a>
+                        </li>
+                        <li><a class="legitRipple" href="/admin/mpbase/fodderlist">素材管理</a></li>
+                        <li>
+                            <a class="legitRipple" href="/admin/mpbase/userlist">
+                                <!--<span class="badge bg-danger pull-right">3</span>-->
+                                微信用户
+                            </a>
+                        </li>
+                        <li>
+                            <a class="legitRipple" href="/admin/mpbase/autoreply">自动回复</a>
+                        </li>
+                        <li>
+                            <a class="legitRipple" href="/admin/mpbase/custommenu">自定义菜单</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            #}
+            <div class="category-content no-padding">
+                <ul class="navigation navigation-main navigation-accordion">
+                    {% if 4|getmode('')|length==0 %}
+                        {% set ism = 20 %}
+                    {% else %}
+                        {% set ism = 0 %}
+                    {% endif %}
+                    {% for i, v in controller.MenuGroup %}
+
+                        {% if i !=0 and i != 99 and i != ism %}
+                            <!-- Main -->
+                            <li class="navigation-header"><span>{{ v }}</span> <i class="icon-menu" title="{{ v }}"></i>
+                            </li>
+
+                            {% for v in controller.adminmenu[i] %}
+
+                                <li>
+                                    {% if v.ico %}
+                                        <a><i class="fa {{ v.ico }}">
+                                            </i><span>{{ v.title }}</span></a>
+                                    {% else %}
+                                        <a>
+                                            <i class="icon-screen-desktop icon">
+                                            </i><span>{{ v.title }}</span>
+                                        </a>
+                                    {% endif %}
+                                    <ul>
+                                        {% for c in v.children %}
+                                            <li class="{% if controller.active == c.url %}active{% endif %}">
+                                                <a href="/{{ c.url }}">{{ c.title }}</a>
+                                            </li>
+                                        {% endfor %}
+
+                                    </ul>
+                                </li>
+
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <!-- /main navigation -->
+
+    </div>
+</div>
+<!-- /main sidebar -->

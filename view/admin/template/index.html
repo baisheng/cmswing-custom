@@ -1,0 +1,70 @@
+{% extends "../default.html" %}
+{% block style %}
+    <!--<link rel="stylesheet" href="/static/admin/js/zTree/metroStyle/metroStyle.css" type="text/css">-->
+{% endblock %}
+{#{% block bodyClass %} sidebar-xs {% endblock %}#}
+
+{% block sidebar2 %}
+    {% include "../inc/template_side.html" %}
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="panel panel-flat">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+
+                <thead>
+                <tr>
+                    <th style="width:20px;">
+                        <input type="checkbox">
+                    </th>
+                    <th style="width:80px;">编号</th>
+                    <th class="">名称</th>
+                    <th class="">是否使用</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in temp_group %}
+                    <tr>
+                        <td><input class="ids" type="checkbox" name="ids"
+                                   value="{% if item.id !=1 %}{{ item.id }}{% endif %}"
+                                   {% if item.id==1 %}disabled="true"{% endif %}></td>
+                        <td>{{ item.gid }}</td>
+                        <td>{{ item.gname }}</td>
+                        <td>
+                            <a href="/limitless/model/setstatus/ids/{{ item.id }}/status/{{ 1-item.status }}"
+                               class="active ajax-get" data-toggle="class">
+                                <i class="fa fa-check text-success {% if item.isdefault %}fa-check text-success text-active{% else %} fa-times text-danger text{% endif %}"></i>
+                            </a>
+                        </td>
+
+                        <td><a href="#" class="btn btn-xs todo">修改</a>
+                            <a href="#" class="btn btn-xs todo">导出</a>
+                            {% if item.pid !=1 %}
+                            <a href="#" class="btn btn-xs todo">删除</a></td>
+                        {% endif %}
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="{{ list_grids|length + 1 }}">
+                            <div class="alert alert-warning alert-block">
+                                <button data-dismiss="alert" class="close" type="button">×</button>
+                                <p>This would display if the 'item' collection were empty</p>
+                            </div>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+{% endblock %} {% block script %}
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "../../_layouts/layout_admin.html" %}
+
+{% block appNavbar %}
+    {% include "../components/app_navbar.html" %}
+{% endblock %}
+
+{% block beforeMain %}
+    {% block sidebar %}
+        {% include "../components/app_sidebar.html" %}
+    {% endblock %}
+
+    {% block sidebar2 %} {% endblock %}
+{% endblock %}
+
+{#{% block afterMain %} {% endblock %}#}
+
+{% block main %}
+    <div class="content-wrapper">
+        {% block pageHeader %} {% endblock %}
+        <div class="content">
+            {% block content %} {% endblock %}
+        </div>
+
+        <!-- Footer -->
+        {% block footer %}
+            {% include "../components/app_footer.html" %}
+        {% endblock %}
+        <!-- /footer -->
+    </div>
+{% endblock %}

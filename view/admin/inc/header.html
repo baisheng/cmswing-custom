@@ -1,0 +1,123 @@
+<!-- Main navbar -->
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-header">
+
+        <a class="navbar-brand" href="/admin">
+
+            {#<img src="/static/themes/admin/assets/images/logo_dark.png" alt=".">#}
+            <img src="/static/themes/admin/assets/images/logo_light.png" alt=".">
+            </a>
+
+        <ul class="nav navbar-nav pull-right visible-xs-block">
+            <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+            <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+        </ul>
+    </div>
+
+    <div class="navbar-collapse collapse" id="navbar-mobile">
+        <ul class="nav navbar-nav">
+            <li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a>
+            </li>
+            <li><a href="#">主页</a></li>
+            <li><a href="#">内容</a></li>
+            {#<li><a href="#">微信</a></li>#}
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <i class="icon-gear position-left"></i>
+                    微信
+                    <span class="caret"></span>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <a href="/admin/mpbase/index">管理首页</a>
+                    </li>
+                    <li>
+                        <span class="arrow bottom hidden-nav-xs"></span>
+                        <a class="legitRipple" href="/admin/setup/index?id=6">公众号信息</a>
+                    </li>
+                    <li>
+                        <a class="legitRipple" href="/admin/mpbase/mass">群发功能</a>
+                    </li>
+                    <li><a class="legitRipple" href="/admin/mpbase/fodderlist">素材管理</a></li>
+                    <li>
+                        <a class="legitRipple" href="/admin/mpbase/userlist">
+                            <!--<span class="badge bg-danger pull-right">3</span>-->
+                            微信用户
+                        </a>
+                    </li>
+                    <li>
+                        <a class="legitRipple" href="/admin/mpbase/autoreply">自动回复</a>
+                    </li>
+                    <li>
+                        <a class="legitRipple" href="/admin/mpbase/custommenu">自定义菜单</a>
+                    </li>
+                    {#<li><a href="#"><i class="icon-user-lock"></i> Account security</a></li>#}
+                    {#<li><a href="#"><i class="icon-statistics"></i> Analytics</a></li>#}
+                    {#<li><a href="#"><i class="icon-accessibility"></i> Accessibility</a></li>#}
+                    {#<li class="divider"></li>#}
+                    {#<li><a href="#"><i class="icon-gear"></i> All settings</a></li>#}
+                </ul>
+            </li>
+            <li><a href="#">电商</a></li>
+            <li><a href="#">系统</a></li>
+
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle legitRipple" data-toggle="dropdown">
+                    <i class="icon-bubbles4"></i>
+                    <span class="visible-xs-inline-block position-right">Messages</span>
+                    <span class="badge bg-warning-400">{{ notifications.count }}</span>
+                </a>
+
+                <div class="dropdown-menu dropdown-content width-350">
+                    <div class="dropdown-content-heading">
+                        <strong>您有 <span class="">{{ notifications.count }}</span> 消息</strong>
+                    </div>
+                    <div class="list-group list-group-alt">
+                        {% for n in notifications.data %}
+                            <a href="{{ n.url }}" class="media list-group-item">
+                                <span class="pull-left thumb-sm text-center">
+                                <i class="fa {{ n.ico }} fa-1x text-success"></i>
+                                </span><span class="media-body block m-b-none">
+                                {{ n.info }}
+
+                                </span>
+                            </a>
+                        {% else %}
+                            <a href="#" class="list-group-item no-border">
+                                <span class="">
+                                没有消息
+                                </span>
+                            </a>
+                        {% endfor %}
+                    </div>
+
+                    <div class="dropdown-content-footer">
+                        <a href="#" data-popup="tooltip" title="" data-original-title="全部消息"><i
+                                    class="icon-menu display-block"></i></a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    {#<img src="/admin/user/avatar" alt="...">#}
+                    <span> {{ userinfo.username }} </span>
+                    <i class="caret"></i>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#"><i class="icon-user-plus"></i> 我的信息</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#"><i class="icon-cog5"></i> 账户设置</a></li>
+                    <li><a href="/admin/public/logout"><i class="icon-switch2 text-danger-400"></i> 登出</a></li>
+
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- /main navbar -->

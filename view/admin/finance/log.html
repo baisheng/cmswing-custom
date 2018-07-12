@@ -1,0 +1,79 @@
+{% extends "../inc/base.html" %}
+{% block header%}
+<!-- Page header -->
+<div class="page-header">
+    <div class="page-header-content">
+
+        <div class="page-title">
+
+            <h4><i class="icon-arrow-left52 position-left"></i> <span
+                    class="text-semibold">系统配置</span> - {{controller.meta_title}}</h4>
+        </div>
+
+    </div>
+    <div class="breadcrumb-line breadcrumb-line-component"><a class="breadcrumb-elements-toggle"><i
+            class="icon-menu-open"></i></a>
+        <ul class="breadcrumb">
+            <li><a href="index.html"><i class="icon-home2 position-left"></i> 首页</a></li>
+            <li><a href="/admin/database/index">系统配置</a></li>
+            <li class="active">{{controller.meta_title}}</li>
+        </ul>
+
+    </div>
+
+
+</div>
+<!-- /page header -->
+
+{% endblock %}
+
+{% block content %}
+<div class="panel panel-flat">
+    <div class="table-responsive">
+        <table class="table table-striped b-t b-light">
+            <thead>
+            <tr>
+
+                <th style="width:80px;">编号</th>
+                <th class="">时间</th>
+                <th class="">金额</th>
+                <th class="">账户资金</th>
+                <th class="">用户</th>
+                <th class="">详细信息</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in list %}
+            <tr>
+                <td>{{item.id}}</td>
+                <td>{{item.time|dateformat("Y-m-d H:i:s")}}</td>
+                <td>{{item.amount|formatCurrency}}</td>
+                <td>{{item.amount_log|formatCurrency}}</td>
+                <td >{{item.user_id}}</td>
+                <td class="text-sm">
+                    {{item.note}}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="7"><div class="alert alert-warning alert-block">
+                <button data-dismiss="alert" class="close" type="button">×</button>
+                <p>This would display if the 'item' collection were empty</p>
+            </div></td></tr>
+
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+    </div>
+    <footer class="panel-footer">
+        <div class="row">
+
+
+            <div class="col-sm-12 text-right text-center-xs">
+                {{pagerData | safe}}
+            </div>
+        </div>
+    </footer>
+</div>
+
+{% endblock %}
