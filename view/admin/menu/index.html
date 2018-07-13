@@ -1,41 +1,30 @@
 {% extends "./_base.html" %}
-
-{% block pageAction %}
-    <a href="/admin/menu/add"
-       class="btn bg-indigo-400"
-    data-toggle="modal"
-    data-target="#modal_remote">
-        <i class="icon-plus22 mr-2"></i>
-        添加菜单
-    </a>
-
-{% endblock %}
+{% import "../../_components/_pages.html" as pages %}
+{% import "../../_components/_cards.html" as cards %}
+{% import "../../_components/_dropdowns.html" as dropdowns %}
 
 {% block content %}
-    <div class="card">
-        <div class="card-header header-elements-inline">
-            <h5 class="card-title">菜单列表</h5>
-        </div>
+    {% set toolbar = {
+        primary: [{
+            url: '/admin/menu/add',
+            toggle: true,
+            text: '添加菜单',
+            icon: 'icon-add'
+        }]
+    } %}
+    {% set theader = [
+        { html: '<input type="checkbox">' },
+        { html: 'ID'},
+        { html: '名称'},
+        { html: '上级菜单'},
+        { html: '分组'},
+        { html: 'URL'},
+        { html: '排序 '},
+        { html: '开发'},
+        { html: '隐藏'},
+        { width: '10%', classes: 'text-center', html: '操作'}] %}
 
-        <div class="card-body">
-            点击<code>菜单名称</code>进入子菜单管理，开发状态下菜单仅管理员可见，隐藏状态为全员不可见。
-        </div>
+    {{ pages.content(toolbar, cards.datagrid(theader)) }}
 
-        <table class="table datatable-basic table-bordered table-hover dataTable no-footer" data-ride="datatables">
-            <thead>
-            <tr>
-                <th style="width:46px;"><input type="checkbox"></th>
-                <th style="width:46px;">ID</th>
-                <th>名称</th>
-                <th>上级菜单</th>
-                <th>分组</th>
-                <th>URL</th>
-                <th style="width:46px;">排序</th>
-                <th>开发</th>
-                <th>隐藏</th>
-                <th style="width:150px;">操作</th>
-            </tr>
-            </thead>
-        </table>
-    </div>
+
 {% endblock %}

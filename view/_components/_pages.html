@@ -9,14 +9,15 @@
         </div>
 
         <div class="navbar-collapse collapse ">
-
+            {% set dataAttribute = 'data-toggle=modal data-target=#modal_remote' %}
             <div class="mt-3 mt-lg-0 {% if not actions.custom %} pt-1 pb-1 {% endif %}">
                 {% if actions.primary %}
                     <div class="btn-group">
                         {% for action in actions.primary %}
                             <a href="{{ action.url }}"
                                class="btn btn-light {{ action.classes }}"
-                                    {% if action.attribute %} action.attribue {% endif %}>
+                                    {% if action.toggle %} {{ dataAttribute }} {% endif %}
+                                    {% if action.attribute %} {{ action.attribute }} {% endif %}>
                                 {% if action.icon %}
                                     <i class="{{ action.icon }}"></i>
                                 {% endif %}
@@ -30,7 +31,8 @@
                         {% for action in actions.secondary %}
                             <a href="{{ action.url }}"
                                class="btn btn-light {{ action.classes }}"
-                                    {% if action.attribute %} action.attribue {% endif %}>
+                                    {% if action.toggle %} {{ dataAttribute }} {% endif %}
+                                    {% if action.attribute %} {{ action.attribute }} {% endif %}>
                                 {% if action.icon %}
                                     <i class="{{ action.icon }}"></i>
                                 {% endif %}
@@ -54,7 +56,8 @@
                                 <div class="dropdown-menu dropdown-menu-right">
                                     {% for menuItem in item.list %}
                                         {% if menuItem !== '-' %}
-                                            <a href="{{ menuItem.url }}" class="dropdown-item" {% if menuItem.attribute %} {{ menuItem.attribute }} {% endif %}>{{ menuItem.text }}</a>
+                                            <a href="{{ menuItem.url }}"
+                                               class="dropdown-item" {% if menuItem.attribute %} {{ menuItem.attribute }} {% endif %}>{{ menuItem.text }}</a>
                                         {% else %}
                                             <div class="dropdown-divider"></div>
                                         {% endif %}

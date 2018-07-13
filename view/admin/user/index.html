@@ -7,84 +7,13 @@
     <link rel="stylesheet" href="{{ ASSETS }}/js/plugins/datepicker/bootstrap-datetimepicker.min.css" type="text/css">
 {% endblock %}
 
-{% block pageHeader %}
-    <div class="page-header">
-        <!-- Header content -->
-        <div class="page-header-content">
-            <div class="page-title">
-                <h4>
-                    <i class="icon-cabinet position-left"></i>
-                    <span class="text-semibold">运营管理</span> - {{ controller.meta_title }}
-                </h4>
-
-                <ul class="breadcrumb position-right">
-                    <li>
-                        <a href="index.html">
-                            首页
-                        </a>
-                    </li>
-                    {#<li><a href="/admin/user/index">用户运营</a></li>#}
-                    <li class="active">{{ controller.meta_title }}</li>
-
-                </ul>
-                <a class="heading-elements-toggle">
-                    <i class="icon-more"></i>
-                </a>
-            </div>
-
-            <div class="heading-elements">
-                <form class="heading-form" action="#">
-                    <div class="form-group">
-                        {#
-                              <div class="input-group">
-                                                    <input type="search" class="form-control" name="username" placeholder="输入用户名检索"
-                                                           value="{{ controller.get('username') }}">
-                                                    <span class="input-group-btn">
-                                                        <a class="btn btn-default "
-                                                           id="search"
-                                                           href="/admin/user/index">
-                                                            <i class="icon-search4 text-size-small text-muted"></i>
-                                                        </a>
-                                                    </span>
-                                                </div>#}
-                        <div class="has-feedback">
-                            <div class="input-group ">
-                                <input type="search" class="form-control" name="username" placeholder="输入并按「Enter」键检索"
-                                       value="{{ controller.get('username') }}">
-                                <a class="form-control-feedback "
-                                   id="search"
-                                   href="/admin/user/index">
-                                    <i class="icon-search4 text-size-small text-muted"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <a href="/admin/user/adduser"
-                   class="btn btn-default btn-primary ml-10"
-                   data-toggle="modal"
-                   data-target="#modal_remote"
-                >
-                    <i class="icon-plus-circle2 position-left"></i>
-                    {#<i class="icon-plus-circle2 position-left"></i>#}
-                    <span class="text">添加用户</span>
-                    {#<b><i class=" icon-add"></i></b>#}
-                </a>
-            </div>
-        </div>
-        <!-- /header content -->
-
-
-    </div>
-
-{% endblock %}
-
 {% block content %}
     {% set toolbar = {
         primary: [{
-            text: '添加',
-            url: '/admin/action/add',
-            icon: 'icon-add'
+            text: '添加用户',
+            url: '/admin/user/adduser',
+            icon: 'icon-add',
+            toggle: true
         }],
         secondary: [{
             text: '启用',
@@ -122,12 +51,13 @@
 
     {% set rowItems = [] %}
     {% for item in list %}
-        {% set group=item.groupid|get_member_group %}
+        {% set group = (item.groupid|get_member_group) %}
+        {% set limited = (item.id|in_Array(controller.config('user_administrator'))) %}
         {% set rowItems = (rowItems.push({cells: [
-            { html: '<input class="ids" type="checkbox" name="ids" value="'+ item.id +'">'},
+            { html: '<input class="ids" type="checkbox" name="ids" value="'+ ('' if limited else item.id) +'"'+("disabled=true" if limited)+'">'},
             { html: item.id},
             { html: '<a class="text-primary" data-toggle="modal" data-target="#modal_remote"
-            href="/admin/user/showuser/?id='+ item.id +'">'+ item.username +'"<i class="fa fa-search-plus"></i></a>'},
+            href="/admin/user/showuser/?id='+ item.id +'">'+ item.username +' </a>'},
             { html: item.email },
             { html: group.name },
             { html: item.reg_ip|int2ip },
@@ -135,7 +65,7 @@
             { html: item.amount },
             { html: item.score },
             { html: ('' if item.id|in_Array(controller.config('user_administrator'))
-                        else '<a href="/admin/user/setstatus/?ids='+ item.id +'&status=1-item.status&model=member" class="active ajax-get" data-toggle="class">
+            else '<a href="/admin/user/setstatus/?ids='+ item.id +'&status=1-item.status&model=member" class="active ajax-get" data-toggle="class">
                             <i class="fa ' +( "fa-check text-success text-active" if item.status else "fa-times text-danger text") +'"></i></a>')},
             { classes: 'text-center',
                 html: dropdowns.menu([{
@@ -156,10 +86,6 @@
             }])}
         ]}), rowItems) %}
     {% endfor %}
-
-    {#{%if item.id|in_Array(controller.config('user_administrator'))%}{%else%}#}
-        {#<a href="/admin/user/userdel/?ids={{item.id}}" class="confirm ajax-get text-info">删除</a>#}
-    {#{%endif%}#}
 
     {% set pager = (pagerData | safe) %}
     {% set content = cards.grid(theader, rowItems, pager) %}
