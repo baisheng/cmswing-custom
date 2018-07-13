@@ -1,141 +1,76 @@
-{% extends "../default.html" %}
+{% extends "../../_layouts/_main.html" %}
+
+{% import "../../_components/_pages.html" as pages %}
+{% import "../../_components/_cards.html" as cards %}
+{% import "../../_components/_dropdowns.html" as dropdowns %}
 
 {% block content %}
-    <div class="navbar navbar-expand-lg navbar-light navbar-component rounded">
-        <div class="text-center d-lg-none w-100">
-            <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-filter">
-                <i class="icon-unfold mr-2"></i>
-                Filters
-            </button>
-        </div>
+    {% set toolbar = {
+        primary: [{
+            text: '添加',
+            url: '/admin/action/add',
+            icon: 'icon-add'
+        }],
+        secondary: [{
+            text: '启用',
+            url: '/admin/action/setstatus?status=0',
+            attribute: 'traget-form="ids"',
+            classes: 'ajax-post',
+            icon: 'icon-checkmark3'
+        }, {
+            text: '禁用',
+            url: '/admin/action/setstatus?status=1',
+            attribute: 'traget-form="ids"',
+            classes: 'ajax-post ',
+            icon: 'icon-cross2'
+        }, {
+            text: '删除',
+            url: '/admin/action/setstatus?status=-1',
+            attribute: 'target-form="items"',
+            classes: 'ajax-post confirm',
+            icon: 'icon-trash-alt'
+        }]} %}
 
-        <div class="navbar-collapse collapse" id="navbar-filter">
+    {% set rowItems = [] %}
+    {% for item in list %}
+        {% set rowItems = (rowItems.push({cells: [
+            { html: '<input class="ids" type="checkbox" name="ids" value="'+ item.id +'">'},
+            { html: item.id},
+            { html: item.name},
+            { html: '<a data-id="'+ item.id + '" href="/admin/action/edit?id='+ item.id +'" class="">' + item.title +'</a>'},
+            { html: item.type|get_action_type},
+            { html: item.remark},
+            { html: '<a href="/admin/action/setstatus/ids/'+ item.id +'/status?1-item.status" class="active ajax-get" data-toggle="class">
+                        <i class="fa '+( "fa-check text-success text-active" if item.status else "fa-times text-danger text") +'"></i></a>', classes: 'text-center'},
 
-            <div class="mt-3 mt-lg-0">
-                <div class="btn-group">
-                    <a href="/admin/action/add" class="btn btn-light"><i class="icon-add"></i>
-                        <span
-                                class="d-none d-lg-inline-block ml-2">添加</span></a>
-                </div>
+            { classes: 'text-center',
+                html: dropdowns.menu([{
+                url: '/admin/action/edit?id='+ item.id,
+                icon: 'icon-pencil7',
+                text: '修改'
+            }, {
+                url: '/admin/action/setstatus?ids='+ item.id +'&status=-1',
+                icon: 'icon-trash-alt',
+                classes: 'ajax-get',
+                text: '删除'
+            }])}
+        ]}), rowItems) %}
+    {% endfor %}
 
-                <div class="btn-group ml-3 mr-lg-3">
-                    <a target-form="ids" href="/admin/action/setstatus?status=1"
-                       class="btn btn-light ajax-post"><i class="icon-checkmark3"></i> <span
-                                class="d-none d-lg-inline-block ml-2">启用</span></a>
-                    <a href="/admin/action/setstatus?status=0" target-form="ids"
-                       class="btn btn-light ajax-post"><i class="icon-cross2"></i> <span
-                                class="d-none d-lg-inline-block ml-2">禁用</span></a>
-                    <a href="/admin/action/setstatus?status=-1"
-                       target-form="ids" class="btn btn-light ajax-post confirm"><i class="icon-trash-alt"></i>
-                        <span
-                                class="d-none d-lg-inline-block ml-2">删除</span></a>
-                </div>
-            </div>
+    {% set theader =  [
+        { html: '<input type="checkbox">' },
+        { html: 'ID'},
+        { html: '标识'},
+        { html: '名称'},
+        { html: '类型'},
+        { html: '规则'},
+        { width: '10%', classes: 'text-center', html: '状态'},
+        { width: '10%', classes: 'text-center', html: '操作'}
+    ] %}
 
-            <span class="navbar-text mr-3 ml-lg-auto">
-									排序:
-								</span>
+    {% set pager = (pagerData | safe) %}
+    {% set content = cards.grid(theader, rowItems, pager) %}
 
-            <ul class="navbar-nav flex-wrap">
-                <li class="nav-item">
-                    <a href="#" class="navbar-nav-link active">
-                        <i class="icon-sort-alpha-asc"></i>
-                        <span class="d-lg-none ml-2">Ascending</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="#" class="navbar-nav-link">
-                        <i class="icon-sort-alpha-desc"></i>
-                        <span class="d-lg-none ml-2">Descending</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="card">
-        {#<div class="card-header bg-transparent header-elements-inline">#}
-            {#<h6 class="card-title">{{ controller.meta_title }}</h6>#}
-
-            {#<div class="header-elements">#}
-                {#<span class="badge bg-blue">259 new today</span>#}
-            {#</div>#}
-        {#</div>#}
-        <div class="table-responsive">
-            <table class="table b-t b-light">
-                <thead>
-                <tr>
-                    <th style="width:20px;">
-                        <input
-                                type="checkbox">
-                    </th>
-                    <th style="width:80px;">编号</th>
-                    <th class="">标识</th>
-                    <th class="">名称</th>
-                    <th class="">类型</th>
-                    <th class="">规则</th>
-                    <th class="">状态</th>
-                    <th class="text-center">操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for item in list %}
-                    <tr>
-                        <td><input class="ids" type="checkbox" name="ids"
-                                   value="{{ item.id }}"></td>
-                        <td>{{ item.id }}</td>
-                        <td>{{ item.name }}</td>
-                        <td><a data-id="{{ item.id }}" href="/admin/action/edit?id={{ item.id }}"
-                               class="">{{ item.title }}</a>
-                        </td>
-                        <td><span>{{ item.type|get_action_type }}</span></td>
-                        <td>{{ item.remark }}</td>
-                        <td>
-                            <a href="/admin/action/setstatus/ids/{{ item.id }}/status/{{ 1-item.status }}"
-                               class="active ajax-get" data-toggle="class">
-                                <i class="fa  {% if item.status %}fa-check text-success text-active{% else %} fa-times text-danger text{% endif %}"></i>
-                            </a>
-                        </td>
-                        <td class="text-center">
-                            <div class="list-icons">
-                                <div class="list-icons-item dropdown">
-                                    <a href="#" class="list-icons-item dropdown-toggle caret-0"
-                                       data-toggle="dropdown"><i class="icon-menu9"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a href="/admin/action/edit?id={{ item.id }}" class="dropdown-item"><i
-                                                    class="icon-pencil7"></i> 修改</a>
-                                        <a href="/admin/action/setstatus?ids={{ item.id }}&status=-1"
-                                           class="dropdown-item ajax-get"><i class="icon-trash-alt"></i> 删除</a>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="7">
-                            <div class="alert alert-warning alert-block">
-                                <button data-dismiss="alert" class="close" type="button">×</button>
-                                <p>还没有内容</p>
-                            </div>
-                        </td>
-                    </tr>
-
-                {% endfor %}
-
-
-                </tbody>
-            </table>
-        </div>
-        {% if pagerData %}
-            <div class="card-footer p-2">
-                <div class="pull-right">
-                    {{ pagerData | safe }}
-                </div>
-            </div>
-        {% endif %}
-
-    </div>
+    {{ pages.content(toolbar, content) }}
 
 {% endblock %}

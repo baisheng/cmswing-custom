@@ -1,0 +1,23 @@
+{% macro menu(actions) %}
+    <div class="list-icons">
+        <div class="list-icons-item dropdown">
+            <a href="#" class="list-icons-item dropdown-toggle caret-0"
+               data-toggle="dropdown"><i class="icon-menu9"></i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+                {% for action in actions %}
+                    {% if action.url !== 'limited' %}
+                        <a href="{{ action.url }}"
+                           class="dropdown-item {% if action.classes %} {{ action.classes }} {% endif %}" {% if action.attribute %} {{ action.attribute }} {% endif %}>
+                            <i class="{{ action.icon }}"></i> {{ action.text }}
+                        </a>
+                    {% endif %}
+                    {#<a href="/admin/action/edit?id='+ item.id +'" class="dropdown-item"><i#}
+                    {#class="icon-pencil7"></i> 修改</a>#}
+                    {#<a href="/admin/action/setstatus?ids='+ item.id +'" &status=-1"#}
+                    {#class="dropdown-item ajax-get"><i class="icon-trash-alt"></i> 删除</a>#}
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+{% endmacro %}

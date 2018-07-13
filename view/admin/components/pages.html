@@ -1,0 +1,66 @@
+{% macro toolbar(primary, secondary, custom) %}
+    <div class="navbar navbar-expand-lg navbar-light navbar-component rounded">
+        <div class="text-center d-lg-none w-100">
+            <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse"
+                    data-target="#navbar-filter">
+                <i class="icon-unfold mr-2"></i>
+                Filters
+            </button>
+        </div>
+
+        <div class="navbar-collapse collapse ">
+
+            <div class="mt-3 mt-lg-0 {% if not custom %} pt-1 pb-1 {% endif %}">
+                {% if primary %}
+                    <div class="btn-group">
+                        {% for action in primary %}
+                            <a href="{{ action.url }}"
+                               class="btn btn-light {{ action.classes }}"
+                                    {% if action.attribute %} action.attribue {% endif %}>
+                                {% if action.icon %}
+                                    <i class="{{ action.icon }}"></i>
+                                {% endif %}
+                                <span class="d-none d-lg-inline-block ml-2">{{ action.text }}</span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if secondary %}
+                    <div class="btn-group ml-3 mr-lg-3">
+                        {% for action in secondary %}
+                            <a href="{{ action.url }}"
+                               class="btn btn-light {{ action.classes }}"
+                                    {% if action.attribute %} action.attribue {% endif %}>
+                                {% if action.icon %}
+                                    <i class="{{ action.icon }}"></i>
+                                {% endif %}
+                                <span class="d-none d-lg-inline-block ml-2">{{ action.text }}</span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if custom %}
+                {% if custom.text %}
+                    <span class="navbar-text mr-3 ml-lg-auto">排序:</span>
+                {% endif %}
+                <ul class="navbar-nav flex-wrap">
+                    {% for item in custom.items %}
+                        <li class="nav-item">
+                            <a href="{{ item.url }}" class="navbar-nav-link {{ item.classes }}">
+                                <i class="{{ item.icon }}"></i>
+                                <span class="d-lg-none ml-2">{{ item.text }}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro content(actions, content) %}
+    {{ toolbar(actions.primary, actions.secondary, actions.custom) }}
+    {{ content }}
+{% endmacro %}

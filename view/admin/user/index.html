@@ -1,4 +1,8 @@
-{% extends "../default.html" %}
+{% extends "../../_layouts/_main.html" %}
+{% import "../../_components/_pages.html" as pages %}
+{% import "../../_components/_cards.html" as cards %}
+{% import "../../_components/_dropdowns.html" as dropdowns %}
+
 {% block style %}
     <link rel="stylesheet" href="{{ ASSETS }}/js/plugins/datepicker/bootstrap-datetimepicker.min.css" type="text/css">
 {% endblock %}
@@ -76,150 +80,91 @@
 {% endblock %}
 
 {% block content %}
-    <div class="card">
-        <div class="panel-toolbar panel-toolbar-inbox panel-body" style="padding-left: 0;">
-            <div class="navbar navbar-default">
-                <ul class="nav navbar-nav visible-xs-block no-border">
-                    <li>
-                        <a class="text-center collapsed" data-toggle="collapse"
-                           data-target="#inbox-toolbar-toggle-multiple">
-                            <i class="icon-circle-down2"></i>
-                        </a>
-                    </li>
-                </ul>
+    {% set toolbar = {
+        primary: [{
+            text: '添加',
+            url: '/admin/action/add',
+            icon: 'icon-add'
+        }],
+        secondary: [{
+            text: '启用',
+            url: '/admin/action/setstatus?status=0',
+            attribute: 'traget-form="ids"',
+            classes: 'ajax-post',
+            icon: 'icon-checkmark3'
+        }, {
+            text: '禁用',
+            url: '/admin/action/setstatus?status=1',
+            attribute: 'traget-form="ids"',
+            classes: 'ajax-post ',
+            icon: 'icon-cross2'
+        }, {
+            text: '删除',
+            url: '/admin/action/setstatus?status=-1',
+            attribute: 'target-form="items"',
+            classes: 'ajax-post confirm',
+            icon: 'icon-trash-alt'
+        }]} %}
 
-                <div class="navbar-collapse collapse" id="inbox-toolbar-toggle-multiple">
+    {% set theader =  [
+        { html: '<input type="checkbox">' },
+        { html: 'ID'},
+        { html: '用户名'},
+        { html: '邮箱'},
+        { html: '用户组'},
+        { html: 'IP'},
+        { html: '最后登录'},
+        { html: '金钱总数'},
+        { html: '积分点数'},
+        { html: '状态'},
+        { width: '10%', classes: 'text-center', html: '操作'}
+    ] %}
 
-                    <div class="btn-group navbar-btn">
+    {% set rowItems = [] %}
+    {% for item in list %}
+        {% set group=item.groupid|get_member_group %}
+        {% set rowItems = (rowItems.push({cells: [
+            { html: '<input class="ids" type="checkbox" name="ids" value="'+ item.id +'">'},
+            { html: item.id},
+            { html: '<a class="text-primary" data-toggle="modal" data-target="#modal_remote"
+            href="/admin/user/showuser/?id='+ item.id +'">'+ item.username +'"<i class="fa fa-search-plus"></i></a>'},
+            { html: item.email },
+            { html: group.name },
+            { html: item.reg_ip|int2ip },
+            { html: item.last_login_time | moment('YYYY-MM-DD HH:mm:ss') },
+            { html: item.amount },
+            { html: item.score },
+            { html: ('' if item.id|in_Array(controller.config('user_administrator'))
+                        else '<a href="/admin/user/setstatus/?ids='+ item.id +'&status=1-item.status&model=member" class="active ajax-get" data-toggle="class">
+                            <i class="fa ' +( "fa-check text-success text-active" if item.status else "fa-times text-danger text") +'"></i></a>')},
+            { classes: 'text-center',
+                html: dropdowns.menu([{
+                url: '/admin/user/edituser?id='+ item.id,
+                icon: 'icon-pencil7',
+                attribute: 'data-toggle=modal data-target=#modal_remote' ,
+                text: '修改'
+            }, {
+                url: '/admin/user/recharge/?ids='+ item.id +'&status=-1',
+                icon: 'icon-coins',
+                attribute: 'data-toggle=modal data-target=#modal_remote' ,
+                text: '充值'
+            }, {
+                text: '删除',
+                icon: 'icon-trash-alt',
+                url: ('limited' if item.id|in_Array(controller.config('user_administrator')) else '/admin/user/userdel/?ids=' + item.id),
+                classes: 'confirm ajax-get'
+            }])}
+        ]}), rowItems) %}
+    {% endfor %}
 
+    {#{%if item.id|in_Array(controller.config('user_administrator'))%}{%else%}#}
+        {#<a href="/admin/user/userdel/?ids={{item.id}}" class="confirm ajax-get text-info">删除</a>#}
+    {#{%endif%}#}
 
-                        <a class="btn btn-default ajax-post confirm" href="/admin/user/userdel"
-                           target-form="ids">
-                            <i class="icon-bin position-left"></i>
-                            删除
-                        </a>
+    {% set pager = (pagerData | safe) %}
+    {% set content = cards.grid(theader, rowItems, pager) %}
 
-                        {#
-                        <a class="btn btn-default ajax-post" target-form="ids"
-                           href="/admin/user/setstatus/?status=1&model=member"
-                           target-form="ids">
-
-                            <i class="icon-check position-left"></i>启用
-                        </a>
-                        <a class="btn btn-default ajax-post" href="/admin/user/setstatus/?status=0&model=member"
-                           target-form="ids">
-                            <i class="icon-cross position-left"></i>禁用
-                        </a>
-                        #}
-
-                    </div>
-                    <div class="navbar-right">
-                        <div class="btn-group navbar-btn ">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                                    aria-expanded="false">
-                                筛选
-                                <span class="caret"></span>
-                            </button>
-
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li>
-                                    <a href="/admin/user/index">全部</a>
-                                </li>
-                                {% for group in memberGroup %}
-                                    <li>
-                                        <a href="/admin/user/index?groupid={{ group.groupid }}">{{ group.name }}</a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered">
-
-                <thead>
-                <tr>
-                    <th style="width:20px;"><input type="checkbox"></th>
-                    <th>#</th>
-                    <th class="">用户名</th>
-                    <th class="">邮箱</th>
-                    <th class="" style="width:100px">用户组</th>
-                    <th class="">IP</th>
-                    <th class="">最后登录</th>
-                    <th class="">状态</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                {% for item in list %}
-                    {% set group=item.groupid|get_member_group %}
-                    <tr>
-                        <td>
-                            <input class="ids" type="checkbox" name="ids"
-                                   value="{% if item.id|in_Array(controller.config('user_administrator')) %}{% else %}{{ item.id }}{% endif %}"
-                                   {% if item.id|in_Array(controller.config('user_administrator')) %}disabled="true"{% endif %}>
-                        </td>
-                        <td>{{ item.id }}</td>
-                        <td>
-                            <a href="/admin/user/showuser/?id={{ item.id }}"
-                               class="text-primary"
-                               data-toggle="modal"
-                               data-target="#modal_remote">
-                                {{ item.username }} <i class="fa fa-search-plus"></i>
-                            </a>
-                        </td>
-                        <td>{{ item.email }}</td>
-                        <td>{{ group.name }}</td>
-                        <td>{{ item.reg_ip|int2ip }}</td>
-                        <td>{{ item.last_login_time | moment('YYYY-MM-DD HH:mm:ss') }}</td>
-                        <td>
-                            {% if item.id|in_Array(controller.config('user_administrator')) %}{% else %}
-                                <a href="/admin/user/setstatus/?ids={{ item.id }}&status={{ 1-item.status }}&model=member"
-                                   class="active ajax-get" data-toggle="class">
-                                    <i class="fa  {% if item.status %}fa-check text-success text-active{% else %}fa-times text-danger text{% endif %}"></i>
-                                </a>
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a href="/admin/user/edituser/?id={{ item.id }}" class="btn btn-xs"
-                               data-toggle="modal"
-                               data-target="#modal_remote">编辑</a>
-                            {% if item.id|in_Array(controller.config('user_administrator')) %}{% else %}
-                                <a href="/admin/user/userdel/?ids={{ item.id }}"
-                                   class="confirm ajax-get text-danger">删除</a>
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="7">
-                            <div class="alert alert-warning alert-block">
-                                <button data-dismiss="alert" class="close" type="button">×</button>
-                                <p>
-                                    还没有内容
-                                </p>
-                            </div>
-                        </td>
-                    </tr>
-
-                {% endfor %}
-
-                </tbody>
-            </table>
-        </div>
-        {% if pagerData %}
-            <div class="card-footer">
-                <div class="pull-right">
-                    {{ pagerData | safe }}
-                </div>
-            </div>
-        {% endif %}
-    </div>
-
+    {{ pages.content(toolbar, content) }}
 
 {% endblock %}
 
@@ -227,5 +172,6 @@
     {#<script src="/static/admin/js/parsley/parsley.min.js"></script>#}
     {#<script src="/static/admin/js/parsley/parsley.extend.js"></script>#}
     <script src="{{ ASSETS }}/js/plugins/datepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-    <script src="{{ ASSETS }}/js/plugins/datepicker/locales/bootstrap-datetimepicker.zh-CN.js" type="text/javascript"></script>
+    <script src="{{ ASSETS }}/js/plugins/datepicker/locales/bootstrap-datetimepicker.zh-CN.js"
+            type="text/javascript"></script>
 {% endblock %}

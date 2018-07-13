@@ -1,0 +1,95 @@
+<!-- Main sidebar -->
+<div class="sidebar sidebar-light sidebar-main sidebar-fixed sidebar-expand-md">
+
+    <!-- Sidebar mobile toggler -->
+    <div class="sidebar-mobile-toggler text-center">
+        <a href="#" class="sidebar-mobile-main-toggle">
+            <i class="icon-arrow-left8"></i>
+        </a>
+        Navigation
+        <a href="#" class="sidebar-mobile-expand">
+            <i class="icon-screen-full"></i>
+            <i class="icon-screen-normal"></i>
+        </a>
+    </div>
+    <!-- /sidebar mobile toggler -->
+
+
+    <!-- Sidebar content -->
+    <div class="sidebar-content">
+
+        <!-- User menu -->
+        <div class="sidebar-user">
+            <div class="card-body">
+                <div class="media">
+                    <div class="mr-3">
+                        <a href="#">
+                            <img src="/admin/user/avatar" width="38"
+                                 height="38" class="rounded-circle" alt=""></a>
+                    </div>
+
+                    <div class="media-body">
+                        <div class="media-title font-weight-semibold">{{ userinfo.username }}</div>
+                        <div class="font-size-xs opacity-50">
+                            <i class="icon-pin font-size-sm"></i> 北京-丰台
+                        </div>
+                    </div>
+
+                    <div class="ml-3 align-self-center">
+                        <a href="#" class="text-white"><i class="icon-cog3"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /user menu -->
+
+
+        <!-- Main navigation -->
+        <div class="card card-sidebar-mobile">
+            <ul class="nav nav-sidebar" data-nav-type="accordion">
+                {% for i, v in controller.MenuGroup %}
+                    {% if i != 0 and i != 99 and i != ism %}
+                        <!-- Main -->
+                        <li class="nav-item-header">
+                            <div class="text-uppercase font-size-xs line-height-xs">{{ v }}</div>
+                            <i class="icon-menu" title="{{ v }}"></i>
+                        </li>
+
+                        {% for v in controller.adminmenu[i] %}
+                            <li class="nav-item {% if v.children %} nav-item-submenu {% endif %}">
+                                {% if v.ico %}
+                                    <a class="nav-link" href="#">
+                                        <i class="fa {{ v.ico }}"></i>
+                                        <span>{{ v.title }}</span>
+                                    </a>
+                                {% else %}
+                                    <a class="nav-link" href="#">
+                                        <i class="icon-screen-desktop icon"></i>
+                                        <span>{{ v.title }}</span>
+                                    </a>
+                                {% endif %}
+                                <ul class="nav nav-group-sub">
+                                    {% for c in v.children %}
+                                        {#{{ controller.active }}#}
+                                        {#{{ c.url }}#}
+                                        <li class="nav-item">
+                                            <a class="nav-link {% if controller.active == c.url %}active{% endif %}"
+                                               href="/{{ c.url }}">{{ c.title }}</a>
+                                        </li>
+                                    {% endfor %}
+
+                                </ul>
+                            </li>
+
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- /main navigation -->
+
+    </div>
+    <!-- /sidebar content -->
+
+</div>
+<!-- /main sidebar -->

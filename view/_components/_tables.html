@@ -1,0 +1,81 @@
+
+{% macro table(thead, tbody, tfoot, option) %}
+    <table class="table {% if option.style %} {{ option.style }} {% else %} b-t b-light {% endif %}" {% if option.attribute %} {{ option.attribute }} {% endif %}>
+        {% if thead %}
+            <thead>
+            {% for row in thead.rows %}
+                <tr>
+                    {% for cell in row.cells %}
+                        <th
+                                {% if cell.width %}
+                                    width="{{cell.width}}"
+                                {% endif %}
+
+                                {% if cell.sort %}
+                                    aria-sort="{{cell.sort}}"
+                                {% endif %}
+
+                                {% if cell.classes %}
+                                    class="{{cell.classes}}"
+                                {% endif %}
+
+                        >
+                            {{cell.html | safe}}
+                        </th>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </thead>
+        {% endif %}
+        <tbody>
+        {% for row in tbody.rows %}
+            <tr>
+                {% for cell in row.cells %}
+
+
+                    <{% if cell.type == 'th' %}{{cell.type}}{% else %}td{% endif %}
+                            {% if cell.width %}
+                                width="{{cell.width}}"
+                            {% endif %}
+
+                            {% if cell.sortValue %}
+                                data-sort-value="{{cell.sortValue}}"
+                            {% endif %}
+
+                            {% if cell.classes %}
+                                class="{{cell.classes}}"
+                            {% endif %}
+
+                    >
+                        {{cell.html | safe}}
+                    </{% if cell.type == 'th' %}{{cell.type}}{% else %}td{% endif %} >
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+        {% if tfoot %}
+            <tfoot style="border-top: 2px solid #000">
+            {% for row in tfoot.rows %}
+                <tr>
+                    {% for cell in row.cells %}
+
+                        <{% if cell.type == 'th' %}{{cell.type}}{% else %}td{% endif %}
+
+                                {% if cell.classes %}
+                                    class="{{cell.classes}}"
+                                {% endif %}
+
+                        >
+                            {{cell.html | safe}}
+                        </{% if cell.type == 'th' %}{{cell.type}}{% else %}td{% endif %} >
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tfoot>
+        {% endif %}
+    </table>
+{% endmacro %}
+
+{% macro datatable(thead, tobyd, tfoot) %}
+    {{ table(thead, tbody, tfoot, {style: 'datatable-basic', attribute: 'data-ride=datatables'}) }}
+{% endmacro %}

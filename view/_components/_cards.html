@@ -1,0 +1,39 @@
+{% from './_tables.html' import table with context %}
+{% from './_tables.html' import datatable with context %}
+
+{% macro default(content, footer, style) %}
+    <div class="card">
+        {{ content }}
+        {% if footer %}
+            <div class="card-footer">
+                {{ footer }}
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro grid(theader, rows, pager) %}
+    <div class="card">
+        <div class="table-responsive">
+            {{ table({rows: [{cells: theader}]}, { rows: rows }) }}
+        </div>
+        {% if pager %}
+            <div class="card-footer">
+                <div class="pull-right">
+                    {{ pager }}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro datagrid(theader) %}
+    {#{% set content = datatable({rows: [{cells: theader}]}) %}#}
+    {#{{ default(content) }}#}
+    <div class="card">
+        <div class="table-responsive">
+            {{ datatable({rows: [{cells: theader}]}) }}
+        </div>
+    </div>
+
+{% endmacro %}

@@ -1,0 +1,82 @@
+{% macro toolbar(actions) %}
+    <div class="navbar navbar-expand-lg navbar-light navbar-component rounded">
+        <div class="text-center d-lg-none w-100">
+            <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse"
+                    data-target="#navbar-filter">
+                <i class="icon-unfold mr-2"></i>
+                Filters
+            </button>
+        </div>
+
+        <div class="navbar-collapse collapse ">
+
+            <div class="mt-3 mt-lg-0 {% if not actions.custom %} pt-1 pb-1 {% endif %}">
+                {% if actions.primary %}
+                    <div class="btn-group">
+                        {% for action in actions.primary %}
+                            <a href="{{ action.url }}"
+                               class="btn btn-light {{ action.classes }}"
+                                    {% if action.attribute %} action.attribue {% endif %}>
+                                {% if action.icon %}
+                                    <i class="{{ action.icon }}"></i>
+                                {% endif %}
+                                <span class="d-none d-lg-inline-block ml-2">{{ action.text }}</span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if actions.secondary %}
+                    <div class="btn-group ml-3 mr-lg-3">
+                        {% for action in actions.secondary %}
+                            <a href="{{ action.url }}"
+                               class="btn btn-light {{ action.classes }}"
+                                    {% if action.attribute %} action.attribue {% endif %}>
+                                {% if action.icon %}
+                                    <i class="{{ action.icon }}"></i>
+                                {% endif %}
+                                <span class="d-none d-lg-inline-block ml-2">{{ action.text }}</span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if actions.custom %}
+                {#{% if custom.text %}#}
+                {#<span class="navbar-text mr-3 ml-lg-auto">排序:</span>#}
+                {#{% endif %}#}
+                <ul class="ml-lg-auto navbar-nav flex-wrap">
+                    {% for item in actions.custom %}
+                        {% if item.type == 'dropdown' %}
+                            <li class="nav-item dropdown">
+                                <a href="{{ item.url }}" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown"
+                                   aria-expanded="false">{{ item.text }}</a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    {% for menuItem in item.list %}
+                                        {% if menuItem !== '-' %}
+                                            <a href="{{ menuItem.url }}" class="dropdown-item" {% if menuItem.attribute %} {{ menuItem.attribute }} {% endif %}>{{ menuItem.text }}</a>
+                                        {% else %}
+                                            <div class="dropdown-divider"></div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a href="{{ item.url }}" class="navbar-nav-link {{ item.classes }}">
+                                    <i class="{{ item.icon }}"></i>
+                                    <span class="d-lg-none ml-2">{{ item.text }}</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro content(actions, content) %}
+    {{ toolbar(actions) }}
+    {{ content }}
+{% endmacro %}

@@ -511,6 +511,7 @@ module.exports = {
       env.addFilter('check_document_position', (pos = 0, contain = 0) => {
         return check_document_position(pos, contain);
       });
+
     }
   }
 }
