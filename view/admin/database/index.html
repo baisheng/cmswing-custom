@@ -1,4 +1,7 @@
-{% extends "../inc/base.html" %}
+{% extends "../../_layouts/_main.html" %}
+{% import "../../_components/_pages.html" as pages %}
+{% import "../../_components/_cards.html" as cards %}
+{% import "../../_components/_dropdowns.html" as dropdowns %}
 
 {% block header%}
 <!-- Page header -->
@@ -46,10 +49,49 @@
 <!-- /page header -->
 {% endblock %}
 
-
+{#<a href="#" data-toggle="tab" id="export" data-toggle="class:show inline" data-target="#spin" data-loading-text="备份中...">#}
+    {#<i class="fa fa-spin fa-spinner position-left hide" id="spin"></i>#}
+    {#<i class=" icon-database-export position-left"></i> 开始备份#}
+{#</a>#}
 {% block content %}
+    {% set toolbar = {
+        primary: [{
+            id: 'export',
+            text: '备份',
+            url: '#',
+            icon: 'icon-database-export'
+        }],
+        secondary: [{
+            id: 'optimize',
+            text: '优化表',
+            classes: 'ajax-post',
+            icon: ' icon-database-check'
+        }, {
+            id: 'repair',
+            text: '修复表',
+            icon: 'icon-database-refresh'
+        }],
+        custom: [
+            {
+                text: '还原数据',
+                url: '/admin/database/imports',
+                icon: 'icon-database-arrow'
+            }
+        ]} %}
+    {% set theader =  [
+        { html: '<input type="checkbox" checked="checked">' },
+        { html: '表名'},
+        { html: '数据量'},
+        { html: '数据大小'},
+        { html: '创建时间'},
+        { html: '状态'},
+        { width: '10%', classes: 'text-center', html: '操作'}
+    ] %}
+    {{ pages.toolbar(toolbar) }}
 
-<div class="panel panel-flat">
+
+
+<div class="card">
     <!--<div class="panel-heading">-->
         <!--<h5 class="panel-title">数据表<a class="heading-elements-toggle"><i class="icon-more"></i></a></h5>-->
     <!--</div>-->
@@ -72,7 +114,6 @@
             {% for item in list %}
             <tr>
                 <td>
-                    <!--<label class="checkbox m-n i-checks">-->
                     <input type="checkbox" value="{{ item.Name }}"
                                                                 name="tables" checked="checked">
                 </td>
@@ -82,10 +123,19 @@
                 <td>{{ item.Create_time | format_time('s')}}</td>
                 <td class="infos">未备份</td>
                 <td>
-                    <ul class="icons-list">
-                        <li><a class="optimize" href="javascript:void(0)" title="优化表"><i class="icon-database-check text-teal-600 " data-tables="{{ item.Name }}"></i></a></li>
-                        <li><a class="repair" href="javascript:void(0)" title="修复表"><i class="icon-database-refresh text-danger-600" data-tables="{{ item.Name }}"></i></a></li>
-                    </ul>
+                   {{  dropdowns.menu([ {
+                       text: '优化表',
+                       icon: 'icon-database-check ',
+                       url: 'javascript:void(0)',
+                       attribute: 'data-tables=' + item.Name,
+                       classes: 'optimize'
+                   }, {
+                       text: '修复表',
+                       icon: 'icon-database-refresh',
+                       url: 'javascript:void(0)',
+                       attribute: 'data-tables=' + item.Name,
+                       classes: 'repair'
+                   }]) }}
                 </td>
             </tr>
             {% endfor %}

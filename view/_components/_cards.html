@@ -1,9 +1,10 @@
 {% from './_tables.html' import table with context %}
 {% from './_tables.html' import datatable with context %}
+{% from './_toolbars.html' import toolbar with context %}
 
 {% macro default(content, footer, style) %}
     <div class="card">
-        {{ content }}
+        {{ content | safe }}
         {% if footer %}
             <div class="card-footer">
                 {{ footer }}
@@ -36,4 +37,25 @@
         </div>
     </div>
 
+{% endmacro %}
+
+{% macro toolbarGrid(actions, theader, rows, pager) %}
+    {% set toolbarClass = "navbar navbar-light bg-light navbar-expand-lg py-lg-2" %}
+    <div class="card">
+        {% if actions %}
+            <div class="bg-light">
+                {{ toolbar(actions, { class: toolbarClass }) }}
+            </div>
+        {% endif %}
+        <div class="table-responsive">
+            {{ table({rows: [{cells: theader}]}, { rows: rows }) }}
+        </div>
+        {% if pager %}
+            <div class="card-footer">
+                <div class="pull-right">
+                    {{ pager }}
+                </div>
+            </div>
+        {% endif %}
+    </div>
 {% endmacro %}

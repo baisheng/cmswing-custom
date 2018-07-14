@@ -24,10 +24,12 @@ module.exports = {
        */
       env.addFilter('format_bytes', function (size, delimiter = '') {
         const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+        let count = 0;
         for (let i = 0; size >= 1024 && i < 5; i++) {
+          count = i
           size /= 1024;
         }
-        return Math.round(size * 100) / 100 + delimiter + units[i];
+        return Math.round(size * 100) / 100 + delimiter + units[count];
       });
 
       /**

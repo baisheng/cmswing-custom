@@ -2,16 +2,17 @@ const fs = require('fs');
 const targz = require('tar.gz');
 const http = require('http');
 module.exports = class extends think.common.Admin {
-  constructor(ctx) {
+  constructor (ctx) {
     super(ctx); // 调用父级的 constructor 方法，并把 ctx 传递进去
     // 其他额外的操作
     this.tactive = 'setup';
   }
+
   /**
-     * 数据库列表
-     * @returns {*}
-     */
-  async indexAction() {
+   * 数据库列表
+   * @returns {*}
+   */
+  async indexAction () {
     // auto render template file index_index.html
     // let DB = think.adapter('db', this.config.type || 'mysql');
     // this._db = new DB(this.config);
@@ -19,15 +20,16 @@ module.exports = class extends think.common.Admin {
     // console.log(list)
     this.meta_title = '备份数据库';
     this.assign('list', list);
+    console.log(list)
     // let mysql = this.service("mysql");
     // console.log(think.config("model.mysql").host);
     return this.display();
   }
 
   /**
-     * 优化表
-     */
-  async optimizeAction() {
+   * 优化表
+   */
+  async optimizeAction () {
     let list;
 
     if (this.isPost) {
@@ -45,10 +47,10 @@ module.exports = class extends think.common.Admin {
   }
 
   /**
-     * 修复表
-     * @returns {*}
-     */
-  async repairAction() {
+   * 修复表
+   * @returns {*}
+   */
+  async repairAction () {
     let list;
     if (this.isPost) {
       const tables = this.post('tables');
@@ -65,13 +67,13 @@ module.exports = class extends think.common.Admin {
   }
 
   /**
-     * 备份数据库
-     * @param  String  tables 表名
-     * @param  Integer id     表ID
-     * @param  Integer start  起始行数
-     * @author
-     */
-  async exportAction() {
+   * 备份数据库
+   * @param  String  tables 表名
+   * @param  Integer id     表ID
+   * @param  Integer start  起始行数
+   * @author
+   */
+  async exportAction () {
     const tables = this.para('tables') ? this.para('tables').split(',') : null;
     let id = Number(this.para('id'));
     let start = Number(this.para('start'));
@@ -172,29 +174,30 @@ module.exports = class extends think.common.Admin {
     }
   }
 
-  importsAction() {
+  importsAction () {
     /**
-         * 遍历文件夹，获取所有文件夹里面的文件信息
-         * @param path
-         * @returns {Array}
-         */
+     * 遍历文件夹，获取所有文件夹里面的文件信息
+     * @param path
+     * @returns {Array}
+     */
 
-    function geFileList(path) {
+    function geFileList (path) {
       var filesList = [];
       readFile(path, filesList);
       return filesList;
     }
 
     /**
-         * 遍历读取文件
-         * @param path
-         * @param filesList
-         */
-    function readFile(path, filesList) {
+     * 遍历读取文件
+     * @param path
+     * @param filesList
+     */
+    function readFile (path, filesList) {
       const files = fs.readdirSync(path);// 需要用到同步读取
       // console.log(files);
       files.forEach(walk);
-      function walk(file) {
+
+      function walk (file) {
         const states = fs.statSync(path + '/' + file);
         if (states.isDirectory()) {
           var dir = {};
@@ -213,6 +216,7 @@ module.exports = class extends think.common.Admin {
         }
       }
     }
+
     let filesList = [];
     const paths = think.resource + '/backup/';
     if (think.isExist(paths)) filesList = geFileList(paths);
@@ -225,10 +229,10 @@ module.exports = class extends think.common.Admin {
   }
 
   /**
-     *删除备份
-     * @returns {Promise.<void>}
-     */
-  async rmdirAction() {
+   *删除备份
+   * @returns {Promise.<void>}
+   */
+  async rmdirAction () {
     const dir = this.get('path');
     const paths = think.resource + '/backup/' + dir;
     // 删除目录
@@ -244,7 +248,7 @@ module.exports = class extends think.common.Admin {
     });
   }
 
-  async aabbAction() {
+  async aabbAction () {
     const Database = think.adapter('database', 'mysql');
     const db = new Database('1', '2', '3');
     await db.backup('vkj_member', 0);
@@ -253,7 +257,7 @@ module.exports = class extends think.common.Admin {
     this.end();
   }
 
-  async targzAction() {
+  async targzAction () {
     // Streams
     if (this.isGet) {
       const paths = think.resource;
@@ -276,25 +280,26 @@ module.exports = class extends think.common.Admin {
     }
   }
 
-  httpedAction() {
-    http.get('http://www.kancloud.cn/tag/JavaScript', function(res) {
+  httpedAction () {
+    http.get('http://www.kancloud.cn/tag/JavaScript', function (res) {
       console.log('STATUS: ' + res.statusCode);
       console.log('HEADERS: ' + JSON.stringify(res.headers));
       res.setEncoding('utf8');
-      res.on('data', function(chunk) {
+      res.on('data', function (chunk) {
         console.log('BODY: ' + chunk);
       });
-      res.on('end', function() {
+      res.on('end', function () {
         console.log('No more data in response.');
       });
-    }).on('error', function(e) {
+    }).on('error', function (e) {
       console.log('Got error: ' + e.message);
     });
   }
+
   /**
-  * 解锁
-  */
-  unlockAction() {
+   * 解锁
+   */
+  unlockAction () {
     const paths = think.resource + '/backup/';
     const lock = paths + 'backup.lock';
     // 检查是否有正在执行的任务

@@ -1,35 +1,26 @@
-{% extends "./_base.html" %}
-{% block pageAction %}
-
-    <a href="/admin/channel/add"
-       class="btn bg-indigo-400"
-       {#data-toggle="modal"#}
-       {#data-target="#modal_remote"#}
-    >
-        <i class="icon-plus22 mr-2"></i>
-        添加导航
-    </a>
-{% endblock %}
+{% extends "../../_layouts/_main.html" %}
+{% import "../../_components/_pages.html" as pages %}
+{% import "../../_components/_cards.html" as cards %}
+{% import "../../_components/_dropdowns.html" as dropdowns %}
 
 {% block content %}
+    {% set toolbar = {
+        primary: [{
+            text: '添加导航',
+            url: '/admin/channel/add',
+            icon: 'icon-add'
+        }],
+        custom: [{
+            text: '排序',
+            url: '/'+ ctx.module +'/'+ ctx.controller +'/?status=1',
+            attribute: 'target-form=sort',
+            classes: 'ajax-post',
+            icon: 'icon-sort-numeric-asc'
+        }]} %}
+
+    {{ pages.toolbar(toolbar) }}
+
     <div class="card">
-        <div class="bg-light" style="padding-left: 0;">
-            <div class="navbar navbar-light bg-light navbar-expand-lg py-lg-2">
-                <div class="navbar-collapse text-center text-lg-left flex-wrap collapse" id="inbox-toolbar-toggle-multiple">
-
-                    <div class="btn-group navbar-btn">
-                        <a target-form="sort"
-                           href="/{{ ctx.controller }}/sort"
-                           class="btn btn-light btn-icon ajax-post">
-                            <i class="icon-sort-numeric-asc"></i>
-                            <span class="hidden-xs position-right ">排序</span>
-                        </a>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
         <div class="table-responsive">
             <table class="table treetable table-bordered" id="category">
                 <thead>
@@ -83,8 +74,6 @@
                 </tbody>
             </table>
         </div>
-
-
     </div>
 
 {% endblock %}
