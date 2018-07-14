@@ -1,4 +1,8 @@
-{% extends "../default.html" %}
+{% extends "../../_layouts/_main.html" %}
+{% import "../../_components/_pages.html" as pages %}
+{% import "../../_components/_cards.html" as cards %}
+{% import "../../_components/_dropdowns.html" as dropdowns %}
+
 {% block pageAction %}
     <a href="/admin/category/add?mold=0" class="btn btn-default btn-primary">
         <i class="icon-plus-circle2 position-left"></i>
@@ -7,114 +11,173 @@
 {% endblock %}
 
 {% block content %}
+
     <div class="card">
-        <div class="panel-toolbar panel-toolbar-inbox panel-body" style="padding-left: 0;">
-            <div class="navbar navbar-default">
-                <ul class="nav navbar-nav visible-xs-block no-border">
-                    <li>
-                        <a class="text-center collapsed" data-toggle="collapse"
-                           data-target="#inbox-toolbar-toggle-multiple">
-                            <i class="icon-circle-down2"></i>
-                        </a>
-                    </li>
-                </ul>
+        <div class="nav-tabs-responsive">
+            <ul class="nav nav-tabs nav-tabs-bottom flex-nowrap mb-0">
+                <li class="nav-item active">
+                    <a class="nav-link {{ active|default('active', true) }}" href="/admin/category/index"> 全部 </a></li>
+                <li class="nav-item">
+                    <a class="nav-link {{ 'active' if active == 0 }}" href="/admin/category/index/?mold=0">系统</a>
+                <li class="nav-item">
+                    <a class="nav-link {{ 'active' if active == 1 }}" href="/admin/category/index/?mold=1">独立</a>
+                <li class="nav-item">
+                    <a class="nav-link {{ 'active' if active == 2 }}" href="/admin/category/index/?mold=2">单页</a>
+            </ul>
+        </div>
+        <!-- Action toolbar -->
+        <div class="bg-light">
+            <div class="navbar navbar-light bg-light navbar-expand-lg py-lg-2">
+                <div class="text-center d-lg-none w-100">
+                    <button type="button" class="navbar-toggler w-100" data-toggle="collapse"
+                            data-target="#inbox-toolbar-toggle-single">
+                        <i class="icon-circle-down2"></i>
+                    </button>
+                </div>
 
-                <div class="navbar-collapse collapse" id="inbox-toolbar-toggle-multiple">
-                    {#
-                    <div class="btn-group navbar-btn">
-                                            <a href="#" onclick="jQuery('#category').treetable('expandAll'); return false;"
-                                               class="btn btn-default ">
-                                                <i class=" icon-unfold position-left"></i>
+                <div class="navbar-collapse text-center text-lg-left flex-wrap collapse"
+                     id="inbox-toolbar-toggle-single">
 
-                                                展开
-                                            </a>
-                                            <a onclick="jQuery('#category').treetable('collapseAll'); return false;" href="#"
-                                               class="btn  btn-default">
-                                                <i class=" icon-fold position-left"></i>
-                                                收起
-                                            </a>
-                                        </div>
-                                        #}
-                    <div class="btn-group navbar-btn">
+                    <div class="mt-3 mt-lg-0">
+                        <div class="btn-group">
+                            <button {% if ctx.param("mold")==null %} data-toggle="dropdown" {% endif %} class="btn btn-light
+                            {% if ctx.param('mold')==null %}dropdown-toggle{% endif %} " {% if ctx.param("mold") !='' %}
+                                                                                                        href="/admin/category/add/?mold={{ ctx.param('mold') }}"{% endif %}
+                            ">
+                            <i class="icon-add mr-2"></i>添加栏目 </button>
 
-                        <a class="btn btn-default ajax-post" target-form="sort" href="/{{ ctx.controller }}/sort">
-                            <i class="icon-sort-numeric-asc"></i>
+                            {% if ctx.param("mold")==null %}
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/admin/category/add/?mold=0"
+                                       class="text-info">添加系统栏目</a>
+                                    <a class="dropdown-item" href="/admin/category/add/?mold=1"
+                                       class="text-info">添加独立栏目</a>
+                                    <a class="dropdown-item" href="/admin/category/add/?mold=2"
+                                       class="text-info">添加单页栏目</a>
+                                </div>
+                            {% endif %}
+                        </div>
 
-                            排序
-                        </a>
-                        <a class="btn btn-default ajax-post" target-form="sort" href="/{{ ctx.controller }}/puliccache">
-                            <i class="icon-database-refresh"></i>
-                            更新版块缓存
-                        </a>
+                        <div class="btn-group ml-3 mr-lg-3">
+                            <button type="button" class="btn btn-light ajax-post" target-form="sort"
+                                    url="/admin/{{ ctx.controller }}/sort">
+                                <i class="icon-sort-numeric-asc"></i> <span
+                                        class="d-none d-lg-inline-block ml-2">排序</span></button>
+
+                            <button type="button" class="btn btn-light ajax-post" target-form="sort"
+                                    href="/admin/{{ ctx.controller }}/puliccache">
+                                <i class="icon-database-refresh"></i> <span
+                                        class="d-none d-lg-inline-block ml-2">更新栏目缓存</span></button>
+                            {#<button type="button" class="btn btn-light"><i class="icon-spam"></i> <span#}
+                            {#class="d-none d-lg-inline-block ml-2">Spam</span></button>#}
+                        </div>
                     </div>
 
+                    {#
+     <div class="btn-group navbar-btn">
+                             <a href="#" onclick="jQuery('#category').treetable('expandAll'); return false;"
+                                class="btn btn-default ">
+                                 <i class=" icon-unfold position-left"></i>
 
+                                 展开
+                             </a>
+                             <a onclick="jQuery('#category').treetable('collapseAll'); return false;" href="#"
+                                class="btn  btn-default">
+                                 <i class=" icon-fold position-left"></i>
+                                 收起
+                             </a>
+                         </div>
+                         #}
+
+                    {#<div class="navbar-text ml-lg-auto"><span class="font-weight-semibold">1-50</span> of <span#}
+                    {#class="font-weight-semibold">528</span></div>#}
+                    {##}
+                    <div class="ml-lg-auto">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-light btn-icon "
+                                    onclick="jQuery('#category').treetable('expandAll'); return false;"><i
+                                        class="icon-unfold mr-2"></i>展开
+                            </button>
+                            <button type="button" class="btn btn-light btn-icon "
+                                    onclick="jQuery('#category').treetable('collapseAll'); return false;"><i
+                                        class="icon-fold mr-2"></i>收起
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- /action toolbar -->
 
         <div class="table-responsive">
             <table class="table table-bordered tree-table treetable" id="category">
                 <thead>
                 <tr>
-                    <th> 分类名称</th>
+                    <th> 栏目名称</th>
+                    <th> 栏目ID</th>
                     <th style="width:80px;">排序</th>
-                    <!--<th> 栏目ID</th>-->
-                    <th class="">分类标识</th>
-                    {#
-                       <th style="width: 80px;">
-                                  状态
-                              </th>#}
+                    <th class="">标识</th>
+                    <th>栏目类型</th>
+                    <th>绑定模型</th>
+                    <th>访问</th>
+                    <th class="">发布</th>
+                    <th style="width:80px;">状态</th>
+                    <th>移动端</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for val in list %}
-                    <tr data-tt-id="{{ val.id }}"
-                            {% if val.pid != 0 %} data-tt-parent-id="{{ val.pid }}"
-
-                        {% else %}class="active"{% endif %}>
-                        <td>
-                            <span class='folder ui-draggable'>{{ val.title }}</span>
-                            <a class="-dker" href="{{ val.url }}" target="_blank">
-                                <i class="fa fa-link text-brown-300 position-right"></i>
-                            </a>
-                            <a href="/admin/category/add/?pid={{ val.id }}&mold={{ val.mold }}" class="">
-                                <i class="fa fa-plus-circle position-right"></i>
-                            </a>
-                        </td>
-
-                        <td>
-                            <input class="form-control form-control-text sort text-center" value="{{ val.sort }}"
-                                   name="sort"
-                                   data-id="{{ val.id }}"/>
-                        </td>
-
+                    <tr data-tt-id="{{ val.id }}" {% if val.pid != 0 %} data-tt-parent-id="{{ val.pid }}"{% else %}class="active" {% endif %}>
+                        <td><span class='folder ui-draggable'>{{ val.title }}</span> <a
+                                    href="/admin/category/add/?pid={{ val.id }}&mold={{ val.mold }}" class="text-info">
+                                <i class="glyphicon glyphicon-plus"></i></a></td>
+                        <td>{{ val.id }}</td>
+                        <td><input class="form-control form-control-text sort" value="{{ val.sort }}" name="sort"
+                                   data-id="{{ val.id }}"/></td>
                         <td>{{ val.name }}</td>
-
-                        {#                        <td>
-                                                    <a href="/admin/category/setstatus/?ids={{ val.id }}&status={{ 1-val.status }}"
-                                                       class="active ajax-get" data-toggle="class">
-                                                        <i class=" {% if val.status %}fa fa-check text-success text-active{% else %} fa-times text-danger text{% endif %}"></i>
-                                                    </a>
-                                                </td>#}
-
-                        <td>
-                            <ul class="icons-list">
-                                <li class="">
-                                    <a href="/admin/category/edit/?cid={{ val.id }}">
-                                        <i class="icon-pencil7"></i>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a href="javascript:void(0)"
-                                       data-id="{{ val.id }}" class="delcate">
-                                        <i class="icon-trash"></i>
-                                    </a>
-                                </li>
-                            </ul>
+                        <td> {% if val.mold == 0 %}系统{% elif val.mold == 1 %}独立{% elif val.mold==2 %}单页{% endif %}</td>
+                        <td> {% for m in val.model|strToArray %}
+                                {{ m|getmode('title') }}&nbsp;&nbsp;
+                            {% endfor %}
                         </td>
+                        <td><a class="text-info-dker" href="{{ val.url }}" target="_blank"><i
+                                        class="glyphicon glyphicon-link"></i></a></td>
+                        <td>
+                            {% if val.allow_publish == 0 %}封面{% elif val.allow_publish==1 %}列表{% endif %}
+                        </td>
+                        <td><a href="/admin/category/setstatus/?ids={{ val.id }}&status={{ 1-val.status }}"
+                               class="active ajax-get" data-toggle="class">
+                                <i class="fa fa-check text-success {% if val.status %}text-active{% else %}text{% endif %}"></i>
+                                <i class="fa fa-times text-danger {% if val.status %}text{% else %}text-active{% endif %}"></i>
+                            </a></td>
+                        <td><a href="/admin/category/isapp/?ids={{ val.id }}&isapp={{ 1-val.isapp }}"
+                               class="active ajax-get" data-toggle="class">
+                                <i class="fa fa-check text-success {% if val.isapp %}text-active{% else %}text{% endif %}"></i>
+                                <i class="fa fa-times text-danger {% if val.isapp %}text{% else %}text-active{% endif %}"></i>
+                            </a></td>
+                        <td>
+                            <div class="list-icons">
 
+                                <div class="list-icons-item dropdown">
+                                    <a href="#" class="list-icons-item dropdown-toggle caret-0"
+                                       data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="/admin/category/edit/?cid={{ val.id }}">编辑</a>
+                                        <a class="dropdown-item delcate" href="javascript:void(0)"
+                                           data-id="{{ val.id }}">删除</a>
+                                        {% if val.mold!=2 %}
+                                            <a class="dropdown-item"
+                                               href="/admin/category/move/?from={{ val.id }}">移动</a>
+                                            <a class="dropdown-item"
+                                               href="/admin/category/move/?merge=1&from={{ val.id }}">合并</a>
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
                     </tr>
                 {% endfor %}
 

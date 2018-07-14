@@ -1,48 +1,17 @@
-{% extends "../default.html" %}
-{#{% block bodyClass %} sidebar-xs {% endblock %}#}
-
-{% block pageHeader %}
-    <!-- Page header -->
-    <div class="page-header">
-        <div class="page-header-content">
-
-            <div class="page-title">
-
-                <h4><i class="icon-arrow-left52 position-left"></i> <span
-                            class="text-semibold">支付与配送</span> - {{ controller.meta_title }}</h4>
-            </div>
-
-        </div>
-        <div class="breadcrumb-line breadcrumb-line-component"><a class="breadcrumb-elements-toggle"><i
-                        class="icon-menu-open"></i></a>
-            <ul class="breadcrumb">
-                <li><a href="index.html"><i class="icon-home2 position-left"></i> 首页</a></li>
-                <li><a href="/admin/database/index">订单中心</a></li>
-                <li><a href="/admin/database/index">单据管理</a></li>
-                <li class="active">{{ controller.meta_title }}</li>
-            </ul>
-            <ul class="breadcrumb-elements">
-                <li class="{% if status == null %}active{% endif %}"><a href="/admin/order/list">
-                        <i class="fa  fa-reorder position-left "></i> 全部订单
-                    </a></li>
-                <!--<li class=""><a href="#"><i-->
-                <!--class="fa fa-minus-circle text-danger position-left"></i> 删除</a></li>-->
-                <li class="{% if status == 2 %}active{% endif %}"><a href="/admin/order/list/status/2"><i
-                                class="fa fa-eye-slash position-left"></i> 未审核</a></li>
-                <li class="{% if status == 3 %}active{% endif %}"><a href="/admin/order/list/status/3"><i
-                                class="fa fa-spin fa-circle-o-notch  position-left"></i> 执行中</a></li>
-
-            </ul>
-
-        </div>
-    </div>
-    <!-- /page header -->
-{% endblock %}
-
+{% extends "../../_layouts/_main.html" %}
 
 {% block content %}
-
     <div class="card">
+        <div class="nav-tabs-responsive">
+            <ul class="nav nav-tabs nav-tabs-bottom flex-nowrap mb-0">
+                <li class="nav-item ">
+                    <a class="nav-link {% if status == null %}active{% endif %}" href="/admin/order/list"> 全部订单 </a></li>
+                <li class="nav-item">
+                    <a class="nav-link {{ 'active' if status == 2}}" href="/admin/order/list?status=2">未审核</a>
+                <li class="nav-item">
+                    <a class="nav-link {{ 'active' if status == 3 }}"  href="/admin/order/list?status=3">执行中</a>
+            </ul>
+        </div>
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
@@ -159,11 +128,13 @@
                 </tbody>
             </table>
         </div>
+        {% if pagerData %}
         <div class="card-footer">
             <div class="pull-right">
                 {{ pagerData | safe }}
             </div>
         </div>
+        {% endif %}
     </div>
 
 {% endblock %}

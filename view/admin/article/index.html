@@ -1,4 +1,21 @@
-{% extends "../default.html" %}
+{#{% extends "../default.html" %}#}
+{% extends "../../_layouts/_main.html" %}
+{% import "../../_components/_pages.html" as pages %}
+{% import "../../_components/_cards.html" as cards %}
+{% import "../../_components/_dropdowns.html" as dropdowns %}
+{% block bodyClass %} navbar-top sidebar-xs {% endblock %}
+{% block sidebar2 %}
+    {% include "./inc/cate_sidebar.html" %}
+{% endblock %}
+ {% block style %}
+     <link rel="stylesheet" href="{{ GLOBAL_ASSETS }}/js/plugins/trees/zTree/metroStyle/metroStyle.css" type="text/css">
+     {#<link rel="stylesheet" href="/static/admin/js/zTree/zTreeStyle/zTreeStyle.css" type="text/css">#}
+     <style>
+         .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+             vertical-align: middle;
+         }
+     </style>
+ {% endblock %}
 
 
 {#{% block bodyClass %} sidebar-xs {% endblock %}#}
@@ -60,147 +77,92 @@
 
 
 {% block content %}
-    <div class="panel panel-flat">
-        {% if sort %}
-            <div class="tabbable tab-content-bordered ">
-                <ul class="nav nav-tabs nav-tabs-bottom">
-                    {% for val in sort.types %}
-                        <li class="{% if controller.get('sortid')|length > 0 %}{% if controller.get('sortid')==val.enable %}active{% endif %}{% else %}{% if sort.defaultshow == val.enable %}active{% endif %}{% endif %}">
-                            <a href="/admin/article/index?pid={{ pid }}&cate_id={{ cate_id }}&group_id={{ group_id }}&sortid={{ val.enable }}"> {{ val.name }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-
-            </div>
-            <div class="panel-body " id="sortbody" style="padding: 0">
-                <div class="tab-content">
-                    <table class="table table-hover">
-                        <tbody>
-                        {%for val in typevar%}
-                            {%if val.search >= 1 and val.available==1%}
-                                <tr>
-                                    <td style="width: 140px" class="text-right">
-                                        {{val.option.title}}:
-                                    </td>
-                                    <td>
-                                        {%if 0 == nsobj[val.option.identifier] or null == nsobj[val.option.identifier]%}
-                                            <span style="margin-right: 10px">全部</span>
-                                        {%else%}
-                                            <a href="/admin/article/index?pid={{pid}}&cate_id={{cate_id}}&group_id={{group_id}}&sortid={{sortid}}&sortval={{0|sort_url(val.option.identifier,typevar,nsobj)}}" class="text-primary" style="margin-right: 10px">全部</a>
-                                        {%endif%}
-                                        {%for v in val.rules %}
-                                            {%if v.id|sort_act(nsobj[val.option.identifier])%}
-                                                <span style="margin-right: 10px">{{v.name}}{{val.option.unit}}</span>
-                                            {%else%}
-                                                <a href="/admin/article/index?pid={{pid}}&cate_id={{cate_id}}&group_id={{group_id}}&sortid={{sortid}}&sortval={{v.id|sort_url(val.option.identifier,typevar,nsobj)}}" class="text-primary" style="margin-right: 10px">{{v.name}}{{val.option.unit}}</a>
-                                            {%endif%}
-                                        {%endfor%}
-
-                                        <!--子栏目-->
-                                        {%for v in val.rules %}
-                                            {%if v.id|sort_act(nsobj[val.option.identifier])%}
-                                                {% if v.children%}
-                                                    <div class="subtsm">
-
-                                                        {% for v_ in v.children %}
-                                                            {%if v_.id|sort_act(nsobj[val.option.identifier])%}
-                                                                <span style="margin-right: 10px">{{v_.name}}{{val.option.unit}}</span>
-                                                            {%else%}
-                                                                <a href="/admin/article/index?pid={{pid}}&cate_id={{cate_id}}&group_id={{group_id}}&sortid={{sortid}}&sortval={{v_.id|sort_url(val.option.identifier,typevar,nsobj)}}" class="text-primary" style="margin-right: 10px">{{v_.name}}{{val.option.unit}}</a>
-                                                            {%endif%}
-                                                        {% endfor %}
-                                                    </div>
-                                                {%endif%}
-                                            {%endif%}
-                                        {%endfor%}
-                                        <!--子栏目-->
-                                        {%for v in val.rules %}
-                                            {%if v.id|sort_act(nsobj[val.option.identifier])%}
-                                                {% if v.children%}
-
-                                                    {% for v_ in v.children %}
-                                                        {%if v_.id|sort_act(nsobj[val.option.identifier])%}
-                                                            {% if v_.children%}
-                                                                <div class="subtsm">
-                                                                    {% for v__ in v_.children %}
-
-                                                                        {%if v__.id|sort_act(nsobj[val.option.identifier])%}
-
-                                                                            <span style="margin-right: 10px">{{v__.name}}{{val.option.unit}}</span>
-                                                                        {%else%}
-                                                                            <a href="/admin/article/index?pid={{pid}}&cate_id={{cate_id}}&group_id={{group_id}}&sortid={{sortid}}&sortval={{v__.id|sort_url(val.option.identifier,typevar,nsobj)}}" class="text-primary" style="margin-right: 10px">{{v__.name}}{{val.option.unit}}</a>
-
-                                                                        {%endif%}
-                                                                    {%endfor%}
-                                                                </div>
-                                                            {%endif%}
-                                                        {%endif%}
-                                                    {% endfor %}
-
-                                                {%endif%}
-                                            {%endif%}
-                                        {%endfor%}
-                                    </td>
-
-                                </tr>
-                            {%endif%}
-                        {%endfor%}
-
-                        </tbody>
-                    </table>
+    {#{% set actions = {#}
+    {#primary: [{#}
+    {##}
+    {#}]#}
+    {#} %}#}
+    {#{{ pages.content(toolbar, content) }}#}
+    <div class="card">
+        <div class="nav-tabs-responsive bg- border-top">
+            <ul class="nav nav-tabs nav-tabs-bottom flex-nowrap mb-0">
+                <li class="nav-item"><a href="#course-overview" class="nav-link" data-toggle="tab"><i
+                                class="icon-menu7 mr-2"></i> Overview</a></li>
+                <li class="nav-item"><a href="#course-attendees" class="nav-link" data-toggle="tab"><i
+                                class="icon-people mr-2"></i> Attendees</a></li>
+                <li class="nav-item"><a href="#course-schedule" class="nav-link active show" data-toggle="tab"><i
+                                class="icon-calendar3 mr-2"></i> Schedule</a></li>
+            </ul>
+        </div>
+        <!-- Action toolbar -->
+        <div class="bg-light">
+            <div class="navbar navbar-light bg-light navbar-expand-lg py-lg-2">
+                <div class="text-center d-lg-none w-100">
+                    <button type="button" class="navbar-toggler w-100" data-toggle="collapse"
+                            data-target="#inbox-toolbar-toggle-single">
+                        <i class="icon-circle-down2"></i>
+                    </button>
                 </div>
-            </div>
 
+                <div class="navbar-collapse text-center text-lg-left flex-wrap collapse"
+                     id="inbox-toolbar-toggle-single">
 
-        {% endif %}
-
-        <div class="panel-toolbar panel-toolbar-inbox panel-body" style="padding-left: 0;">
-
-            <div class="navbar navbar-default">
-                <ul class="nav navbar-nav visible-xs-block no-border">
-                    <li>
-                        <a class="text-center collapsed" data-toggle="collapse"
-                           data-target="#inbox-toolbar-toggle-multiple">
-                            <i class="icon-circle-down2"></i>
-                        </a>
-                    </li>
-                </ul>
-
-                <div class="navbar-collapse collapse" id="inbox-toolbar-toggle-multiple">
-
-                    <div class="btn-group navbar-btn">
-
-                        <a class="btn btn-default ajax-post confirm"
-                           href="/admin/article/setstatus?status=-1"
-                           target-form="ids">
-                            <i class="icon-bin position-left"></i>
-                            删除
-                        </a>
-
-                    </div>
-                    <div class="navbar-right">
-                        <div class="btn-group navbar-btn ">
-                            <form class="heading-form">
-                                <div class="input-group pull-right search-form">
-                                    <input type="text" class="input-sm form-control"
-                                           name="{{ model.search_key|default('title', true) }}"
-                                           placeholder="请输入关键字"
-                                           value="{{ controller.get('title') }}">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-sm btn-default" type="button" id="search"
-                                                url="/admin/article/index?pid={{ pid }}{% if cate_id >0 %}&cate_id={{ cate_id }}{% endif %}">搜索  <i
-                                                    class="position-right icon-search4"></i></button>
-                                        </button>
-                                    </span>
+                    <div class="mt-3 mt-lg-0">
+                        <div class="btn-group">
+                            {% set multi = (true if model|length > 1 else false) %}
+                            <button type="button"
+                                    class="btn btn-light document_add {% if allow == 0 or controller.get('cate_id')==null %}disabled{% endif %} {% if mulit %} dropdown-toggle {% endif %}"
+                                    {% if mulit %} data-toggle="dropdown" {% endif %} aria-expanded="false"
+                                    {% if not mulit %} url="/admin/article/add?model_id={{ modellist[0].id }}&pid={{ pid }}&cate_id={{ cate_id }}&group_id={{ group_id }}&sortid={{ sortid }}" {% endif %}>
+                                <i class="icon-add mr-2"></i>添加内容
+                            </button>
+                            {% if model|length > 1 %}
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    {% for val in modellist %}
+                                        <a href="/admin/article/add?model_id={{ val.id }}&pid={{ pid }}&cate_id={{ cate_id }}&group_id={{ group_id }}&sortid={{ sortid }}"
+                                           class="dropdown-item">添加{{ val.title }}</a>
+                                    {% endfor %}
                                 </div>
+                            {% endif %}
 
-                            </form>
+                        </div>
 
+                        <div class="btn-group ml-3 mr-lg-3">
+                            {#<button type="button" class="btn btn-light"><i class="icon-pencil7"></i> <span#}
+                                        {#class="d-none d-lg-inline-block ml-2">Compose</span></button>#}
+                            <button type="button" class="btn btn-light"><i class="icon-bin"></i> <span
+                                        class="d-none d-lg-inline-block ml-2">删除</span></button>
+                            {#<button type="button" class="btn btn-light"><i class="icon-spam"></i> <span#}
+                                        {#class="d-none d-lg-inline-block ml-2">Spam</span></button>#}
+                        </div>
+                    </div>
+
+                    <div class="navbar-text ml-lg-auto"><span class="font-weight-semibold">1-50</span> of <span
+                                class="font-weight-semibold">528</span></div>
+
+                    <div class="ml-lg-3 mb-3 mb-lg-0">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-light btn-icon disabled"><i
+                                        class="icon-arrow-left12"></i></button>
+                            <button type="button" class="btn btn-light btn-icon"><i class="icon-arrow-right13"></i>
+                            </button>
+                        </div>
+
+                        <div class="btn-group ml-3">
+                            <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown"><i
+                                        class="icon-cog3"></i></button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="#" class="dropdown-item">Action</a>
+                                <a href="#" class="dropdown-item">Another action</a>
+                                <a href="#" class="dropdown-item">Something else here</a>
+                                <a href="#" class="dropdown-item">One more line</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- /action toolbar -->
 
         <div class="table-responsive">
 
@@ -259,7 +221,8 @@
 
 
 {% block script %}
-    <script src="/static/admin/js/zTree/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
+    <script src="{{ GLOBAL_ASSETS }}/js/plugins/trees/zTree/jquery.ztree.core-3.5.min.js"
+            type="text/javascript"></script>
     <script type="text/javascript">
       <!--
       var zTree;

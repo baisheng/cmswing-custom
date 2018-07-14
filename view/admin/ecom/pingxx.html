@@ -1,72 +1,9 @@
-{% extends "../inc/base.html" %}
-{% block pageHeader %}
-    <!-- Page header -->
-    <div class="page-header">
-        <div class="page-header-content">
-
-            <div class="page-title">
-
-                <h4><i class="icon-arrow-left52 position-left"></i> <span
-                            class="text-semibold">系统配置</span> - {{ controller.meta_title }}</h4>
-            </div>
-
-            <div class="heading-elements">
-
-                <a href="/admin/setup/add"
-                   class="active btn btn-labeled btn-labeled-right bg-primary heading-btn ">
-                    添加配置
-                    <b><i class=" icon-add"></i></b>
-
-                </a>
-            </div>
-        </div>
-        <div class="breadcrumb-line breadcrumb-line-component"><a class="breadcrumb-elements-toggle"><i
-                        class="icon-menu-open"></i></a>
-            <ul class="breadcrumb">
-                <li><a href="index.html"><i class="icon-home2 position-left"></i> 首页</a></li>
-                <li><a href="/admin/database/index">系统配置</a></li>
-                <li class="active">{{ controller.meta_title }}</li>
-            </ul>
-            <ul class="breadcrumb-elements">
-                <!--<li><a href="/admin/channel/add">-->
-                <!--<i class="  icon-add-to-list position-left"></i> 添加分类-->
-                <!--</a></li>-->
-                <!--<li><a class="ajax-post" target-form="sort" href="/{{ http.module }}/{{ http.controller }}/sort"><i-->
-                <!--class=" icon-sort position-left"></i> 排序</a></li>-->
-                <!--<li><a href="#" onclick="jQuery('#category').treetable('expandAll'); return false;"><i-->
-                <!--class="  icon-unfold position-left"></i> 展开全部</a></li>-->
-                <!--<li><a href="#" onclick="jQuery('#category').treetable('collapseAll'); return false;"><i-->
-                <!--class="   icon-fold position-left"></i> 合并全部</a></li>-->
-
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="icon-gear position-left"></i>
-                        全部配置
-                        <span class="caret"></span>
-                    </a>
-
-                    <ul class="dropdown-menu dropdown-menu-right">
-                        {% for ingredient, amount in setup.CONFIG_GROUP_LIST %}
-                            <li><a href="#{{ ingredient }}" data-toggle="tab" data-groupid="{{ ingredient }}"
-                                   class="grouplist">
-                                    {{ amount }}</a></li>
-                        {% endfor %}
-                        <li class="divider"></li>
-                        <li><a href="/admin/setup/group"><i class="icon-gear"></i> 全部配置</a></li>
-                    </ul>
-                </li>
-            </ul>
-
-        </div>
-
-    </div>
-    <!-- /page header -->
-{% endblock %}
+{% extends "../../_layouts/_main.html" %}
 
 {% block content %}
     <div class="card content-group-lg">
         <div class="card-header">
-            <h5 class="panel-title">ping++支付设置<a class="heading-elements-toggle"><i class="icon-more"></i></a></h5>
+            <h4 class="panel-title">ping++支付设置</h4>
 
         </div>
         <div class="card-body">
@@ -148,18 +85,17 @@
                 </small>
             </h6>
         </div>
-
-        <div class="tabbable">
-            <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
-
-                <li class="active"><a href="#tab1" data-toggle="tab"><i class="fa fa-desktop text-muted"></i> 适用于 PC
-                        网页 </a></li>
-                </a></li>
-                <li><a href="#tab2" data-toggle="tab"><i class="fa fa-mobile text-muted"></i> 适用于手机网页</a></li>
-                <li><a href="#tab3" data-toggle="tab"><i class="fa fa-apple text-muted"></i> 适用于 APP</a></li>
-
+        <div class="nav-tabs-responsive bg-light border-top">
+            <ul class="nav nav-tabs nav-tabs-bottom flex-nowrap mb-0">
+                <li class="nav-item"><a href="#tab1" class="nav-link active" data-toggle="tab"><i
+                                class="icon-browser mr-2"></i> 适用于 PC 端网页</a></li>
+                <li class="nav-item"><a href="#tab2" class="nav-link" data-toggle="tab"><i class="icon-mobile mr-2"></i>
+                        适用于移动端网页</a></li>
+                <li class="nav-item"><a href="#tab3" class="nav-link" data-toggle="tab"><i class="icon-apple2 mr-2"></i>
+                        适用于 APP</a></li>
             </ul>
-
+        </div>
+        <div class="tabbable">
             <div class="tab-content">
                 <div class="tab-pane active" id="tab1">
                     <div class="table-responsive">
@@ -185,7 +121,7 @@
                                         <td>
                                             <a href="/admin/ecom/setstatus/ids/{{ item.id }}/status/{{ 1-item.status }}/table/pingxx"
                                                class="active ajax-get" data-toggle="class">
-                                                <i class="fa  {% if item.status %}fa-check text-success text-active{% else %} fa-times text-dangertext{% endif %}"></i>
+                                                <i class="fa  {% if item.status %} fa-check text-success text-active{% else %} fa-times text-dangertext{% endif %}"></i>
                                             </a>
                                         </td>
                                         <td>
