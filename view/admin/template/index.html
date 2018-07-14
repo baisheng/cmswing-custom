@@ -1,8 +1,7 @@
-{% extends "../default.html" %}
-{% block style %}
-    <!--<link rel="stylesheet" href="/static/admin/js/zTree/metroStyle/metroStyle.css" type="text/css">-->
-{% endblock %}
-{#{% block bodyClass %} sidebar-xs {% endblock %}#}
+{% extends "../../_layouts/_main.html" %}
+{% import "../../_components/_pages.html" as pages %}
+{% import "../../_components/_cards.html" as cards %}
+{% import "../../_components/_dropdowns.html" as dropdowns %}
 
 {% block sidebar2 %}
     {% include "../inc/template_side.html" %}
@@ -11,7 +10,7 @@
 
 {% block content %}
 
-    <div class="panel panel-flat">
+    <div class="card">
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
 
@@ -41,10 +40,10 @@
                             </a>
                         </td>
 
-                        <td><a href="#" class="btn btn-xs todo">修改</a>
-                            <a href="#" class="btn btn-xs todo">导出</a>
+                        <td><a href="#" class="btn btn-sm btn-light todo">修改</a>
+                            <a href="#" class="btn btn-sm btn-light todo">导出</a>
                             {% if item.pid !=1 %}
-                            <a href="#" class="btn btn-xs todo">删除</a></td>
+                            <a href="#" class="btn btn-sm btn-light todo">删除</a></td>
                         {% endif %}
                     </tr>
                 {% else %}
@@ -66,5 +65,4 @@
 
     </div>
 
-{% endblock %} {% block script %}
 {% endblock %}

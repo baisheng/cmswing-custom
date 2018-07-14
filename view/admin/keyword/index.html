@@ -1,4 +1,8 @@
-{% extends "../inc/base.html" %}
+{% extends "../../_layouts/_main.html" %}
+{% import "../../_components/_pages.html" as pages %}
+{% import "../../_components/_cards.html" as cards %}
+{% import "../../_components/_dropdowns.html" as dropdowns %}
+
 {% block header%}
 <!-- Page header -->
 <div class="page-header">
@@ -67,7 +71,7 @@
 {% endblock %}
 {% block content %}
 
-<div class="panel panel-flat">
+<div class="card">
     <div class="tabbable">
         <ul class="nav nav-tabs nav-tabs-bottom">
             <li class="{{controller.get('type')|default('active', true)}}"><a  href="/admin/keyword/index"> 话题列表 </a></li>
@@ -115,8 +119,8 @@
 
                 </td>
                 <td>
-                    <a href="/admin/keyword/edit/id/{{item.id}}" class="btn btn-default btn-xs ">编辑</a>
-                    <a href="/admin/keyword/del/ids/{{item.id}}" class="btn btn-danger btn-xs">删除</a>
+                    <a href="/admin/keyword/edit/id/{{item.id}}" class="btn btn-light btn-sm ">编辑</a>
+                    <a href="/admin/keyword/del/ids/{{item.id}}" class="btn btn-light btn-sm">删除</a>
                 </td>
 
                 </td>
@@ -126,17 +130,17 @@
             </tbody>
         </table>
     </div>
-    <footer class="panel-footer">
+    <div class="card-footer">
         <div class="row">
             <div class="col-md-3">
                 <div class="btn-group">
-                    <a class="btn btn-sm btn-default todo" target-form="ids" href="#">
+                    <a class="btn btn-sm btn-light todo" target-form="ids" href="#">
                         微信图文
                     </a>
-                    <a class="btn btn-sm btn-default todo" target-form="ids" href="#">
+                    <a class="btn btn-sm btn-light todo" target-form="ids" href="#">
                         高级图文
                     </a>
-                    <a class="btn btn-sm btn-default todo" target-form="ids" href="#">
+                    <a class="btn btn-sm btn-light todo" target-form="ids" href="#">
                         推送
                     </a>
                 </div>
@@ -146,7 +150,7 @@
                 {{pagerData | safe}}
             </div>
         </div>
-    </footer>
+    </div>
 
 </div>
 

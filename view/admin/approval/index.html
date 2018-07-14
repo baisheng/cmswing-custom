@@ -1,8 +1,11 @@
-{% extends "../default.html" %}
+{% extends "../../_layouts/_main.html" %}
+{% import "../../_components/_pages.html" as pages %}
+{% import "../../_components/_cards.html" as cards %}
+{% import "../../_components/_dropdowns.html" as dropdowns %}
 
 {% block content %}
     <div class="card">
-        <div class="tabbable">
+        <div class="card-header">
             <ul class="nav nav-tabs nav-tabs-bottom">
                 <li class="{{ controller.get('model')|default('active', true) }}"><a href="/admin/approval/index"> 全部
                         <span class="badge bg-primary">{{ count }}</span></a></li>
@@ -14,24 +17,20 @@
                 </li>
 
             </ul>
-
-            <div class="row wrapper">
-
-                <div class="col-md-12">
-                    <div class="p-10">
-
-                        <a class="btn btn-sm btn-primary ajax-post" target-form="ids"
-                           href="/{{ http.module }}/{{ http.controller }}/adopta">
-                            通过审核
-                        </a>
-                        <a class="btn btn-sm btn-danger ajax-post" target-form="ids"
-                           href="/{{ http.module }}/{{ http.controller }}/refuse">
-                            拒绝审核
-                        </a>
-                    </div>
-                </div>
-
-            </div>
+        </div>
+        {% set actions = {
+            primary: [{
+                url: '/'+ ctx.module +'/'+ ctx.controller +'/adopta',
+                text: '通过审核',
+                attribute: 'target-form=ids',
+                class: 'ajax-post'
+            }, {
+                url: '/'+ ctx.module +'/'+ ctx.controller +'/refuse',
+                text: '拒绝审核',
+                attribute: 'target-form=ids'
+            }]
+        } %}
+        {{ pages.actionToolbar(actions) }}
             <div class="table-responsive">
                 <table class="table table-hover b-t b-light treetable" id="category">
                     <thead>
@@ -96,6 +95,5 @@
             </div>
             {% endif %}
         </div>
-    </div>
 
 {% endblock %}

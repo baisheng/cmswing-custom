@@ -1,4 +1,9 @@
-{% extends "../default.html" %}
+{#{% extends "../default.html" %}#}
+{% extends "../../_layouts/_main.html" %}
+{% import "../../_components/_pages.html" as pages %}
+{% import "../../_components/_cards.html" as cards %}
+{% import "../../_components/_dropdowns.html" as dropdowns %}
+
 {% block pageToolbar %}
     <div class="navbar navbar-default navbar-component navbar-xs">
         <ul class="nav navbar-nav visible-xs-block">
@@ -151,16 +156,16 @@
             </div>
 
             <div class="card-footer">
-                <div class="col-md-12">
+                {#<div class="col-md-12">#}
                     <!--<a href="javascript:void(0)" class="btn btn-default btn-xs"><i class="icon-plus"></i> 导入</a>-->
-                    <a href="javascript:void(0)" class="btn btn-default addtr"><i
-                                class="icon-add position-left"></i> 添加属性分类</a>
-                    <button class="btn btn-default posttype">
-                        <i class="icon-check position-left"></i>
+                    <a href="javascript:void(0)" class="btn btn-light addtr"><i
+                                class="icon-add mr-1"></i> 添加属性分类</a>
+                    <button class="btn btn-light posttype">
+                        <i class="icon-check mr-1"></i>
                         确定
                     </button>
 
-                </div>
+                {#</div>#}
 
             </div>
 
