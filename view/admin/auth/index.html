@@ -1,132 +1,90 @@
-{% extends "./_base.html" %}
-{% block pageAction %}
-    <a href="/{{ ctx.controller }}/adduser"
-       class="btn btn-default btn-primary" data-toggle="modal" data-target="#modal_remote">
-        <i class="icon-plus-circle2 position-left"></i>
-        <span class="text">添加用户组</span>
-    </a>
-{% endblock %}
-{% block pageToolbar %}
-    <div class="navbar navbar-default navbar-component navbar-xs">
-        <ul class="nav navbar-nav visible-xs-block">
-            <li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter"><i
-                            class="icon-menu7"></i></a></li>
-        </ul>
+{% extends "../../_layouts/_main.html" %}
+{% import "../../_components/_pages.html" as pages %}
+{% import "../../_components/_cards.html" as cards %}
+{% import "../../_components/_dropdowns.html" as dropdowns %}
 
-        <div class="navbar-collapse collapse" id="navbar-filter">
-            <ul class="nav navbar-nav">
-                <li class="{% if ctx.action == 'index' %}active{% endif %}">
-                    <a href="/{{ ctx.controller }}/index"
-                       class="c-tabs__link">
-                        <i class="icon-users4 position-left"></i>
-                        用户组
-                    </a>
-                </li>
-                <li class="{% if ctx.action == 'admin' %}active{% endif %}">
-                    <a href="/{{ ctx.controller }}/admin"
-                       class="c-tabs__link">
-                        <i class="icon-user-tie position-left"></i>
-                        管理员角色
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <!-- /toolbar -->
-
-    </div>
-{% endblock %}
 {% block content %}
-    <div class="card">
+    {% set actions = {
+        primary: [{
+            url: '/' + ctx.module + '/' + ctx.controller + '/adduser',
+            toggle: true,
+            icon: 'icon-add',
+            text: '添加用户组'
+        }],
+        secondary: [{
+            url: '',
+            text: '删除'
+        }, {
+            url: '/' + ctx.module + '/' + ctx.controller + '/sort/?type=1',
+            class: 'ajax-post',
+            icon: 'icon-sort-numeric-asc',
+            text: '排序'
+        }]
+    } %}
+    {% set tabs = [{
+        url: '/' + ctx.module + '/' + ctx.controller + '/index',
+        text: '用户组',
+        icon: 'icon-user4',
+        active: (true if ctx.action == 'index')
+    }, {
+        url: '/' + ctx.module + '/' + ctx.controller + '/admin',
+        icon: 'icon-user-tie',
+        text: '管理员角色',
+        active: (true if ctx.action === 'admin')
+    }] %}
 
-        {#           <div class="panel-toolbar panel-toolbar-inbox panel-body" style="padding-left: 0;">
-                       <div class="navbar navbar-default">
-                           <ul class="nav navbar-nav visible-xs-block no-border">
-                               <li>
-                                   <a class="text-center collapsed" data-toggle="collapse"
-                                      data-target="#inbox-toolbar-toggle-multiple">
-                                       <i class="icon-circle-down2"></i>
-                                   </a>
-                               </li>
-                           </ul>
+    {% set theader = [
+        { html: '<input type="checkbox">', width: '5%' },
+        { html: 'ID' },
+        { html: '排序', width: '8%'},
+        { html: '用户组名' },
+        { html: '系统组' },
+        { html: '会员数' },
+        { html: '星级' },
+        { html: '积分小于' },
+        { html: '允许上传附件' },
+        { html: '投稿权限' },
+        { html: '投稿不需审核' },
+        { html: '搜索权限' },
+        { html: '发短消息' },
+        { html: '操作', width: '10%', classes: 'text-center' }
+    ] %}
+    {% set rowItems = [] %}
+    {% for item in list %}
+        {% set rowItems = (rowItems.push({cells: [
+            { html: ('<input class="ids" type="checkbox" name="ids" value="'+ item.groupid +'">' if item.issystem !== 1) },
+            { html: item.groupid},
+            { html: '<input class="form-control form-control-text sort" name="sort" value="'+ item.sort +'" data-id="'+ item.groupid +'">'},
+            { html: item.name },
+            { html: ('<i class="fa fa-check text-success"></i>' if item.issystem == 1 else '<i class="fa fa-times text-danger"></i>') },
+            { html: item.count},
+            { html: item.starnum},
+            { html: item.point},
+            { html: ('<i class="fa fa-check text-success"></i>' if item.allowattachment == 1 else '<i class="fa fa-times text-danger"></i>') },
+            { html: ('<i class="fa fa-check text-success"></i>' if item.allowpost == 1 else '<i class="fa fa-times text-danger"></i>') },
+            { html: ('<i class="fa fa-check text-success"></i>' if item.allowpostverify == 1 else '<i class="fa fa-times text-danger"></i>') },
+            { html: ('<i class="fa fa-check text-success"></i>' if item.allowsearch == 1 else '<i class="fa fa-times text-danger"></i>') },
+            { html: ('<i class="fa fa-check text-success"></i>' if item.allowsendmessage == 1 else '<i class="fa fa-times text-danger"></i>') },
 
-                           <div class="navbar-collapse collapse" id="inbox-toolbar-toggle-multiple">
-                               <div class="btn-group navbar-btn">
-                                   <a target-form="sort"
-                                      href="/{{ ctx.controller }}/sort/?type=1"
-                                      class="btn btn-default ajax-post">
-                                       <i class="icon-sort-numeric-asc"></i>
-                                       <span class="hidden-xs position-right ">排序</span>
-                                   </a>
-                               </div>
-                           </div>
-                       </div>
-                   </div>#}
+            { classes: 'text-center',
+                html: dropdowns.menu([ {
+                text: '编辑',
+                url: '/admin/auth/edituser?id=' + item.groupid
+            }, {
+                text: '删除',
+                icon: 'icon-trash-alt',
+                url: '/admin/auth/deluser/?ids=' + item.id,
+                url: (('/admin/auth/deluser/?ids=' + item.id) if item.issystem !== 1 else 'limited'),
+                classes: 'confirm ajax-get'
+            }])}
+        ]}), rowItems) %}
+    {% endfor %}
+    {% if pagerData %}
+        {% set pager = (pagerData | safe) %}
+    {% endif %}
 
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover">
+    {% set content = cards.toolbarGrid(actions, theader, rowItems, pager) %}
 
-                <thead>
-                <tr>
-                    {#<th style="width:40px;">#}
-                    {#<input type="checkbox">#}
-                    {#</th>#}
-                    {#<th style="width:80px;" class="text-center">排序</th>#}
-                    <th class="text-center">组名</th>
-                    <th class="text-center">用户数</th>
-
-                    <th style="width:200px; text-align:center;">操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for item in list %}
-                    <tr>
-                        {#                     <td>
-                                                 {% if item.issystem !=1 %}
-                                                     <input class="ids" type="checkbox"
-                                                            name="ids"
-                                                            value="{{ item.groupid }}">
-                                                 {% endif %}
-                                             </td>#}
-                        {#                    <td>
-                                                <input class="form-control form-control-text sort" value="{{ item.sort }}"
-                                                       name="sort"
-                                                       data-id="{{ item.groupid }}" style="text-align: center;"/>
-                                            </td>#}
-                        <td>{{ item.name }}</td>
-                        <td class="text-center">{{ item.count }}</td>
-
-                        <td class="text-center">
-                            <a href="/admin/auth/edituser?id={{ item.groupid }}"
-                               class="btn  btn-xs" data-toggle="modal" data-target="#modal_remote">编辑</a>
-                            {% if item.issystem !=1 %}
-                            <a href="/admin/auth/deluser?id={{ item.groupid }}"
-                               class="btn  btn-xs text-danger confirm ajax-get ">删除</a></td>
-                        {% endif %}
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="14">
-                            <div class="alert alert-warning alert-block">
-                                <button data-dismiss="alert" class="close" type="button">×</button>
-                                <p>还没有用户组数据！</p>
-                            </div>
-                        </td>
-                    </tr>
-
-                {% endfor %}
-
-
-                </tbody>
-            </table>
-        </div>
-
-        {% if pagerData %}
-            <div class="card-footer">
-                <div class="pull-right">
-                    {{ pagerData | safe }}
-                </div>
-            </div>
-        {% endif %}
-    </div>
+    {{ pages.tabContent(tabs, content) }}
 
 {% endblock %}

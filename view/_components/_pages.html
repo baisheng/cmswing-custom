@@ -1,5 +1,9 @@
 {% from './_toolbars.html' import toolbar with context %}
 
+{% macro actionToolbar(actions) %}
+    {{ toolbar(actions) }}
+{% endmacro %}
+
 {% macro content(actions, content) %}
     {% if actions %}
         {{ toolbar(actions) }}

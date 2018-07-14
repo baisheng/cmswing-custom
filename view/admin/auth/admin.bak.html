@@ -1,0 +1,290 @@
+{% extends "../../_layouts/_main.html" %}
+{% import "../../_components/_pages.html" as pages %}
+{% import "../../_components/_cards.html" as cards %}
+{% import "../../_components/_dropdowns.html" as dropdowns %}
+
+{% block pageAction %}
+    <a href="/{{ ctx.controller }}/roleadd"
+       class="btn btn-default btn-primary"
+       data-toggle="modal" data-target="#modal_remote">
+        <i class="icon-plus-circle2 position-left"></i>
+        <span class="text">添加管理角色</span>
+        {#<b><i class=" icon-add"></i></b>#}
+    </a>
+{% endblock %}
+{% block pageToolbar %}
+    <div class="navbar navbar-default navbar-component navbar-xs">
+        <ul class="nav navbar-nav visible-xs-block">
+            <li class="full-width text-center">
+                <a data-toggle="collapse" data-target="#navbar-filter">
+                    <i class="icon-menu7"></i>
+                </a>
+            </li>
+        </ul>
+
+        <div class="navbar-collapse collapse" id="navbar-filter">
+            <ul class="nav navbar-nav">
+                <li class="{% if ctx.action == 'index' %}active{% endif %}">
+                    <a href="/{{ ctx.controller }}/index"
+                       class="c-tabs__link">
+                        <i class="icon-users4 position-left"></i>
+                        用户组
+                    </a>
+                </li>
+                <li class="{% if ctx.action == 'admin' %}active{% endif %}">
+                    <a href="/{{ ctx.controller }}/admin"
+                       class="c-tabs__link">
+                        <i class="icon-user-tie position-left"></i>
+                        管理员角色
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /toolbar -->
+
+    </div>
+
+{% endblock %}
+{% block _pageHeader %}
+    <div class="page-header">
+        <!-- Header content -->
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4>
+                    <i class="icon-cabinet position-left"></i>
+                    <span class="text-semibold">系统管理</span> - {{ controller.meta_title }}
+                </h4>
+
+                <ul class="breadcrumb position-right">
+                    <li>
+                        <a href="index.html">
+                            首页
+                        </a>
+                    </li>
+                    <li><a href="/admin/database/index">系统配置</a></li>
+                    <li class="active">{{ controller.meta_title }}</li>
+
+                </ul>
+                <a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
+
+            <div class="heading-elements">
+                <a href="/{{ ctx.controller }}/roleadd"
+                   class="btn btn-labeled btn-labeled-right bg-primary heading-btn">
+                    <span class="text">添加管理角色</span>
+                    <b><i class=" icon-add"></i></b>
+                </a>
+            </div>
+        </div>
+        <!-- /header content -->
+
+
+        <!-- Toolbar -->
+        <div class="navbar navbar-default navbar-component navbar-xs">
+            <ul class="nav navbar-nav visible-xs-block">
+                <li class="full-width text-center">
+                    <a data-toggle="collapse" data-target="#navbar-filter">
+                        <i class="icon-menu7"></i>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="navbar-collapse collapse" id="navbar-filter">
+                <ul class="nav navbar-nav">
+                    <li class="{% if ctx.action == 'index' %}active{% endif %}">
+                        <a href="/{{ ctx.controller }}/index"
+                           class="c-tabs__link">
+                            <i class="icon-users4 position-left"></i>
+                            用户组
+                        </a>
+                    </li>
+                    <li class="{% if ctx.action == 'admin' %}active{% endif %}">
+                        <a href="/{{ ctx.controller }}/admin"
+                           class="c-tabs__link">
+                            <i class="icon-user-tie position-left"></i>
+                            管理员角色
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /toolbar -->
+
+        </div>
+    </div>
+{% endblock %}
+
+    {% block page %}
+        <li>
+            <a href="/{{ http.module }}/{{ http.controller }}/roleadd" data-toggle="ajaxModal">
+                <i class="fa fa-plus-circle position-left text-teal-600"></i>
+                <span class="text">角色</span>
+            </a>
+        </li>
+        <li>
+            <a class="ajax-post confirm" href="/{{ http.module }}/{{ http.controller }}/roledel" target-form="ids">
+                <i class="fa fa-minus-circle position-left text-danger"></i> <span>删除</span>
+
+            </a>
+        </li>
+
+        <li>
+            <a class="ajax-post confirm" href="/{{ http.module }}/{{ http.controller }}/sort/type/1"
+               target-form="sort"><i
+                        class="fa fa-sort position-left"></i> <span>排序</span></a></li>
+
+    {% endblock %}
+
+{% block content %}
+
+    <div class="tab-content">
+        <div class="tab-pane active">
+            <div class="card">
+                {#
+                                <div class="panel-toolbar panel-toolbar-inbox panel-body" style="padding-left: 0;">
+                                    <div class="navbar navbar-default">
+                                        <ul class="nav navbar-nav visible-xs-block no-border">
+                                            <li>
+                                                <a class="text-center collapsed" data-toggle="collapse"
+                                                   data-target="#inbox-toolbar-toggle-multiple">
+                                                    <i class="icon-circle-down2"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="navbar-collapse collapse" id="inbox-toolbar-toggle-multiple">
+
+                                            <div class="btn-group navbar-btn">
+                                                <a href="/{{ ctx.controller }}/roledel"
+                                                   target-form="ids"
+                                                   class="btn btn-default ajax-post confirm">
+                                                    <i class="icon-bin"></i>
+                                                    <span class="hidden-xs position-right">删除</span>
+                                                </a>
+                                                <a target-form="sort" href="/{{ ctx.controller }}/sort"
+                                                   class="btn btn-default ajax-post">
+                                                    <i class="icon-sort-numeric-asc"></i>
+                                                    <span class="hidden-xs position-right ">排序</span>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                #}
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            {#<th style="width:40px;"><input type="checkbox"></th>#}
+                            {#<th style="width:80px;" class="text-center">排序</th>#}
+                            <th>用户组</th>
+                            <th>描述</th>
+                            <th class="text-center">授权</th>
+                            {#<th class="text-center" style="width: 80px;">#}
+                            {#状态#}
+                            {#</th>#}
+
+                            <th style="width: 145px;"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in list %}
+                            <tr>
+                                {#<td>{% if item.issystem !=1 %}<input class="ids" type="checkbox" name="ids"#}
+                                {#value="{{ item.id }}" >{% endif %}</td>#}
+                                {#<td><input class="form-control form-control-text text-center sort"#}
+                                {#value="{{ item.sort }}"#}
+                                {#name="sort" data-id="{{ item.id }}"/></td>#}
+                                <td>{{ item.desc }}</td>
+
+                                <td>{{ item.description }}</td>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <a class="btn btn-xs"
+                                           href="/admin/auth/access/?id={{ item.id }}">权限设置</a>
+                                        <a class="btn btn-xs"
+                                           href="/admin/auth/catepriv/?id={{ item.id }}">栏目权限</a>
+                                        <a class="btn btn-xs"
+                                           href="/admin/auth/userlist/?id={{ item.id }}">成员管理</a>
+                                    </div>
+                                </td>
+                                {#<td>#}
+                                {#<a href="/admin/auth/setstatus/ids/{{ item.id }}/status/{{ 1-item.status }}/model/auth_role"#}
+                                {#class="active ajax-get"#}
+                                {#data-toggle="class"#}
+                                {#style="text-align: center;">#}
+                                {#<i class="fa  {% if item.status %}fa-check text-success text-active{% else %} fa-times text-danger text{% endif %}"></i>#}
+                                {#</a>#}
+                                {#</td>#}
+                                <td>
+                                    <a href="/admin/auth/roleedit/?id={{ item.id }}"
+                                       data-toggle="modal"
+                                       data-target="#modal_remote" class="btn btn-xs ">编辑</a>
+                                </td>
+
+                                {#{% if item.issystem !=1 %}#}
+                                {#<a href="/admin/auth/roledel/?ids={{ item.id }}"#}
+                                {#class="confirm ajax-get btn btn-xs text-danger-600">删除</a>#}
+                                {#{% endif %}#}
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="14">
+                                    <div class="alert alert-warning alert-block">
+                                        <button data-dismiss="alert" class="close" type="button">×</button>
+                                        <p>
+                                            内容为空
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+    {#
+    <div class="panel-footer">
+        <div class="col-sm-12 text-right text-center-xs">
+            {{ pagerData | safe }}
+        </div>
+    </div>
+            #}
+
+    {#</div>#}
+
+    <section class="hbox stretch">
+
+        <aside id="asideres" class="aside-lg bg-light b-r hide">
+            <div class="wrapper">
+                <h4 class="m-t-none">新增角色 </h4>
+                <form data-validate="" id="register">
+                    <div class="form-group">
+                        <label>用户组 </label>
+                        <input id="desc" type="text" name="desc" class="input-sm form-control" placeholder="角色名称"
+                               data-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label>描述 </label>
+                        <textarea id="description" type="text" name="description"
+                                  class="datepicker input-sm form-control" placeholder="描述"
+                                  data-required="true"></textarea>
+                    </div>
+                    <div class="m-t-lg">
+                        <button class="btn btn-lg btn-default" id="btn">添加角色</button>
+                    </div>
+                </form>
+            </div>
+        </aside>
+        <aside id="bjax-target" class="aside-lg bg-light b-r hide">
+
+        </aside>
+    </section>
+{% endblock %}
