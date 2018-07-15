@@ -32,8 +32,6 @@ module.exports = class extends Error {
     for (const key in this.adminmenu) {
       this.MenuGroup[key] = allmenu[key];
     }
-
-    // console.log(JSON.stringify(this.MenuGroup) + '-xxxxxxxxxxx-------')
     /** 菜单当前状态
      *  权限验证超级管理员
      */
@@ -47,6 +45,23 @@ module.exports = class extends Error {
       }
     }
     this.active = this.ctx.module + '/' + this.ctx.controller + '/' + this.ctx.action;
+    // 后台提示
+    // 审核提示
+    const notifications = {};
+    notifications.count = 0;
+    notifications.data = [];
+    const approval = await this.model('approval').count();
+    if (approval > 0) {
+      notifications.count += Number(approval);
+      notifications.data.push({type: 'approval', info: `有 ${approval} 条内容待审核`, url: '/admin/approval/index', ico: 'fa-umbrella'});
+    }
+
+    // console.log(notifications);
+    this.assign({
+      'navxs': false,
+      'bg': 'bg-black',
+      'notifications': notifications
+    });
   }
 
   /**
@@ -271,7 +286,7 @@ module.exports = class extends Error {
    */
   async returnnodes (tree) {
     tree = tree || true;
-    let tree_nodes = [];
+    const tree_nodes = [];
     if (tree && !think.isEmpty(tree_nodes)) {
       return tree_nodes;
     }
@@ -298,8 +313,8 @@ module.exports = class extends Error {
       list.forEach((data, k) => {
         for (const key in data) {
           if (!think.isEmpty(attrList[key])) {
-            const extra = attrList[key]['extra'];
-            const type = attrList[key]['type'];
+            const extra = attrList[key].extra;
+            const type = attrList[key].type;
             // const extra = attrList[key].extra;
             // const type = attrList[key].type;
             if (type === 'select' || type === 'checkbox' || type === 'radio' || type === 'bool') {
