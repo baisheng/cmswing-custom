@@ -32,24 +32,24 @@
     {#{% set content = datatable({rows: [{cells: theader}]}) %}#}
     {#{{ default(content) }}#}
     <div class="card">
-        <div class="table-responsive">
+        {#<div class="table-responsive">#}
             {{ datatable({rows: [{cells: theader}]}) }}
-        </div>
+        {#</div>#}
     </div>
 
 {% endmacro %}
 
 {% macro toolbarGrid(actions, theader, rows, pager) %}
     {% set toolbarClass = "navbar navbar-light bg-light navbar-expand-lg py-lg-2" %}
-    <div class="card">
+    {#<div class="card">#}
         {% if actions %}
             <div class="bg-light">
                 {{ toolbar(actions, { class: toolbarClass }) }}
             </div>
         {% endif %}
-        <div class="table-responsive">
+        {#<div class="table-responsive">#}
             {{ table({rows: [{cells: theader}]}, { rows: rows }) }}
-        </div>
+        {#</div>#}
         {% if pager %}
             <div class="card-footer">
                 <div class="pull-right">
@@ -57,5 +57,5 @@
                 </div>
             </div>
         {% endif %}
-    </div>
+    {#</div>#}
 {% endmacro %}

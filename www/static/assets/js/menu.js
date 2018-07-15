@@ -65,9 +65,9 @@ function initTable () {
           // var url1 = "/admin/menu/edit/id/" + data;
           var url1 = '/admin/menu/edit?id=' + data;
           // var url2 = "/admin/user/roledel/id/"+data;
-          return '<a class="btn btn-sm" data-toggle="modal"' +
+          return '<a class="btn btn-sm btn-light " data-toggle="modal"' +
             ' data-target="#modal_remote" href=' + url1 + '>编辑</a> ' +
-            '<a class="btn btn-xs text-danger roledel" href="javascript:void(0);" onclick="_deleteFun(' + data + ')">删除</a>';
+            '<a class="btn btn-light btn-sm roledel" href="javascript:void(0);" onclick="_deleteFun(' + data + ')">删除</a>';
         },
         'bSortable': false,
         'aTargets': [9]
@@ -165,10 +165,9 @@ function _deleteFun (id) {
       showCancelButton: true,
       confirmButtonColor: '#DD6B55',
       confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      closeOnConfirm: false
-    },
-    function () {
+      cancelButtonText: '取消'
+    }).then(function (result) {
+    if (result.value) {
       $.ajax({
         url: '/admin/menu/delete',
         data: {'id': id},
@@ -185,7 +184,8 @@ function _deleteFun (id) {
           console.log(error);
         }
       });
-    });
+    }
+  });
 }
 
 /**

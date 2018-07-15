@@ -1,124 +1,67 @@
-{% extends "../inc/base.html" %}
-{% block pageHeader %}
-    <div class="page-header">
-        <!-- Header content -->
-        <div class="page-header-content">
-            <div class="page-title">
-                <h4>
-                    <i class="icon-cabinet position-left"></i>
-                    <span class="text-semibold">系统管理</span> - {{ controller.meta_title }}
-                </h4>
-
-                <ul class="breadcrumb position-right">
-                    <li>
-                        <a href="index.html">
-                            首页
-                        </a>
-                    </li>
-                    <li><a href="/admin/setup/index">系统配置</a></li>
-                    <li class="active">{{ controller.meta_title }}</li>
-
-                </ul>
-                <a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
-
-            <div class="heading-elements">
-
-                <a href="/admin/ext/add"
-                   class="btn  bg-primary heading-btn ">
-                    创建插件
-
-                </a>
-
-                <a href="/admin/ext/load"
-                   class="btn btn-default btn-success heading-btn ">
-                    加载插件
-                </a>
-            </div>
-        </div>
-        <!-- /header content -->
-
-
-        <!-- Toolbar -->
-        <div class="navbar navbar-default navbar-component navbar-xs">
-            <ul class="nav navbar-nav visible-xs-block">
-                <li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter"><i
-                                class="icon-menu7"></i></a></li>
-            </ul>
-
-            <div class="navbar-collapse collapse" id="navbar-filter">
-                <ul class="nav navbar-nav">
-                    <li class=""><a href="/{{ ctx.controller }}/index">已安装的插件</a></li>
-                    <li class="active"><a href="/{{ ctx.controller }}/uninstall">未安装的插件</a></li>
-                </ul>
-            </div>
-            <!-- /toolbar -->
-
-        </div>
-    </div>
-
-{% endblock %}
-
-{% block style %}
-    <link rel="stylesheet" href="/static/admin/js/datepicker/bootstrap-datetimepicker.min.css" type="text/css">
-{% endblock %}
+{% extends "../../_layouts/_main.html" %}
+{% import "../../_components/_pages.html" as pages %}
+{% import "../../_components/_cards.html" as cards %}
+{% import "../../_components/_dropdowns.html" as dropdowns %}
 
 {% block content %}
-    <div class="card">
 
-        <div class="table-responsive">
-            <table class="table table-striped b-t b-light">
-                <thead>
-                <tr>
-                    <th style="">插件名称</th>
-                    <th class="">插件目录</th>
-                    <th class="">描述</th>
-                    <th class="">版本号</th>
-                    <th>作者</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for item in list %}
-                    <tr>
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.ext }}</td>
-                        <td>{{ item.description }}</td>
-                        <td>{{ item.version }}</td>
-                        <td>{{ item.author }}</td>
-                        <td>
-                            <a href="/ext/{{ item.ext }}/admin/install/?ext={{ item.ext }}"
-                               class="btn btn-flat  confirm ajax-get ">安装</a>
-                            <a href="/ext/{{ item.ext }}/admin/delext/?ext={{ item.ext }}"
-                               class="btn btn-flat text-danger confirm ajax-get ">删除</a>
-                        </td>
+    {% set actions = {
+        primary: [{
+            text: '添加插件',
+            url: '/'+ ctx.module +'/'+ ctx.controller +'/add',
+            icon: 'icon-add'
+        }]} %}
 
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="8">
-                            <div class="alert alert-warning alert-block">
-                                <button data-dismiss="alert" class="close" type="button">×</button>
-                                <p>未检测到未安装的插件！</p>
-                            </div>
-                        </td>
-                    </tr>
+    {% set tabs = [{
+        url: '/'+ ctx.module +'/'+ ctx.controller +'/index',
+        text: '已安装的插件'
+    }, {
+        url: '/'+ ctx.module +'/'+ ctx.controller +'/uninstall',
+        active: true,
+        text: '未安装的插件'
+    }] %}
+    {% set theader =  [
+        { html: '插件名称'},
+        { html: '插件目录'},
+        { html: '描述'},
+        { html: '版本号'},
+        { html: '作者'},
+        { width: '10%', classes: 'text-center', html: '操作'}
+    ] %}
 
-                {% endfor %}
+    {% set rowItems = [] %}
+    {% for item in list %}
 
+        {% set rowItems = (rowItems.push({cells: [
+            { html: item.name } ,
+            { html: item.ext } ,
+            { html: item.description } ,
+            { html: item.version } ,
+            { html: item.author } ,
+            { classes: 'text-center',
+                html: dropdowns.menu([{
+                url: ('/addons/'+ item.ext +'/index/index' if item.isindex == 1 else 'limited'),
+                icon: 'icon-upload10',
+                classes: 'confirm ajax-get',
+                text: '安装'
+            }, {
+                text: '删除',
+                icon: 'icon-trash-alt',
+                url: '/addons/'+ item.ext +'/admin/delext/?ext='+ item.ext,
+                classes: 'confirm ajax-get'
+            }])}
+        ]}), rowItems) %}
+    {% endfor %}
 
-                </tbody>
-            </table>
-        </div>
-        {% if pagerData %}
+    {% if pagerData %}
+        {% set pager = (pagerData | safe) %}
+    {% endif %}
+    {% set content = cards.toolbarGrid(actions, theader, rowItems, pager) %}
 
-            <div class="card-footer">
-                <div class="pull-right">
-                    {{ pagerData | safe }}
-                </div>
-            </div>
-        {% endif %}
-    </div>
+    {{ pages.tabContent(tabs, content) }}
+
 {% endblock %}
+
 {% block script %}
     <script src="/static/admin/js/parsley/parsley.min.js"></script>
     <script src="/static/admin/js/parsley/parsley.extend.js"></script>

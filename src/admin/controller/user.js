@@ -9,7 +9,7 @@ const fs = require('fs');
  */
 module.exports = class extends Base {
   /**
-   * index action
+   * index actiologout
    * @return {Promise} []
    */
   constructor (ctx) {

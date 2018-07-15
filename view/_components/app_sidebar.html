@@ -1,5 +1,5 @@
 <!-- Main sidebar -->
-<div class="sidebar sidebar-dark sidebar-main sidebar-fixed sidebar-expand-md">
+<div class="sidebar sidebar-light sidebar-main sidebar-fixed sidebar-expand-md">
 
     <!-- Sidebar mobile toggler -->
     <div class="sidebar-mobile-toggler text-center">
@@ -54,9 +54,9 @@
                             <div class="text-uppercase font-size-xs line-height-xs">{{ v }}</div>
                             <i class="icon-menu" title="{{ v }}"></i>
                         </li>
-
+                        {#{% if expanded %} nav-item-expanded {% endif %}#}
                         {% for v in controller.adminmenu[i] %}
-                            <li class="nav-item {% if v.children %} nav-item-submenu {% endif %}">
+                            <li class="nav-item {% if v.children %}  nav-item-submenu {% endif %}">
                                 {% if v.ico %}
                                     <a class="nav-link" href="#">
                                         <i class="fa {{ v.ico }}"></i>
@@ -68,12 +68,10 @@
                                         <span>{{ v.title }}</span>
                                     </a>
                                 {% endif %}
-                                <ul class="nav nav-group-sub">
+                                <ul class="nav nav-group-sub " data-submenu-title="{{ v.title }}">
                                     {% for c in v.children %}
-                                        {#{{ controller.active }}#}
-                                        {#{{ c.url }}#}
                                         <li class="nav-item">
-                                            <a class="nav-link {% if controller.active == c.url %}active{% endif %}"
+                                            <a class="nav-link {% if controller.active == c.url %}active {% endif %}"
                                                href="/{{ c.url }}">{{ c.title }}</a>
                                         </li>
                                     {% endfor %}

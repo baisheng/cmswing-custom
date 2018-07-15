@@ -1,155 +1,85 @@
-{% extends "../inc/base.html" %}
-
-{% block pageHeader %}
-    <!-- Page header -->
-    <div class="page-header">
-        <div class="page-header-content">
-
-            <div class="page-title">
-                <h4>
-                    <span class="text-semibold">系统配置</span> - {{ controller.meta_title }}</h4>
-            </div>
-
-            <div class="heading-elements">
-                {#<a href="/admin/menu/add#bjax-target" class="btn btn-sm btn-default" data-toggle="class:show" data-bjax="" data-target="#bjax-target">#}
-                {##}
-                <a href="/{{ ctx.controller }}/addext"
-                   class="active btn btn-labeled btn-labeled-right bg-primary heading-btn" data-toggle="modal"
-                >
-                    添加独立模型
-                    <b><i class=" icon-add-to-list"></i></b>
-
-                </a>
-            </div>
-        </div>
-        <div class="breadcrumb-line breadcrumb-line-component"><a class="breadcrumb-elements-toggle"><i
-                        class="icon-menu-open"></i></a>
-            <ul class="breadcrumb">
-                <li><a href="index.html"><i class="icon-home2 position-left"></i> 首页</a></li>
-                <li><a href="/admin/database/index">系统配置</a></li>
-                <li class="active">{{ controller.meta_title }}</li>
-            </ul>
-            <ul class="breadcrumb-elements">
-                <li>
-
-                    <a class="ajax-post" href="/{{ ctx.controller }}/setstatus/?status=1"
-                       target-form="ids">
-                        <i class="fa fa-play-circle position-left text-success-600"></i>
-                        启用
-                    </a>
-                </li>
-                <li>
-
-                    <a class="ajax-post" href="/{{ ctx.controller }}/setstatus/?status=0"
-                       target-form="ids">
-                        <i class="fa fa-stop-circle position-left text-warning"></i>
-                        禁用
-                    </a>
-                </li>
-                <li>
-
-                    <a href="/{{ ctx.controller }}/generate">
-                        <i class="fa fa-dot-circle-o text-primary position-left"></i>
-
-                        生成
-                    </a>
-                </li>
-
-            </ul>
-
-        </div>
-
-    </div>
-    <!-- /page header -->
-{% endblock %}
+{% extends "../../_layouts/_main.html" %}
+{% import "../../_components/_pages.html" as pages %}
+{% import "../../_components/_cards.html" as cards %}
+{% import "../../_components/_dropdowns.html" as dropdowns %}
 
 {% block content %}
-    <div class="card">
-        <div class="tabbable tab-content-bordered ">
-            <ul class="nav nav-tabs nav-tabs-bottom">
-                <li class="active"><a href="/{{ ctx.controller }}/ext">已安装的模型</a></li>
-                <li class=""><a href="/{{ ctx.controller }}/extun">未安装的模型</a></li>
+    {% set actions = {
+        primary: [{
+            text: '添加独立模型',
+            url: '/'+ ctx.module +'/'+ ctx.controller +'/add',
+            icon: 'icon-add'
+        }],
+        secondary: [{
+            url: '/admin/'+ ctx.controller +'/setstatus?status=1',
+            text: '启用',
+            attribute: 'target-form=ids'
+        }, {
+            url: '/admin/'+ ctx.controller +'/setstatus?status=0',
+            text: '禁用',
+            attribute: 'target-form=ids'
+        }, {
+            url: '/admin/'+ ctx.controller +'/generate',
+            text: '生成'
+        }]} %}
 
-            </ul>
-        </div>
-        <div class="table-responsive">
-            <table class="table table-striped b-t b-light">
-                <thead>
-                <tr>
-                    <th style="width:20px;">
-                        <input type="checkbox">
-                    </th>
-                    <th style="width:80px;">ID</th>
-                    <th class="">目录/标识</th>
-                    <th class="">名称</th>
-                    <th class="">版本号</th>
-                    <th class="">作者</th>
-                    <th class="">安装时间</th>
-                    <th class="">状态</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for item in list %}
-                    <tr>
-                        <td>
-                            <input class="ids" type="checkbox" name="ids"
-                                   value="{% if item.id !=1 %}{{ item.id }}{% endif %}"
-                                   {% if item.id==1 %}disabled="true"{% endif %}>
-                        </td>
-                        <td>{{ item.id }}</td>
-                        <td>{{ item.name }}</td>
-                        <td><a data-id="{{ item.id }}"
-                               href="/admin/model/{% if item.extend==0 %}{% if item.id==1 %}edit{% else %}editext{% endif %}{% else %}edit{% endif %}?id={{ item.id }}"
-                               class="">{{ item.title }}</a></td>
-                        <td>{{ item.version }}</td>
-                        <td>{{ item.author }}</td>
-                        <td>{{ item.create_time | moment('YYYY-MM-DD HH:mm') }}</td>
-                        <td>
-                            <a href="/admin/model/setstatus/?ids={{ item.id }}&status={{ 1-item.status }}"
-                               class="active ajax-get" data-toggle="class">
-                                <i class="fa fa-check text-success {% if item.status %}text-active{% else %}text{% endif %}"></i>
-                                <i class="fa fa-times text-danger {% if item.status %}text{% else %}text-active{% endif %}"></i>
-                            </a>
-                        </td>
+    {% set tabs = [{
+        url: '/'+ ctx.module +'/'+ ctx.controller +'/ext',
+        active: true,
+        text: '已安装的模型'
+    }, {
+        url: '/'+ ctx.module +'/'+ ctx.controller +'/extun',
+        text: '未安装的模型'
+    }] %}
 
-                        <td>{#<a href="/admin/cms/list/?model={{item.name}}" class="">数据</a>#}
-                            <a href="/admin/model/{% if item.extend==0 %}{% if item.id==1 %}edit{% else %}editext{% endif %}{% else %}edit{% endif %}?id={{ item.id }}"
-                               class="">编辑</a>
-                            {% if item.extend==1 or item.id==1 %}
-                                <a href="/admin/attribute/index/?model_id={{ item.id }}"
-                                   class="">字段</a>
-                            {% else %}
-                                <a href="/admin/attribute/ext/?model_id={{ item.id }}" class="">字段</a>
-                            {% endif %}
-                            {% if item.id !=1 %}
-                            <a href="/admin/model/unext?id={{ item.id }}"
-                               class="confirm ajax-get ">卸载</a></td>
-                        {% endif %}
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="9">
-                            <div class="alert alert-warning alert-block">
-                                <button data-dismiss="alert" class="close" type="button">×</button>
-                                <p>还没有内容。</p>
-                            </div>
-                        </td>
-                    </tr>
+    {% set theader =  [
+        { html: '<input type="checkbox">'},
+        { html: '目录/标识'},
+        { html: '名称'},
+        { html: '版本号'},
+        { html: '作者'},
+        { html: '安装时间'},
+        { html: '状态'},
+        { width: '10%', classes: 'text-center', html: '操作'}
+    ] %}
 
-                {% endfor %}
+    {% set rowItems = [] %}
+    {% for item in list %}
 
+        {% set rowItems = (rowItems.push({cells: [
+            { html: '<input class="ids" type="checkbox" name="ids" value="'+ (item.id if item.id !== 1) +'"'+ ('disabled=true' if item.id == 1) +'>'},
+            { html: item.name },
+            { html: '<a href="/admin/model/'+ (('edit' if item.id == 1 else 'editext') if item.extend == 0 else 'edit') +'?id='+ item.id +'" data-id="'+ item.id +'">'+ item.title +'</a>' },
+            { html: item.version },
+            { html: item.author },
+            { html: ( item.create_time | moment('YYYY-MM-DD HH:mm')) },
+            { html: '<a href="/admin/model/setstatus/?ids='+ item.id +'&status='+ (1-item.status) +'" data-toggle="class" class="active ajax-get">
+                        <i class="fa '+ ('fa-check text-success text-active' if item.status else 'fa-times text-danger text') +'"></i></a>' },
 
-                </tbody>
-            </table>
-        </div>
-        {% if pagerData %}
-        <div class="card-footer">
-            <div class="pull-right">
-                {{ pagerData | safe }}
-            </div>
-        </div>
-        {% endif %}
-    </div>
+            { classes: 'text-center',
+                html: dropdowns.menu([{
+                url: '/admin/model/'+ (('edit' if item.id == 1 else 'editext') if item.extend == 0 else 'edit') +'?id='+ item.id,
+                icon: 'icon-pencil7',
+                text: '编辑'
+            }, {
+                url: '/admin/attribute/'+ ('index' if (item.extend == 1 or item.id == 1) else 'ext') +'/?model_id=' + item.id,
+                icon: 'icon-cog ',
+                text: '字段'
+            }, {
+                text: '卸载',
+                icon: 'icon-trash-alt',
+                url: ('/admin/model/unext?id='+ item.ext if item.id !== 1 else 'limited'),
+                classes: 'confirm ajax-get'
+            }])}
+        ]}), rowItems) %}
+
+    {% endfor %}
+
+    {% if pagerData %}
+        {% set pager = (pagerData | safe) %}
+    {% endif %}
+    {% set content = cards.toolbarGrid(actions, theader, rowItems, pager) %}
+
+    {{ pages.tabContent(tabs, content) }}
 
 {% endblock %}

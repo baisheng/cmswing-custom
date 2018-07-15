@@ -46,7 +46,7 @@ module.exports = class extends Error {
         return error.noAction('未授权访问!');
       }
     }
-    this.active = this.ctx.controller + '/' + this.ctx.action;
+    this.active = this.ctx.module + '/' + this.ctx.controller + '/' + this.ctx.action;
   }
 
   /**
