@@ -79,6 +79,9 @@
     - Form fields
     - Links
     - Modal
+    
+- graphql
+- nuxtjs
 
 ## 效果截图
 <img src="https://github.com/baisheng/cmswing-custom/blob/master/screenshot/user_login.png?raw=true" width="375">
