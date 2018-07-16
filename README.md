@@ -20,41 +20,6 @@
 - graphql
 - ...
 
-
-## 效果截图
-<img src="https://github.com/baisheng/cmswing-custom/blob/master/screenshot/user_login.png?raw=true" width="375">
-<img src="https://github.com/baisheng/cmswing-custom/blob/master/screenshot/admin_menu_index.png?raw=true" width="375">
-<img src="https://github.com/baisheng/cmswing-custom/blob/master/screenshot/admin_model_index.png?raw=true" width="375">
-
-## Todos 更新记录
-
-- ~~将 CMSWing 从单模块工程到多模块工程重建~~
-- ~~将 CMSWing 的基类迁移到 common 模块~~
-- ~~将 ext 迁移至 addons 模块~~
-- ~~增加 addons 插件加载机制，可识别插件目录结构~~
-- 基于 bootstrap4 和 nunjucks 重构 admin 前端视图
-    - ~~登录页~~
-    - 后台管理 Dashboard 页
-    - ~~菜单管理~~
-    - ~~导航管理~~
-    - ~~系统设置~~
-    - ~~用户行为~~
-    - ~~行为日志~~
-    - ~~订单中心~~
-    - ~~支付与配送~~
-    - ~~用户管理~~
-    - ~~扩展~~
-- nunjucks UI 组件
-    - Button
-    - ~~Dropdown(default, menu)~~
-    - ~~Pages(toolbar, content)~~
-    - ~~Cards(grid, datagrid)~~
-    - ~~Tables(table, datatable)~~
-    - ~~Toolbars~~
-    - Form fields
-    - Links
-    - Modal
-
 ## 目录结构 
 ```bash
 .
@@ -86,9 +51,45 @@
 
 ```
 
+## Todos 更新记录
+
+- ~~将 CMSWing 从单模块工程到多模块工程重建~~
+- ~~将 CMSWing 的基类迁移到 common 模块~~
+- ~~将 ext 迁移至 addons 模块~~
+- ~~增加 addons 插件加载机制，可识别插件目录结构~~
+- 基于 bootstrap4 和 nunjucks 重构 admin 前端视图
+    - ~~登录页~~
+    - 后台管理 Dashboard 页
+    - ~~菜单管理~~
+    - ~~导航管理~~
+    - ~~系统设置~~
+    - ~~用户行为~~
+    - ~~行为日志~~
+    - ~~订单中心~~
+    - ~~支付与配送~~
+    - ~~用户管理~~
+    - ~~扩展~~
+- nunjucks UI 组件
+    - Button
+    - ~~Dropdown(default, menu)~~
+    - ~~Pages(toolbar, content)~~
+    - ~~Cards(grid, datagrid)~~
+    - ~~Tables(table, datatable)~~
+    - ~~Toolbars~~
+    - Form fields
+    - Links
+    - Modal
+
+## 效果截图
+<img src="https://github.com/baisheng/cmswing-custom/blob/master/screenshot/user_login.png?raw=true" width="375">
+<img src="https://github.com/baisheng/cmswing-custom/blob/master/screenshot/admin_menu_index.png?raw=true" width="375">
+<img src="https://github.com/baisheng/cmswing-custom/blob/master/screenshot/admin_model_index.png?raw=true" width="375">
+
+
 ## 相关文章
 - [Thinkjs3 中自定义加载，实现插件目录功能](https://www.jianshu.com/p/df9346a1d0bb)
 - [Thinkjs3 支持 Nuxtjs](https://www.jianshu.com/p/16feed3a5715)
 - [CMSWing SVG 验证码插件](https://github.com/baisheng/cmswing-ext-captcha)
 - [采用 Dokku 构建自己的 PaaS 服务](https://www.jianshu.com/p/476cb3b8a64d)
 - [Dokku 项目部署](https://www.jianshu.com/p/f5951d860446)
+- [基于 Thinkjs、Vuejs 的多用户、多应用，管理系统实践](https://www.jianshu.com/p/150cab22ff27)
