@@ -26,7 +26,7 @@ module.exports = {
     charset: 'UTF8MB4_GENERAL_CI',
     // debug: true,
     host: isDev ? '127.0.0.1' : '127.0.0.1',
-    port: isDev ? '3313' : '3313',
+    port: isDev ? '3313' : '3366',
     user: 'root',
     password: 'ub08JASJQy9s',
     dateStrings: true,
