@@ -1,10 +1,12 @@
-{% extends "../inc/base.html" %}
+{% extends "../../_layouts/_main.html" %}
+{% import "../../_components/_pages.html" as pages %}
+{% import "../../_components/_cards.html" as cards %}
+{% import "../../_components/_dropdowns.html" as dropdowns %}
 {#{% block sidebar2 %}#}
     {#{% include "../inc/ext_side.html" %}#}
 {#{% endblock %}#}
 
 {% block content %}
-    {% block extadmin %}
         <div class="card">
             <div class="tabbable tab-content-bordered ">
                 <ul class="nav nav-tabs nav-tabs-bottom">
@@ -30,7 +32,6 @@
                 </div>
             </div>
         </div>
-    {% endblock %}
 
     {#    <div class="panel panel-default">
             <div class="panel-heading">

@@ -1,6 +1,6 @@
 {
-  "name": "cx-iboyaa",
-  "description": "VR CMS application for Iboyaa",
+  "name": "CMS",
+  "description": "CMS application",
   "version": "1.0.0",
   "author": "baisheng@gmail.com <baisheng@gmail.com>",
   "scripts": {
@@ -59,13 +59,13 @@
   "readmeFilename": "README.md",
   "thinkjs": {
     "metadata": {
-      "name": "cx-iboyaa",
-      "description": "VR CMS application for Iboyaa",
-      "author": "baisheng <baisheng@caixie.top>",
+      "name": "cms",
+      "description": "CMS application",
+      "author": "baisheng <baisheng@gmail.com>",
       "babel": false,
       "defaultModule": "home"
     },
-    "projectName": "cx-iboyaa",
+    "projectName": "cms",
     "template": "/Users/basil/.nvm/versions/node/v8.9.0/lib/node_modules/think-cli/default_template",
     "clone": false,
     "isMultiModule": true
