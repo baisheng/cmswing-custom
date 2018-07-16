@@ -10,15 +10,13 @@
 
 ## WIP
 
-- 采用 CMSWing (基于 thinkjs3 + mysql 构建) 定制
-- 多模块项目结构
-- 独立插件目录 (addons)
+- 项目结构改为多模块项目结构
+- 新增独立插件目录 (addons)
 - 独立扩展模块目录 (modules)
 - API 模块
 - Nunjucks + bootstrap4 UI 定制
-- 可插拔前后台页面模板
+- graphql支持
 - nuxtjs 支持
-- graphql
 - ...
 
 ## 目录结构 
