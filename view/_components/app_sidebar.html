@@ -1,5 +1,5 @@
 <!-- Main sidebar -->
-<div class="sidebar sidebar-light sidebar-main sidebar-fixed sidebar-expand-md">
+<div class="sidebar sidebar-dark sidebar-main sidebar-fixed sidebar-expand-md">
 
     <!-- Sidebar mobile toggler -->
     <div class="sidebar-mobile-toggler text-center">
@@ -36,7 +36,16 @@
                     </div>
 
                     <div class="ml-3 align-self-center">
-                        <a href="#" class="text-white"><i class="icon-cog3"></i></a>
+                        <div class="dropdown">
+                            <a href="#" class="list-icons-item dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                {#<i class="icon-cog6"></i>#}
+                            </a>
+                            <div class="dropdown-menu" x-placement="bottom-start">
+                                <a href="#" class="dropdown-item"><i class="icon-file-pdf"></i> 我的账户</a>
+                                <a href="#" class="dropdown-item"><i class="icon-file-excel"></i> 登出</a>
+                            </div>
+                        </div>
+                        {#<a href="#" class="text-white"><i class="icon-cog3"></i></a>#}
                     </div>
                 </div>
             </div>
@@ -47,41 +56,84 @@
         <!-- Main navigation -->
         <div class="card card-sidebar-mobile">
             <ul class="nav nav-sidebar" data-nav-type="accordion">
-                {% for i, v in controller.MenuGroup %}
-                    {% if i != 0 and i != 99 and i != ism %}
-                        <!-- Main -->
-                        <li class="nav-item-header">
-                            <div class="text-uppercase font-size-xs line-height-xs">{{ v }}</div>
-                            <i class="icon-menu" title="{{ v }}"></i>
-                        </li>
+                <li class="nav-item">
+                    <a href="/admin/index" class="nav-link  {% if controller.active == c.url %}active {% endif %}">
+                        <i class="icon-dash"></i>
+                        <span>
+                            {#{{ controller.active }}#}
+                            控制台
+                            {#<span class="d-block font-weight-normal opacity-50">No active orders</span>#}
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/article/index" class="nav-link">
+                        <i class="icon-file-text2"></i>
+                        <span>
+                            内容管理
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">
+                        <i class="icon-attachment"></i>
+                        <span>
+                            文件素材
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">
+                        <i class="icon-users"></i>
+                        <span>
+                            用户管理
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/settings" class="nav-link">
+                        <i class="icon-cog"></i>
+                        <span>
+                            配置
+                        </span>
+                    </a>
+                </li>
+                {#{% for i, v in controller.MenuGroup %}#}
+                    {#{% if i != 0 and i != 99 and i != ism %}#}
+                        {#<!-- Main -->#}
+                        {#<li class="nav-item-header">#}
+                            {#<div class="text-uppercase font-size-xs line-height-xs">{{ v }}</div>#}
+                            {#<i class="icon-menu" title="{{ v }}"></i>#}
+                        {#</li>#}
                         {#{% if expanded %} nav-item-expanded {% endif %}#}
-                        {% for v in controller.adminmenu[i] %}
-                            <li class="nav-item {% if v.children %}  nav-item-submenu {% endif %}">
-                                {% if v.ico %}
-                                    <a class="nav-link" href="#">
-                                        <i class="fa {{ v.ico }}"></i>
-                                        <span>{{ v.title }}</span>
-                                    </a>
-                                {% else %}
-                                    <a class="nav-link" href="#">
-                                        <i class="icon-screen-desktop icon"></i>
-                                        <span>{{ v.title }}</span>
-                                    </a>
-                                {% endif %}
-                                <ul class="nav nav-group-sub " data-submenu-title="{{ v.title }}">
-                                    {% for c in v.children %}
-                                        <li class="nav-item">
-                                            <a class="nav-link {% if controller.active == c.url %}active {% endif %}"
-                                               href="/{{ c.url }}">{{ c.title }}</a>
-                                        </li>
-                                    {% endfor %}
+                        {#{% for v in controller.adminmenu[i] %}#}
+                            {#<li class="nav-item {% if v.children %}  nav-item-submenu {% endif %}">#}
+                                {#{% if v.ico %}#}
+                                    {#<a class="nav-link" href="#">#}
+                                        {#<i class="fa {{ v.ico }}"></i>#}
+                                        {#<span>{{ v.title }}</span>#}
+                                    {#</a>#}
+                                {#{% else %}#}
+                                    {#<a class="nav-link" href="#">#}
+                                        {#<i class="icon-screen-desktop icon"></i>#}
+                                        {#<span>{{ v.title }}</span>#}
+                                    {#</a>#}
+                                {#{% endif %}#}
+                                {#<ul class="nav nav-group-sub " data-submenu-title="{{ v.title }}">#}
+                                    {#{% for c in v.children %}#}
+                                        {#<li class="nav-item">#}
+                                            {#<a class="nav-link {% if controller.active == c.url %}active {% endif %}"#}
+                                               {#href="/{{ c.url }}">{{ c.title }}</a>#}
+                                        {#</li>#}
+                                    {#{% endfor %}#}
 
-                                </ul>
-                            </li>
+                                {#</ul>#}
+                            {#</li>#}
 
-                        {% endfor %}
-                    {% endif %}
-                {% endfor %}
+                        {#{% endfor %}#}
+                    {#{% endif %}#}
+                {#{% endfor %}#}
+
             </ul>
         </div>
         <!-- /main navigation -->

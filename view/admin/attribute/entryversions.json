@@ -1,0 +1,79 @@
+{
+  "typeId": "7",
+  "authorId": "1",
+  "title": "App Development",
+  "slug": "app-development",
+  "postDate": 1412437620,
+  "expiryDate": null,
+  "enabled": 1,
+  "fields": {
+    "4": {
+      "160": {
+        "type": "quote",
+        "enabled": "1",
+        "fields": {
+          "quote": "Hey, You've got nice apps!",
+          "attribution": "A Satisfied Customer",
+          "position": "center"
+        }
+      },
+      "181": {
+        "type": "heading",
+        "enabled": "1",
+        "fields": {
+          "heading": "We pride ourselves in our toned apps"
+        }
+      },
+      "182": {
+        "type": "text",
+        "enabled": "1",
+        "fields": {
+          "text": "<p>\r\n\tWe've been developing them libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facer possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum  quod maxime placeat facernecessitatibus.\r\n<\/p>",
+          "position": "center"
+        }
+      }
+    },
+    "15": [
+      "123"
+    ],
+    "58": [
+      "152"
+    ],
+    "59": {
+      "178": {
+        "type": "servicesPoint",
+        "enabled": "1",
+        "fields": {
+          "heading": "Discover your audience",
+          "text": "<p>\r\n\tYour audience is human, but their device is not. We like to cross that gap by engaging your audience in casual conversation as one would at their local pub.\r\n<\/p>",
+          "image": [
+            "163"
+          ]
+        }
+      },
+      "179": {
+        "type": "servicesPoint",
+        "enabled": "1",
+        "fields": {
+          "heading": "Explore all possibilities",
+          "text": "<p>\r\n\tYour product is a journey; a story. At Happy Lager we follow that story to create holistic experience giving you the best possible product.\r\n<\/p>",
+          "image": [
+            "167"
+          ]
+        }
+      },
+      "180": {
+        "type": "servicesPoint",
+        "enabled": "1",
+        "fields": {
+          "heading": "Create Genius",
+          "text": "<p>\r\n\tYou are the inspiration and we are the perspiration. Together we can create genius; and throw back a few in the process.\r\n<\/p>",
+          "image": [
+            "168"
+          ]
+        }
+      }
+    },
+    "47": "<p>\r\n\tOur apps are as good as our taste buds.\r\n<\/p>"
+  }
+}

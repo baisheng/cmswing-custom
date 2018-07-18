@@ -1,0 +1,161 @@
+{% extends '../../_layouts/_main.html' %}
+{% block content %}
+    {% set settings = [{
+        name: 'system',
+        title: '系统',
+        items: [{
+            title: '通用配置',
+            url: '/admin/setup/index'
+        }, {
+            title: '用户',
+            url: '/admin/setup/users'
+        }, {
+            title: '插件',
+            url: '/admin/addons/index'
+        }, {
+            title: '视图插件',
+            url: '/admin/hooks/index'
+        }]
+    }, {
+        name: 'content',
+        title: '内容',
+        items: [{
+            title: '字段',
+            url: '/admin/attribute/index'
+        }]
+    }] %}
+    <div class="card">
+        <div class="card-body">
+
+            <div class="mb-3">
+                <h6 class="mb-0 font-weight-semibold">
+                    系统
+                </h6>
+                <span class="text-muted d-block">Boxes with icons</span>
+            </div>
+            <div class="row row-tile no-gutters">
+                <div class="col-1">
+                    <a class="btn btn-light btn-block btn-float m-0" href="/admin/setup/index">
+                        <i class="icon-github4 icon-2x"></i>
+                        <span>通用配置</span>
+                    </a>
+                </div>
+                <div class="col-1">
+
+                    <button type="button" class="btn btn-light btn-block btn-float ">
+                        <i class="icon-dropbox text-blue-400 icon-2x"></i>
+                        <span>用户</span>
+                    </button>
+                </div>
+
+                <div class="col-1">
+
+                    <button type="button" class="btn btn-light btn-block btn-float ">
+                        <i class="icon-dropbox text-blue-400 icon-2x"></i>
+                        <span>插件</span>
+                    </button>
+                </div>
+            </div>
+            <div class="mb-3 pt-2">
+                <h6 class="mb-0 font-weight-semibold">
+                    内容
+                </h6>
+                <span class="text-muted d-block">Boxes with icons</span>
+            </div>
+            <div class="row row-tile no-gutters">
+                <div class="col-1">
+                    <button type="button" class="btn btn-light btn-block btn-float m-0">
+                        <i class="icon-github4 icon-2x"></i>
+                        <span>字段</span>
+                    </button>
+                </div>
+                <div class="col-1">
+
+                    <button type="button" class="btn btn-light btn-block btn-float ">
+                        <i class="icon-dropbox text-blue-400 icon-2x"></i>
+                        <span>版块</span>
+                    </button>
+                </div>
+
+                <div class="col-1">
+
+                    <button type="button" class="btn btn-light btn-block btn-float ">
+                        <i class="icon-dropbox text-blue-400 icon-2x"></i>
+                        <span>附件</span>
+                    </button>
+                </div>
+                <div class="col-1">
+
+                    <button type="button" class="btn btn-light btn-block btn-float ">
+                        <i class="icon-dropbox text-blue-400 icon-2x"></i>
+                        <span>类别</span>
+                    </button>
+                </div>
+                <div class="col-1">
+
+                    <button type="button" class="btn btn-light btn-block btn-float ">
+                        <i class="icon-dropbox text-blue-400 icon-2x"></i>
+                        <span>标签</span>
+                    </button>
+                </div>
+                <div class="col-1">
+
+                    <button type="button" class="btn btn-light btn-block btn-float ">
+                        <i class="icon-dropbox text-blue-400 icon-2x"></i>
+                        <span>多语言</span>
+                    </button>
+                </div>
+            </div>
+            <div class="mb-3 pt-2">
+                <h6 class="mb-0 font-weight-semibold">
+                    工具
+                </h6>
+                <span class="text-muted d-block">Boxes with icons</span>
+            </div>
+            <div class="row row-tile no-gutters">
+                <div class="col-1">
+                    <button type="button" class="btn btn-light btn-block btn-float m-0">
+                        <i class="icon-github4 icon-2x"></i>
+                        <span>更新附件索引</span>
+                    </button>
+                </div>
+                <div class="col-1">
+
+                    <button type="button" class="btn btn-light btn-block btn-float ">
+                        <i class="icon-dropbox text-blue-400 icon-2x"></i>
+                        <span>删除站点缓存</span>
+                    </button>
+                </div>
+                <div class="col-1">
+
+                    <button type="button" class="btn btn-light btn-block btn-float ">
+                        <i class="icon-dropbox text-blue-400 icon-2x"></i>
+                        <span>数据库备份</span>
+                    </button>
+                </div>
+
+                <div class="col-1">
+
+                    <button type="button" class="btn btn-light btn-block btn-float ">
+                        <i class="icon-dropbox text-blue-400 icon-2x"></i>
+                        <span>全站搜索</span>
+                    </button>
+                </div>
+                <div class="col-1">
+
+                    <button type="button" class="btn btn-light btn-block btn-float ">
+                        <i class="icon-dropbox text-blue-400 icon-2x"></i>
+                        <span>后台菜单</span>
+                    </button>
+                </div>
+                <div class="col-1">
+
+                    <button type="button" class="btn btn-light btn-block btn-float ">
+                        <i class="icon-dropbox text-blue-400 icon-2x"></i>
+                        <span>模型管理</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

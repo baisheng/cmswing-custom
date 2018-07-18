@@ -20,7 +20,7 @@ module.exports = {
     logConnect: isDev,
     handle: mysql,
     database: 'cmswing',
-    prefix: 'cmswing_',
+    prefix: 'picker_',
     connectionLimit: 1, // 连接池的连接个数，默认为 1
     // charset: 'UTF8MB4',
     charset: 'UTF8MB4_GENERAL_CI',

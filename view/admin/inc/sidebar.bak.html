@@ -24,10 +24,66 @@
         </div>
         <!-- Main navigation -->
         <div class="sidebar-category sidebar-category-visible">
+            {#
+            <div class="sidebar-user-material">
+                <div class="category-content">
+                    <div class="sidebar-user-material-content">
 
+                        <a href="#" class="legitRipple">
+                            <img src="/static/themes/admin/assets/images/brands/weixin-1.png"
+                                 class="img-circle img-responsive" alt="">
+                        </a>
+                        <h6>{{ config.setup.wx_name }}</h6>
+                        <span class="text-size-small">
+                            {% if config.setup.wx_type==1 %}
+                            未认证订阅号
+                            {% elif config.setup.wx_type==2 %}
+                            认证订阅号
+                            {% elif config.setup.wx_type==3 %}
+                            未认证服务号
+                            {% elif config.setup.wx_type==4 %}
+                            微信认证服务号
+                            {% endif %}
+                        </span>
+                    </div>
+
+                    <div class="sidebar-user-material-menu">
+                        <a href="#user-nav" data-toggle="collapse" class="legitRipple"><span>公众平台管理</span> <i
+                                    class="caret"></i></a>
+                    </div>
+                </div>
+
+                <div class="navigation-wrapper collapse" id="user-nav">
+                    <ul class="navigation">
+                        <li>
+                            <a href="/admin/mpbase/index">管理首页</a>
+                        </li>
+                        <li>
+                            <span class="arrow bottom hidden-nav-xs"></span>
+                            <a class="legitRipple" href="/admin/setup/index?id=6">公众号信息</a>
+                        </li>
+                        <li>
+                            <a class="legitRipple" href="/admin/mpbase/mass">群发功能</a>
+                        </li>
+                        <li><a class="legitRipple" href="/admin/mpbase/fodderlist">素材管理</a></li>
+                        <li>
+                            <a class="legitRipple" href="/admin/mpbase/userlist">
+                                <!--<span class="badge bg-danger pull-right">3</span>-->
+                                微信用户
+                            </a>
+                        </li>
+                        <li>
+                            <a class="legitRipple" href="/admin/mpbase/autoreply">自动回复</a>
+                        </li>
+                        <li>
+                            <a class="legitRipple" href="/admin/mpbase/custommenu">自定义菜单</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            #}
             <div class="category-content no-padding">
                 <ul class="navigation navigation-main navigation-accordion">
-
                     {% if 4|getmode('')|length==0 %}
                         {% set ism = 20 %}
                     {% else %}

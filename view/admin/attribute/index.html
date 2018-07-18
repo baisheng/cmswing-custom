@@ -1,4 +1,7 @@
-{% extends "./base.html" %}
+{% extends "../../_layouts/_main.html" %}
+{% import "../../_components/_pages.html" as pages %}
+{% import "../../_components/_cards.html" as cards %}
+{% import "../../_components/_dropdowns.html" as dropdowns %}
 {% block pageAction %}
     <a href="/admin/attribute/add?model_id={{ model_id }}"
        class="btn btn-default ">
@@ -7,59 +10,23 @@
     </a>
     <a href="/admin/model/edit?id={{ model_id }}" class="btn btn-default">
         <i class="fa fa-cog position-left"></i>
-        设置模型
+        设计模型
     </a>
 {% endblock %}
 
-{% block _pageHeader %}
-    <!-- Page header -->
-    <div class="page-header">
-        <div class="page-header-content">
-
-            <div class="page-title">
-
-                <h4>
-                    <span class="text-semibold">系统配置</span> - {{ controller.meta_title }}</h4>
-            </div>
-
-            <div class="heading-elements">
-
-                <a href="/admin/setup/add"
-                   class="active btn btn-labeled btn-labeled-right bg-primary heading-btn ">
-                    添加模型
-                    <b><i class=" icon-add"></i></b>
-
-                </a>
-            </div>
-        </div>
-        <div class="breadcrumb-line breadcrumb-line-component"><a class="breadcrumb-elements-toggle"><i
-                        class="icon-menu-open"></i></a>
-            <ul class="breadcrumb">
-                <li><a href="index.html"><i class="icon-home2 position-left"></i> 首页</a></li>
-                <li><a href="/admin/database/index">系统配置</a></li>
-                <li class="active">{{ controller.meta_title }}</li>
-            </ul>
-            <ul class="breadcrumb-elements">
-                <!--<li><a href="/admin/channel/add">-->
-                <!--<i class="  icon-add-to-list position-left"></i> 添加分类-->
-                <!--</a></li>-->
-                <li><a href="/admin/attribute/add?model_id={{ model_id }}"><i
-                                class="fa fa-plus position-left"></i> 新增字段</a></li>
-
-                <li><a href="/admin/model/edit?id={{ model_id }}"><i
-                                class="fa fa-eye position-left"></i> 设置模型</a></li>
-
-
-            </ul>
-
-        </div>
-
-    </div>
-    <!-- /page header -->
-{% endblock %}
-
 {% block content %}
-
+    {% set actions = {
+        primary: [{
+            url: '/admin/attribute/add?model_id=' + model_id,
+            icon: 'icon-add',
+            text: '新增字段'
+        }, {
+            url: '/admin/model/edit?id='+ model_id,
+            icon: 'icon-pen',
+            text: '设计模型'
+        }]
+    } %}
+    {{ pages.actionToolbar(actions) }}
     <div class="card">
         <div class="table-responsive">
             <table class="table table-striped table-bordered">
