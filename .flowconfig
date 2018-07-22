@@ -1,0 +1,16 @@
+[ignore]
+./runtime
+./node_modules
+.*/www/*
+./test
+./view
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+
+[strict]

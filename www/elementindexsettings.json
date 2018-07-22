@@ -1,0 +1,92 @@
+{
+  "sourceOrder": [
+    [
+      "key",
+      "*"
+    ],
+    [
+      "heading",
+      "Site Pages"
+    ],
+    [
+      "key",
+      "singles"
+    ],
+    [
+      "heading",
+      "Company"
+    ],
+    [
+      "key",
+      "section:2"
+    ],
+    [
+      "key",
+      "section:8"
+    ],
+    [
+      "key",
+      "section:5"
+    ],
+    [
+      "key",
+      "section:3"
+    ],
+    [
+      "heading",
+      ""
+    ],
+    [
+      "key",
+      "section:9"
+    ]
+  ],
+  "sources": {
+    "*": {
+      "tableAttributes": {
+        "1": "section",
+        "2": "postDate",
+        "3": "expiryDate",
+        "4": "author",
+        "5": "link"
+      }
+    },
+    "singles": {
+      "tableAttributes": {
+        "1": "uri"
+      }
+    },
+    "section:2": {
+      "tableAttributes": {
+        "1": "type",
+        "2": "field:75",
+        "3": "field:15",
+        "4": "postDate",
+        "5": "author",
+        "6": "link"
+      }
+    },
+    "section:8": {
+      "tableAttributes": {
+        "1": "field:15",
+        "2": "field:37",
+        "3": "field:41"
+      }
+    },
+    "section:5": {
+      "tableAttributes": {
+        "1": "field:58",
+        "2": "uri"
+      }
+    },
+    "section:3": {
+      "tableAttributes": {
+        "1": "field:49",
+        "2": "field:45",
+        "3": "field:63",
+        "4": "uri",
+        "5": "field:78"
+      }
+    }
+  }
+}

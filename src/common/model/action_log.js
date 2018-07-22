@@ -3,5 +3,4 @@
  * @type {module.exports}
  */
 module.exports = class extends think.Model {
-
 }

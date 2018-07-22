@@ -48,6 +48,8 @@
     "eslint": "^4.2.0",
     "eslint-config-think": "^1.0.0",
     "eslint-plugin-html": "^4.0.3",
+    "flow-bin": "^0.76.0",
+    "flow-remove-types": "^1.2.3",
     "nyc": "^11.8.0",
     "think-watcher": "^3.0.0"
   },
